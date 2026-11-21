@@ -1,0 +1,41 @@
+.class public final synthetic Lio/sentry/K3;
+.super Ljava/lang/Object;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements Lio/sentry/util/c$a;
+
+
+# direct methods
+.method public synthetic constructor <init>()V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 2
+    .line 3
+    .line 4
+    return-void
+.end method
+
+
+# virtual methods
+.method public final test(Ljava/lang/Object;)Z
+    .locals 0
+
+    .line 1
+    check-cast p1, Lio/sentry/protocol/y;
+
+    .line 2
+    .line 3
+    invoke-static {p1}, Lio/sentry/L3;->b(Lio/sentry/protocol/y;)Z
+
+    .line 4
+    .line 5
+    .line 6
+    move-result p1
+
+    .line 7
+    return p1
+.end method

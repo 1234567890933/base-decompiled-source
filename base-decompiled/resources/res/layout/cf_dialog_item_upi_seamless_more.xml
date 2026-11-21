@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground">
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:id="@+id/upi_app"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:paddingHorizontal="16dp">
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/app_img"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="0x7f0801d2"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            app:tint="#8a8a8a"/>
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/app_name"
+            android:padding="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Others"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/app_img"/>
+    </RelativeLayout>
+</FrameLayout>

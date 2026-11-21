@@ -1,0 +1,122 @@
+.class public final LO0/J$a;
+.super LO0/J;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = LO0/J;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "a"
+.end annotation
+
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        LO0/J$a$a;
+    }
+.end annotation
+
+
+# instance fields
+.field public a:LO0/J$a$a;
+
+.field public b:Z
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 0
+
+    .line 1
+    return-void
+.end method
+
+.method public constructor <init>(LO0/J$a$a;Z)V
+    .locals 1
+
+    const/4 v0, 0x0
+
+    .line 1
+    invoke-direct {p0, v0}, LO0/J;-><init>(Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+
+    .line 2
+    iput-object p1, p0, LO0/J$a;->a:LO0/J$a$a;
+
+    .line 3
+    iput-boolean p2, p0, LO0/J$a;->b:Z
+
+    return-void
+.end method
+
+.method public synthetic constructor <init>(LO0/J$a$a;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+    .locals 0
+
+    and-int/lit8 p4, p3, 0x1
+
+    if-eqz p4, :cond_0
+
+    .line 4
+    sget-object p1, LO0/J$a$a;->c:LO0/J$a$a;
+
+    :cond_0
+    and-int/lit8 p3, p3, 0x2
+
+    if-eqz p3, :cond_1
+
+    const/4 p2, 0x0
+
+    .line 5
+    :cond_1
+    invoke-direct {p0, p1, p2}, LO0/J$a;-><init>(LO0/J$a$a;Z)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final a()LO0/J$a$a;
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, LO0/J$a;->a:LO0/J$a$a;
+
+    .line 2
+    .line 3
+    return-object v0
+.end method
+
+.method public final b()Z
+    .locals 1
+
+    .line 1
+    iget-boolean v0, p0, LO0/J$a;->b:Z
+
+    .line 2
+    .line 3
+    return v0
+.end method
+
+.method public final c(LO0/J$a$a;)V
+    .locals 0
+
+    .line 1
+    iput-object p1, p0, LO0/J$a;->a:LO0/J$a$a;
+
+    .line 2
+    .line 3
+    return-void
+.end method
+
+.method public final d(Z)V
+    .locals 0
+
+    .line 1
+    iput-boolean p1, p0, LO0/J$a;->b:Z
+
+    .line 2
+    .line 3
+    return-void
+.end method

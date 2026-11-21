@@ -1,0 +1,19 @@
+package expo.modules.kotlin.devtools;
+
+import com.amazon.a.a.o.b;
+import expo.modules.notifications.notifications.presentation.builders.ExpoNotificationBuilder;
+import kotlin.Metadata;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes5.dex */
+@Metadata(d1 = {"\u0000*\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0010\u0002\n\u0000\n\u0002\u0010\u000e\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0000\b`\u0018\u00002\u00020\u0001J\"\u0010\u0002\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u00052\u0006\u0010\u0006\u001a\u00020\u00072\b\u0010\b\u001a\u0004\u0018\u00010\tH&J*\u0010\n\u001a\u00020\u00032\u0006\u0010\u0004\u001a\u00020\u00052\u0006\u0010\u0006\u001a\u00020\u00072\u0006\u0010\u000b\u001a\u00020\t2\b\u0010\f\u001a\u0004\u0018\u00010\rH&¨\u0006\u000eÀ\u0006\u0003"}, d2 = {"Lexpo/modules/kotlin/devtools/ExpoNetworkInspectOkHttpInterceptorsDelegate;", "", "willSendRequest", "", b.f57050B, "", "request", "Lokhttp3/Request;", "redirectResponse", "Lokhttp3/Response;", "didReceiveResponse", "response", ExpoNotificationBuilder.EXTRAS_BODY_KEY, "Lokhttp3/ResponseBody;", "expo-modules-core_release"}, k = 1, mv = {2, 2, 0}, xi = 48)
+public interface ExpoNetworkInspectOkHttpInterceptorsDelegate {
+    void didReceiveResponse(@NotNull String requestId, @NotNull Request request, @NotNull Response response, @Nullable ResponseBody body);
+
+    void willSendRequest(@NotNull String requestId, @NotNull Request request, @Nullable Response redirectResponse);
+}

@@ -1,0 +1,19 @@
+package p596wm;
+
+import kotlin.jvm.functions.Function0;
+
+/* JADX INFO: loaded from: classes6.dex */
+public class k implements Function0 {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final l f103206a;
+
+    public k(l lVar) {
+        this.f103206a = lVar;
+    }
+
+    @Override // kotlin.jvm.functions.Function0
+    public Object invoke() {
+        return l.e(this.f103206a);
+    }
+}

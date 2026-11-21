@@ -1,0 +1,66 @@
+.class public abstract LTf/E;
+.super Ljava/lang/Object;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 2
+    .line 3
+    .line 4
+    return-void
+.end method
+
+.method public static d(Ljava/lang/String;)LTf/D;
+    .locals 1
+
+    .line 1
+    new-instance p0, LTf/y;
+
+    .line 2
+    .line 3
+    invoke-direct {p0}, LTf/y;-><init>()V
+
+    .line 4
+    .line 5
+    .line 6
+    const-string v0, "common"
+
+    .line 7
+    .line 8
+    invoke-virtual {p0, v0}, LTf/y;->d(Ljava/lang/String;)LTf/D;
+
+    .line 9
+    .line 10
+    .line 11
+    const/4 v0, 0x1
+
+    .line 12
+    invoke-virtual {p0, v0}, LTf/D;->a(Z)LTf/D;
+
+    .line 13
+    .line 14
+    .line 15
+    invoke-virtual {p0, v0}, LTf/D;->b(I)LTf/D;
+
+    .line 16
+    .line 17
+    .line 18
+    return-object p0
+.end method
+
+
+# virtual methods
+.method public abstract a()I
+.end method
+
+.method public abstract b()Ljava/lang/String;
+.end method
+
+.method public abstract c()Z
+.end method

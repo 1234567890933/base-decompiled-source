@@ -1,0 +1,6 @@
+.class public abstract Lgg/i;
+.super Ljava/lang/Object;
+
+
+# static fields
+.field public static a:I = 0x7f110003

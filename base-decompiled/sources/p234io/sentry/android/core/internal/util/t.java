@@ -1,0 +1,14 @@
+package p234io.sentry.android.core.internal.util;
+
+import android.content.Context;
+import android.os.Process;
+import p234io.sentry.util.w;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes6.dex */
+public abstract class t {
+    public static boolean a(Context context, String str) {
+        w.c(context, "The application context is required.");
+        return context.checkPermission(str, Process.myPid(), Process.myUid()) == 0;
+    }
+}

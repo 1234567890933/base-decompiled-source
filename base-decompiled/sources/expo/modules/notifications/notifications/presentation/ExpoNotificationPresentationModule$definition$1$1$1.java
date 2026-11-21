@@ -1,0 +1,40 @@
+package expo.modules.notifications.notifications.presentation;
+
+import android.os.Bundle;
+import expo.modules.kotlin.Promise;
+import expo.modules.notifications.service.NotificationsService;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import kotlin.Metadata;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes5.dex */
+@Metadata(k = 3, mv = {2, 1, 0}, xi = 48)
+public final class ExpoNotificationPresentationModule$definition$1$1$1 implements Function2<Integer, Bundle, Unit> {
+    final /* synthetic */ Promise $promise;
+    final /* synthetic */ ExpoNotificationPresentationModule this$0;
+
+    public ExpoNotificationPresentationModule$definition$1$1$1(Promise promise, ExpoNotificationPresentationModule expoNotificationPresentationModule) {
+        this.$promise = promise;
+        this.this$0 = expoNotificationPresentationModule;
+    }
+
+    @Override // kotlin.jvm.functions.Function2
+    public /* bridge */ /* synthetic */ Object invoke(Object obj, Object obj2) {
+        invoke(((Number) obj).intValue(), (Bundle) obj2);
+        return Unit.f85088a;
+    }
+
+    public final void invoke(int i10, Bundle bundle) {
+        ArrayList parcelableArrayList = bundle != null ? bundle.getParcelableArrayList(NotificationsService.NOTIFICATIONS_KEY) : null;
+        if (i10 == 0 && parcelableArrayList != null) {
+            this.$promise.resolve((Collection<? extends Object>) this.this$0.serializeNotifications(parcelableArrayList));
+        } else {
+            Serializable serializable = bundle != null ? bundle.getSerializable(NotificationsService.EXCEPTION_KEY) : null;
+            this.$promise.reject("ERR_NOTIFICATIONS_FETCH_FAILED", "A list of displayed notifications could not be fetched.", serializable instanceof Exception ? (Exception) serializable : null);
+        }
+    }
+}

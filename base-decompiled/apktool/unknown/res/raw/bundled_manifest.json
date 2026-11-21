@@ -1,0 +1,5764 @@
+{
+  "schemaVersion": 2,
+  "revision": 4,
+  "updatedAt": "2026-10-23T14:15:11Z",
+  "statusOverrides": {
+    "CAN_REPAIR": {
+      "bands": [
+        {
+          "fromMissedDays": 0,
+          "scene": "can_repair"
+        }
+      ]
+    },
+    "NOT_STARTED": {
+      "bands": [
+        {
+          "fromHour": 0,
+          "scene": "not_started"
+        }
+      ]
+    },
+    "SAVED": {
+      "bands": [
+        {
+          "fromMissedDays": 0,
+          "scene": "shield_used"
+        }
+      ]
+    }
+  },
+  "scenes": {
+    "at_risk": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#0B0621"
+                },
+                {
+                  "at": 1,
+                  "color": "#1F2F5D"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_worried_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_worried_img.png"
+          },
+          "subMessage": {
+            "en": "This is getting tight"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#0B0621"
+                },
+                {
+                  "at": 1,
+                  "color": "#1F2F5D"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_worried_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_worried_img.png"
+          },
+          "subMessage": {
+            "en": "This is getting tight"
+          }
+        },
+        "id": "at_risk_v1"
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#6B1709"
+                },
+                {
+                  "at": 1,
+                  "color": "#EB5E46"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_weapon_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_weapon_img.png"
+          },
+          "subMessage": {
+            "en": "YOU COMING?!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#6B1709"
+                },
+                {
+                  "at": 1,
+                  "color": "#EB5E46"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_weapon_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_weapon_img.png"
+          },
+          "subMessage": {
+            "en": "YOU COMING?!"
+          }
+        },
+        "id": "at_risk_v2"
+      }
+    ],
+    "at_risk_v1": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1F172B"
+                },
+                {
+                  "at": 1,
+                  "color": "#0D0020"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 93,
+              "offsetY": -44,
+              "width": 146
+            },
+            "key": "mascot_worried_sweating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_worried_sweating_img-4c943bf5.png"
+          },
+          "subMessage": {
+            "en": "Time Ticking!!!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1F172B"
+                },
+                {
+                  "at": 1,
+                  "color": "#0D0020"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 115,
+              "offsetX": 15,
+              "offsetY": 34,
+              "width": 180
+            },
+            "key": "mascot_worried_sweating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_worried_sweating_img-4c943bf5.png"
+          },
+          "subMessage": {
+            "en": "Time Ticking!!!"
+          }
+        },
+        "id": "at_risk_v1_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Time Ticking!!!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 60,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#FF3B30"
+                },
+                {
+                  "at": 1,
+                  "color": "#0D0020"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 93,
+              "offsetY": -44,
+              "width": 146
+            },
+            "key": "mascot_worried_sweating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_worried_sweating_img-4c943bf5.png"
+          },
+          "subMessage": {
+            "en": "Time Ticking!!!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 60,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#FF3B30"
+                },
+                {
+                  "at": 1,
+                  "color": "#0D0020"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 115,
+              "offsetX": 15,
+              "offsetY": 34,
+              "width": 180
+            },
+            "key": "mascot_worried_sweating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_worried_sweating_img-4c943bf5.png"
+          },
+          "subMessage": {
+            "en": "Time Ticking!!!"
+          }
+        },
+        "id": "at_risk_v1_v_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Time Ticking!!!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#610000"
+                },
+                {
+                  "at": 1,
+                  "color": "#0A0A0A"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 87,
+              "offsetY": -54,
+              "width": 127
+            },
+            "key": "mascot_door_angry_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_door_angry_img.png"
+          },
+          "subMessage": {
+            "en": "No Time Left!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#610000"
+                },
+                {
+                  "at": 1,
+                  "color": "#0A0A0A"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "offsetY": 26
+            },
+            "key": "mascot_door_angry_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_door_angry_img.png"
+          },
+          "subMessage": {
+            "en": "No Time Left!"
+          }
+        },
+        "id": "at_risk_v1_v2",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "No Time Left!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "at_risk_v2": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "band": {
+                "color": "#55399D",
+                "height": 10
+              },
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000632"
+                },
+                {
+                  "at": 1,
+                  "color": "#000000"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 76,
+              "offsetX": -2,
+              "offsetY": -49,
+              "width": 157
+            },
+            "key": "mascot_laptop_angry_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_laptop_angry_img-1980c0f1.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "band": {
+                "color": "#55399D",
+                "height": 10
+              },
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000632"
+                },
+                {
+                  "at": 1,
+                  "color": "#000000"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "offsetX": 1,
+              "offsetY": 38
+            },
+            "key": "mascot_laptop_angry_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_laptop_angry_img-1980c0f1.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "id": "at_risk_v2_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Watching You!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000632"
+                },
+                {
+                  "at": 1,
+                  "color": "#000000"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_spotlight_glowing",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_spotlight_glowing-dfdd2f67.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 93,
+              "offsetY": -46,
+              "width": 128
+            },
+            "key": "mascot_bloated_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_bloated_img-1aaaff21.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000632"
+                },
+                {
+                  "at": 1,
+                  "color": "#000000"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_spotlight_glowing",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_spotlight_glowing-89b19744.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 101,
+              "offsetX": -8,
+              "offsetY": 26,
+              "width": 139
+            },
+            "key": "mascot_bloated_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_bloated_img-1aaaff21.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "id": "at_risk_v2_v2",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Watching You!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000C6B"
+                },
+                {
+                  "at": 1,
+                  "color": "#000000"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_spotlight_glowing",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_spotlight_glowing-dfdd2f67.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 93,
+              "offsetY": -46,
+              "width": 128
+            },
+            "key": "mascot_bloated_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_bloated_img-1aaaff21.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000C6B"
+                },
+                {
+                  "at": 1,
+                  "color": "#000000"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_spotlight_glowing",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_spotlight_glowing-89b19744.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 101,
+              "offsetX": -8,
+              "offsetY": 26,
+              "width": 139
+            },
+            "key": "mascot_bloated_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_bloated_img-1aaaff21.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "id": "at_risk_v2_v2_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Watching You!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "broken_verdict_pending": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "band": {
+                "color": "#101862",
+                "height": 35
+              },
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1D2C64"
+                },
+                {
+                  "at": 1,
+                  "color": "#4B60AD"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "key": "mascot_crying_hidden_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_crying_hidden_img.png"
+          },
+          "subMessage": {
+            "en": "You left?"
+          },
+          "transform": {
+            "ios": {
+              "offsetY": -36
+            }
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "band": {
+                "color": "#101862",
+                "height": 35
+              },
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1D2C64"
+                },
+                {
+                  "at": 1,
+                  "color": "#4B60AD"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "key": "mascot_crying_hidden_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_crying_hidden_img.png"
+          },
+          "subMessage": {
+            "en": "You left?"
+          },
+          "transform": {
+            "android": {
+              "translationY": 40
+            },
+            "ios": {
+              "offsetY": -10
+            }
+          }
+        },
+        "id": "broken_verdict_pending_v1"
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "band": {
+                "color": "#101862",
+                "height": 35
+              },
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1D2C64"
+                },
+                {
+                  "at": 1,
+                  "color": "#4B60AD"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "offsetY": -12
+            },
+            "key": "mascot_worried_sad_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_worried_sad_img.png"
+          },
+          "subMessage": {
+            "en": "NOOOOOOOO"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "band": {
+                "color": "#101862",
+                "height": 35
+              },
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1D2C64"
+                },
+                {
+                  "at": 1,
+                  "color": "#4B60AD"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "key": "mascot_worried_sad_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_worried_sad_img.png"
+          },
+          "subMessage": {
+            "en": "NOOOOOOOO"
+          }
+        },
+        "id": "broken_verdict_pending_v2"
+      }
+    ],
+    "broken_w1_cloudy": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#00A1FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#014EAE"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 250,
+              "offsetX": 10,
+              "offsetY": 40
+            },
+            "key": "mascot_cloudy_v2_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_cloudy_v2_img.png"
+          },
+          "subMessage": {
+            "en": "You there??"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#00A1FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#014EAE"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 180,
+              "offsetX": 25,
+              "offsetY": 40,
+              "width": 167
+            },
+            "key": "mascot_cloudy_v2_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_cloudy_v2_img.png"
+          },
+          "subMessage": {
+            "en": "You there??"
+          }
+        },
+        "id": "broken_w1_cloudy_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You there??"
+                },
+                {
+                  "en": "Hello?"
+                },
+                {
+                  "en": "Waiting again"
+                },
+                {
+                  "en": "Just checking in"
+                },
+                {
+                  "en": "Left on read"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "broken_w1_floor": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#003549"
+                },
+                {
+                  "at": 1,
+                  "color": "#00A1E0"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 106,
+              "offsetY": -51,
+              "width": 164
+            },
+            "key": "mascot_sobbing_floor_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sobbing_floor_img.png"
+          },
+          "subMessage": {
+            "en": "Still waiting"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#003549"
+                },
+                {
+                  "at": 1,
+                  "color": "#00A1E0"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 107,
+              "offsetX": 9,
+              "offsetY": 10,
+              "width": 165
+            },
+            "key": "mascot_sobbing_floor_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sobbing_floor_img.png"
+          },
+          "subMessage": {
+            "en": "Still waiting"
+          }
+        },
+        "id": "broken_w1_floor_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Still waiting"
+                },
+                {
+                  "en": "Come back?"
+                },
+                {
+                  "en": "Remember me?"
+                },
+                {
+                  "en": "Miss me yet?"
+                },
+                {
+                  "en": "Hello?"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "broken_w1_sobbing": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#01055D"
+                },
+                {
+                  "at": 1,
+                  "color": "#003D89"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 105,
+              "offsetX": 2,
+              "offsetY": -51,
+              "width": 144
+            },
+            "key": "mascot_sobbing_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sobbing_img.png"
+          },
+          "subMessage": {
+            "en": "Crying for you"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#01055D"
+                },
+                {
+                  "at": 1,
+                  "color": "#003D89"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 113,
+              "offsetY": 27,
+              "width": 144
+            },
+            "key": "mascot_sobbing_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sobbing_img.png"
+          },
+          "subMessage": {
+            "en": "Crying for you"
+          }
+        },
+        "id": "broken_w1_sobbing_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Crying for you"
+                },
+                {
+                  "en": "Crying since you left"
+                },
+                {
+                  "en": "Is it over??"
+                },
+                {
+                  "en": "You there?"
+                },
+                {
+                  "en": "Waiting for you"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "can_repair": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1D2C64"
+                },
+                {
+                  "at": 1,
+                  "color": "#4B60AD"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "offsetY": 22
+            },
+            "key": "mascot_crying_river_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_crying_river_img.png"
+          },
+          "subMessage": {
+            "en": "Your streak is calling..."
+          },
+          "transform": {
+            "ios": {
+              "offsetY": -36
+            }
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1D2C64"
+                },
+                {
+                  "at": 1,
+                  "color": "#4B60AD"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 99,
+              "offsetX": -1,
+              "offsetY": 38,
+              "width": 162
+            },
+            "key": "mascot_crying_river_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_crying_river_img.png"
+          },
+          "subMessage": {
+            "en": "Your streak is calling..."
+          },
+          "transform": {
+            "android": {
+              "translationY": 40
+            },
+            "ios": {
+              "offsetY": -10
+            }
+          }
+        },
+        "id": "can_repair_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Save your streak"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#15204C"
+                },
+                {
+                  "at": 1,
+                  "color": "#324AB2"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_blue_clouds",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_blue_clouds.png"
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 100,
+              "offsetY": -40,
+              "width": 127
+            },
+            "key": "mascot_sobbing_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sobbing_img.png"
+          },
+          "subMessage": {
+            "en": "Miss today, and it resets"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#15204C"
+                },
+                {
+                  "at": 1,
+                  "color": "#324AB2"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_blue_clouds_rain",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_blue_clouds_rain.png"
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 98,
+              "offsetX": -10,
+              "offsetY": 31,
+              "width": 125
+            },
+            "key": "mascot_sobbing_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sobbing_img.png"
+          },
+          "subMessage": {
+            "en": "Miss today, and it resets"
+          }
+        },
+        "id": "can_repair_v2"
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#172C7C"
+                },
+                {
+                  "at": 1,
+                  "color": "#5B71C9"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "key": "mascot_broken_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_broken_img.png"
+          },
+          "subMessage": {
+            "en": "One save keeps it going"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#172C7C"
+                },
+                {
+                  "at": 1,
+                  "color": "#5B71C9"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 186,
+              "offsetX": 10,
+              "offsetY": 1,
+              "width": 162
+            },
+            "key": "mascot_broken_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_broken_img.png"
+          },
+          "subMessage": {
+            "en": "One save keeps it going"
+          },
+          "transform": {
+            "android": {
+              "translationY": 30
+            },
+            "ios": {
+              "offsetY": 30
+            }
+          }
+        },
+        "id": "can_repair_v3"
+      }
+    ],
+    "dormant_at_the_window": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#003D89"
+                },
+                {
+                  "at": 1,
+                  "color": "#00A1FF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 89,
+              "offsetX": 1,
+              "offsetY": -53,
+              "width": 132
+            },
+            "key": "mascot_window_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_window_img.png"
+          },
+          "subMessage": {
+            "en": "you forgot me?"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#003D89"
+                },
+                {
+                  "at": 1,
+                  "color": "#00A1FF"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_window_glare",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_window_glare.png"
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 101,
+              "offsetY": 30,
+              "width": 150
+            },
+            "key": "mascot_window_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_window_img.png"
+          },
+          "subMessage": {
+            "en": "you forgot me?"
+          }
+        },
+        "id": "dormant_at_the_window_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "you forgot me?"
+                },
+                {
+                  "en": "somebody there?"
+                },
+                {
+                  "en": "spare a duel?"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_awkward_hello": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#222222"
+                },
+                {
+                  "at": 1,
+                  "color": "#0A0A0A"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 150,
+              "offsetX": 4,
+              "offsetY": -52,
+              "width": 137
+            },
+            "key": "mascot_poker_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_poker_img.png"
+          },
+          "subMessage": {
+            "en": "uhhh"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#222222"
+                },
+                {
+                  "at": 1,
+                  "color": "#0A0A0A"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 177,
+              "offsetX": -2,
+              "offsetY": -6,
+              "width": 137
+            },
+            "key": "mascot_poker_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_poker_img.png"
+          },
+          "subMessage": {
+            "en": "uhhh"
+          }
+        },
+        "id": "dormant_awkward_hello_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "uhhh"
+                },
+                {
+                  "en": "been a while."
+                },
+                {
+                  "en": "one quick game?"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_begging": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000F49"
+                },
+                {
+                  "at": 1,
+                  "color": "#1C3189"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 100,
+              "offsetX": 2,
+              "offsetY": -52,
+              "width": 160
+            },
+            "key": "mascot_uhhh_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_uhhh_img.png"
+          },
+          "subMessage": {
+            "en": "thinking of you."
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000F49"
+                },
+                {
+                  "at": 1,
+                  "color": "#1C3189"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 113,
+              "offsetX": 8,
+              "offsetY": 26,
+              "width": 160
+            },
+            "key": "mascot_uhhh_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_uhhh_img.png"
+          },
+          "subMessage": {
+            "en": "thinking of you."
+          }
+        },
+        "id": "dormant_begging_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "thinking of you."
+                },
+                {
+                  "en": "missing you"
+                },
+                {
+                  "en": "remember me?"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_coffin": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000215"
+                },
+                {
+                  "at": 1,
+                  "color": "#0B124E"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 119,
+              "offsetX": 2,
+              "offsetY": -43,
+              "width": 126
+            },
+            "key": "mascot_coffin_v2_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_coffin_v2_img.png"
+          },
+          "subMessage": {
+            "en": "over my dead body"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000215"
+                },
+                {
+                  "at": 1,
+                  "color": "#0B124E"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 132,
+              "offsetX": -4,
+              "offsetY": 16,
+              "width": 152
+            },
+            "key": "mascot_coffin_v2_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_coffin_v2_img.png"
+          },
+          "subMessage": {
+            "en": "over my dead body"
+          }
+        },
+        "id": "dormant_coffin_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "over my dead body"
+                },
+                {
+                  "en": "will haunt you"
+                },
+                {
+                  "en": "last call."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_first_tear": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#01055D"
+                },
+                {
+                  "at": 1,
+                  "color": "#003D89"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 105,
+              "offsetX": -4,
+              "offsetY": -38,
+              "width": 144
+            },
+            "key": "mascot_sobbing_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sobbing_img.png"
+          },
+          "subMessage": {
+            "en": "crying since you left"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#01055D"
+                },
+                {
+                  "at": 1,
+                  "color": "#003D89"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 130,
+              "offsetX": -1,
+              "offsetY": 6,
+              "width": 166
+            },
+            "key": "mascot_sobbing_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sobbing_img.png"
+          },
+          "subMessage": {
+            "en": "crying since you left"
+          }
+        },
+        "id": "dormant_first_tear_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "crying since you left"
+                },
+                {
+                  "en": "is it over?"
+                },
+                {
+                  "en": "got 60 seconds?"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_floor_collapse": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#003549"
+                },
+                {
+                  "at": 1,
+                  "color": "#00A1E0"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 106,
+              "offsetY": -51,
+              "width": 164
+            },
+            "key": "mascot_sobbing_floor_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sobbing_floor_img.png"
+          },
+          "subMessage": {
+            "en": "this hurts."
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#003549"
+                },
+                {
+                  "at": 1,
+                  "color": "#00A1E0"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 107,
+              "offsetX": 9,
+              "offsetY": 10,
+              "width": 165
+            },
+            "key": "mascot_sobbing_floor_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sobbing_floor_img.png"
+          },
+          "subMessage": {
+            "en": "this hurts."
+          }
+        },
+        "id": "dormant_floor_collapse_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "this hurts."
+                },
+                {
+                  "en": "you there?"
+                },
+                {
+                  "en": "waiting for you"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_fool_for_you": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#A2016F"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF00AE"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 103,
+              "offsetX": 4,
+              "offsetY": -54,
+              "width": 144
+            },
+            "key": "mascot_clown_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_clown_img.png"
+          },
+          "subMessage": {
+            "en": "fool for you"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#A2016F"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF00AE"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 103,
+              "offsetX": 1,
+              "offsetY": 29,
+              "width": 144
+            },
+            "key": "mascot_clown_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_clown_img.png"
+          },
+          "subMessage": {
+            "en": "fool for you"
+          }
+        },
+        "id": "dormant_fool_for_you_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "fool for you"
+                },
+                {
+                  "en": "hey stranger."
+                },
+                {
+                  "en": "Why i always repeat the same thing"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_grey_mood": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#00A1FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#014EAE"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 250,
+              "offsetX": 10,
+              "offsetY": 40
+            },
+            "key": "mascot_cloudy_v2_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_cloudy_v2_img.png"
+          },
+          "subMessage": {
+            "en": "everything's grey"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#00A1FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#014EAE"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 180,
+              "offsetX": 25,
+              "offsetY": 40,
+              "width": 167
+            },
+            "key": "mascot_cloudy_v2_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_cloudy_v2_img.png"
+          },
+          "subMessage": {
+            "en": "everything's grey"
+          }
+        },
+        "id": "dormant_grey_mood_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "everything's grey"
+                },
+                {
+                  "en": "not okay."
+                },
+                {
+                  "en": "one game. that's it"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_haunting": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#610000"
+                },
+                {
+                  "at": 1,
+                  "color": "#0A0A0A"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 107,
+              "offsetX": 6,
+              "offsetY": -44,
+              "width": 155
+            },
+            "key": "mascot_door_angry_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_door_angry_img.png"
+          },
+          "subMessage": {
+            "en": "watching you"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#610000"
+                },
+                {
+                  "at": 1,
+                  "color": "#0A0A0A"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 128,
+              "offsetX": 18,
+              "offsetY": 12,
+              "width": 186
+            },
+            "key": "mascot_door_angry_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_door_angry_img.png"
+          },
+          "subMessage": {
+            "en": "watching you"
+          }
+        },
+        "id": "dormant_haunting_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Ill Miss YOu"
+                },
+                {
+                  "en": "anytime now?"
+                },
+                {
+                  "en": "one game?"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_interrogation": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#0D0D0D"
+                },
+                {
+                  "at": 1,
+                  "color": "#1F172B"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 86,
+              "offsetX": -2,
+              "offsetY": -48,
+              "width": 137
+            },
+            "key": "mascot_spotlight_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_spotlight_img.png"
+          },
+          "subMessage": {
+            "en": "i trusted you!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#0D0D0D"
+                },
+                {
+                  "at": 1,
+                  "color": "#1F172B"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_spotlight_beam",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_spotlight_beam.png"
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 96,
+              "offsetX": 29,
+              "offsetY": 34,
+              "width": 153
+            },
+            "key": "mascot_spotlight_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_spotlight_img.png"
+          },
+          "subMessage": {
+            "en": "i trusted you!"
+          }
+        },
+        "id": "dormant_interrogation_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "i trusted you!"
+                },
+                {
+                  "en": "Seriously huh?!"
+                },
+                {
+                  "en": "unbelievable."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_on_fire": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000632"
+                },
+                {
+                  "at": 1,
+                  "color": "#000000"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 90,
+              "offsetX": -4,
+              "offsetY": -48,
+              "width": 186
+            },
+            "key": "mascot_burning_laptop_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_burning_laptop_img.png"
+          },
+          "subMessage": {
+            "en": "Long time no streak"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000632"
+                },
+                {
+                  "at": 1,
+                  "color": "#000000"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_purple_floor_line",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_purple_floor_line.png"
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 90,
+              "offsetX": 14,
+              "offsetY": 32,
+              "width": 186
+            },
+            "key": "mascot_burning_laptop_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_burning_laptop_img.png"
+          },
+          "subMessage": {
+            "en": "Long time no streak"
+          }
+        },
+        "id": "dormant_on_fire_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Long time no streak"
+                },
+                {
+                  "en": "getting worried."
+                },
+                {
+                  "en": "still waiting."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_shock": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1B1B1B"
+                },
+                {
+                  "at": 1,
+                  "color": "#333333"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 181,
+              "offsetX": 6,
+              "offsetY": 0,
+              "width": 228
+            },
+            "key": "mascot_electrocuted_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_electrocuted_img.png"
+          },
+          "subMessage": {
+            "en": "in shock"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1B1B1B"
+                },
+                {
+                  "at": 1,
+                  "color": "#333333"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 181,
+              "offsetX": 45,
+              "offsetY": -1,
+              "width": 228
+            },
+            "key": "mascot_electrocuted_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_electrocuted_img.png"
+          },
+          "subMessage": {
+            "en": "in shock"
+          }
+        },
+        "id": "dormant_shock_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "in shock"
+                },
+                {
+                  "en": "Its Too Hurting"
+                },
+                {
+                  "en": "one duel"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_surrender": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2F1A7C"
+                },
+                {
+                  "at": 1,
+                  "color": "#090A46"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 92,
+              "offsetX": -2,
+              "offsetY": -50,
+              "width": 150
+            },
+            "key": "mascot_white_flag_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_white_flag_img.png"
+          },
+          "subMessage": {
+            "en": "you win. happy?"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2F1A7C"
+                },
+                {
+                  "at": 1,
+                  "color": "#090A46"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 92,
+              "offsetX": -2,
+              "offsetY": 24,
+              "width": 150
+            },
+            "key": "mascot_white_flag_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_white_flag_img.png"
+          },
+          "subMessage": {
+            "en": "you win. happy?"
+          }
+        },
+        "id": "dormant_surrender_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "you win. happy?"
+                },
+                {
+                  "en": "come beat me"
+                },
+                {
+                  "en": "treaty. one duel."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "dormant_your_move": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000215"
+                },
+                {
+                  "at": 1,
+                  "color": "#0B124E"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 88,
+              "offsetX": 3,
+              "offsetY": -50,
+              "width": 143
+            },
+            "key": "mascot_crying_river_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_crying_river_img.png"
+          },
+          "subMessage": {
+            "en": "seriously?!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000215"
+                },
+                {
+                  "at": 1,
+                  "color": "#0B124E"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "broken",
+            "frame": {
+              "height": 100,
+              "offsetY": 36,
+              "width": 163
+            },
+            "key": "mascot_crying_river_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_crying_river_img.png"
+          },
+          "subMessage": {
+            "en": "seriously?!"
+          }
+        },
+        "id": "dormant_your_move_v1",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "seriously?!"
+                },
+                {
+                  "en": "your move."
+                },
+                {
+                  "en": "you owe me a game"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "gained_day_celebrating": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2F1D6F"
+                },
+                {
+                  "at": 1,
+                  "color": "#070020"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 171,
+              "offsetX": 37,
+              "offsetY": 14,
+              "width": 172
+            },
+            "key": "mascot_celebrating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_celebrating_img-5c0c875a.png"
+          },
+          "subMessage": {
+            "en": "You Did it!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2F1D6F"
+                },
+                {
+                  "at": 1,
+                  "color": "#070020"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 213,
+              "offsetX": 70,
+              "offsetY": 43,
+              "width": 215
+            },
+            "key": "mascot_celebrating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_celebrating_img-5c0c875a.png"
+          },
+          "subMessage": {
+            "en": "You Did it!"
+          }
+        },
+        "id": "gained_day_celebrating_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You Did it!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2D72FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#9BBAFF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 171,
+              "offsetX": 37,
+              "offsetY": 14,
+              "width": 172
+            },
+            "key": "mascot_celebrating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_celebrating_img-5c0c875a.png"
+          },
+          "subMessage": {
+            "en": "You Did it!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2D72FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#9BBAFF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 213,
+              "offsetX": 70,
+              "offsetY": 43,
+              "width": 215
+            },
+            "key": "mascot_celebrating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_celebrating_img-5c0c875a.png"
+          },
+          "subMessage": {
+            "en": "You Did it!"
+          }
+        },
+        "id": "gained_day_celebrating_v_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You Did it!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#81C7FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#0091DF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 169,
+              "offsetX": 37,
+              "offsetY": 13,
+              "width": 170
+            },
+            "key": "mascot_celebrating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_celebrating_img-5c0c875a.png"
+          },
+          "subMessage": {
+            "en": "You Did it!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#81C7FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#0091DF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 213,
+              "offsetX": 70,
+              "offsetY": 43,
+              "width": 215
+            },
+            "key": "mascot_celebrating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_celebrating_img-5c0c875a.png"
+          },
+          "subMessage": {
+            "en": "You Did it!"
+          }
+        },
+        "id": "gained_day_celebrating_v_copy_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You Did it!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "gained_day_charged": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#F26900"
+                },
+                {
+                  "at": 1,
+                  "color": "#FFB175"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_amber_peaks",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_amber_peaks.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 128,
+              "offsetX": -1,
+              "offsetY": -6,
+              "width": 138
+            },
+            "key": "mascot_charged_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_charged_img.png"
+          },
+          "subMessage": {
+            "en": "You did it!!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#F26900"
+                },
+                {
+                  "at": 1,
+                  "color": "#FFB175"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_amber_peaks",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_amber_peaks.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "key": "mascot_charged_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_charged_img.png"
+          },
+          "subMessage": {
+            "en": "You did it!!"
+          }
+        },
+        "id": "gained_day_charged_v1"
+      }
+    ],
+    "gained_day_fire_hold": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2D72FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#9BBAFF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 141,
+              "offsetY": -25,
+              "width": 130
+            },
+            "key": "mascot_fire_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_fire_img-08f728ab.png"
+          },
+          "subMessage": {
+            "en": "You Did It!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2D72FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#9BBAFF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 149,
+              "offsetX": 1,
+              "width": 138
+            },
+            "key": "mascot_fire_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_fire_img-08f728ab.png"
+          },
+          "subMessage": {
+            "en": "You Did It!"
+          }
+        },
+        "id": "gained_day_fire_hold_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You Did it!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2F1D6F"
+                },
+                {
+                  "at": 1,
+                  "color": "#070020"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 141,
+              "offsetY": -25,
+              "width": 130
+            },
+            "key": "mascot_fire_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_fire_img-08f728ab.png"
+          },
+          "subMessage": {
+            "en": "You Did It!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2F1D6F"
+                },
+                {
+                  "at": 1,
+                  "color": "#070020"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 149,
+              "offsetX": 1,
+              "width": 138
+            },
+            "key": "mascot_fire_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_fire_img-08f728ab.png"
+          },
+          "subMessage": {
+            "en": "You Did It!"
+          }
+        },
+        "id": "gained_day_fire_hold_v_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You Did it!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1C1E69"
+                },
+                {
+                  "at": 1,
+                  "color": "#0091DF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 141,
+              "offsetY": -25,
+              "width": 130
+            },
+            "key": "mascot_fire_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_fire_img-08f728ab.png"
+          },
+          "subMessage": {
+            "en": "You Did It!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#1C1E69"
+                },
+                {
+                  "at": 1,
+                  "color": "#0091DF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 149,
+              "offsetX": 1,
+              "width": 138
+            },
+            "key": "mascot_fire_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_fire_img-08f728ab.png"
+          },
+          "subMessage": {
+            "en": "You Did It!"
+          }
+        },
+        "id": "gained_day_fire_hold_v_copy_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You Did it!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "gained_day_sunglasses": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#FF5603"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF9765"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_yellow_triangles",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_yellow_triangles.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "key": "mascot_sunglasses_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sunglasses_img.png"
+          },
+          "subMessage": {
+            "en": "You did it!!",
+            "ja": "やったね！"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#FF5603"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF9765"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_yellow_triangles",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_yellow_triangles.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "key": "mascot_sunglasses_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_sunglasses_img.png"
+          },
+          "subMessage": {
+            "en": "You did it!!",
+            "ja": "やったね！"
+          }
+        },
+        "id": "gained_day_sunglasses_v1"
+      }
+    ],
+    "gained_day_teaching": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#CA1290"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF5FCC"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "offsetX": -1,
+              "offsetY": -7
+            },
+            "key": "mascot_teaching_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_teaching_img-6b1dcab2.png"
+          },
+          "subMessage": {
+            "en": "You Did It"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#CA1290"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF5FCC"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 194,
+              "offsetX": 52,
+              "offsetY": 37,
+              "width": 196
+            },
+            "key": "mascot_teaching_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_teaching_img-6b1dcab2.png"
+          },
+          "subMessage": {
+            "en": "You Did It"
+          },
+          "transform": {
+            "android": {
+              "rotation": -5
+            },
+            "ios": {
+              "rotation": -5
+            }
+          }
+        },
+        "id": "gained_day_teaching_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You did It"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2D72FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#9BBAFF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "offsetX": -1,
+              "offsetY": -7
+            },
+            "key": "mascot_teaching_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_teaching_img-6b1dcab2.png"
+          },
+          "subMessage": {
+            "en": "You Did It"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2D72FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#9BBAFF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 194,
+              "offsetX": 52,
+              "offsetY": 37,
+              "width": 196
+            },
+            "key": "mascot_teaching_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_teaching_img-6b1dcab2.png"
+          },
+          "subMessage": {
+            "en": "You Did It"
+          },
+          "transform": {
+            "android": {
+              "rotation": -5
+            },
+            "ios": {
+              "rotation": -5
+            }
+          }
+        },
+        "id": "gained_day_teaching_v_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You did It"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#81C7FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#0091DF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "offsetX": -1,
+              "offsetY": -7
+            },
+            "key": "mascot_teaching_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_teaching_img-6b1dcab2.png"
+          },
+          "subMessage": {
+            "en": "You Did It"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#81C7FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#0091DF"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 194,
+              "offsetX": 52,
+              "offsetY": 37,
+              "width": 196
+            },
+            "key": "mascot_teaching_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_teaching_img-6b1dcab2.png"
+          },
+          "subMessage": {
+            "en": "You Did It"
+          },
+          "transform": {
+            "android": {
+              "rotation": -5
+            },
+            "ios": {
+              "rotation": -5
+            }
+          }
+        },
+        "id": "gained_day_teaching_v_copy_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You did It"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "gained_day_thumbsup": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#CA1290"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF5FCC"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 112,
+              "offsetX": -2,
+              "offsetY": -39,
+              "width": 135
+            },
+            "key": "mascot_thumbsup_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_thumbsup_img-1014d76a.png"
+          },
+          "subMessage": {
+            "en": "You Did It!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#CA1290"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF5FCC"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 147,
+              "offsetX": 28,
+              "offsetY": 13,
+              "width": 177
+            },
+            "key": "mascot_thumbsup_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_thumbsup_img-1014d76a.png"
+          },
+          "subMessage": {
+            "en": "You Did It!"
+          }
+        },
+        "id": "gained_day_thumbsup_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "You Did It"
+                },
+                {
+                  "en": "One More ?"
+                },
+                {
+                  "en": "too Easy"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "gained_day_whistle": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#58032C"
+                },
+                {
+                  "at": 1,
+                  "color": "#A71752"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 105,
+              "offsetX": -2,
+              "offsetY": -35,
+              "width": 166
+            },
+            "key": "mascot_wistle_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_wistle_img-2b74d3f4.png"
+          },
+          "subMessage": {
+            "en": "One More?"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#58032C"
+                },
+                {
+                  "at": 1,
+                  "color": "#A71752"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 147,
+              "offsetX": 58,
+              "offsetY": 38,
+              "width": 232
+            },
+            "key": "mascot_wistle_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_wistle_img-2b74d3f4.png"
+          },
+          "subMessage": {
+            "en": "One More?"
+          },
+          "transform": {
+            "android": {
+              "rotation": 5
+            },
+            "ios": {
+              "rotation": 5
+            }
+          }
+        },
+        "id": "gained_day_whistle_v"
+      }
+    ],
+    "inactive_safe": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#FFA4E7"
+                },
+                {
+                  "at": 1,
+                  "color": "#FFD4F4"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_white_sparkles_v1",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_white_sparkles_v1.png"
+            }
+          },
+          "isDarkTheme": true,
+          "mascot": {
+            "fallback": "hopping",
+            "key": "mascot_hopping_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_hopping_img.png"
+          },
+          "subMessage": {
+            "en": "Tap to Play"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#FFA4E7"
+                },
+                {
+                  "at": 1,
+                  "color": "#FFD4F4"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_white_sparkles_v1",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_white_sparkles_v1.png"
+            }
+          },
+          "isDarkTheme": true,
+          "mascot": {
+            "fallback": "hopping",
+            "key": "mascot_hopping_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_hopping_img.png"
+          },
+          "subMessage": {
+            "en": "Tap to Play"
+          }
+        },
+        "id": "inactive_safe_v1"
+      }
+    ],
+    "inactive_safe_v1": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000F49"
+                },
+                {
+                  "at": 1,
+                  "color": "#1C3189"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 105,
+              "offsetX": 1,
+              "offsetY": -37,
+              "width": 113
+            },
+            "key": "mascot_with_pillow_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_with_pillow_img-62facf2d.png"
+          },
+          "subMessage": {
+            "en": "Still Awake ?"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000F49"
+                },
+                {
+                  "at": 1,
+                  "color": "#1C3189"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 121,
+              "offsetX": -10,
+              "offsetY": 17,
+              "width": 131
+            },
+            "key": "mascot_with_pillow_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_with_pillow_img-62facf2d.png"
+          },
+          "subMessage": {
+            "en": "Still Awake ?"
+          }
+        },
+        "id": "inactive_safe_v1_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Still Awake "
+                },
+                {
+                  "en": "Early Start?"
+                },
+                {
+                  "en": "Late Night Game?"
+                },
+                {
+                  "en": "Duel from bed?"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "band": {
+                "color": "#220080",
+                "height": 10
+              },
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000632"
+                },
+                {
+                  "at": 1,
+                  "color": "#000000"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "offsetX": 4,
+              "offsetY": -15
+            },
+            "key": "mascot_laptop_calm_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_laptop_calm_img-9626d563.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "band": {
+                "color": "#220080",
+                "height": 10
+              },
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000632"
+                },
+                {
+                  "at": 1,
+                  "color": "#000000"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "offsetX": 11,
+              "offsetY": 42
+            },
+            "key": "mascot_laptop_calm_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_laptop_calm_img-9626d563.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "id": "inactive_safe_v1_v2",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "New Day, new streak"
+                },
+                {
+                  "en": "Ready for today?"
+                },
+                {
+                  "en": "Lets Start!"
+                },
+                {
+                  "en": "Can't Sleep?"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#0D0047"
+                },
+                {
+                  "at": 1,
+                  "color": "#4267D7"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "offsetX": -4,
+              "offsetY": -25
+            },
+            "key": "mascot_waiting_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_waiting_img-4e621354.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#0D0047"
+                },
+                {
+                  "at": 1,
+                  "color": "#4267D7"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 107,
+              "offsetX": 1,
+              "offsetY": 15,
+              "width": 169
+            },
+            "key": "mascot_waiting_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_waiting_img-4e621354.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "id": "inactive_safe_v1_v3",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Since you're up..."
+                },
+                {
+                  "en": "Sero's awake too"
+                },
+                {
+                  "en": "Midnight game?"
+                },
+                {
+                  "en": "Brain still on?"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "inactive_safe_v2": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#00A1FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#014EAE"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 175,
+              "offsetX": 1,
+              "offsetY": 10,
+              "width": 175
+            },
+            "key": "sero_sailor_moon",
+            "url": "https://cdn0.matiks.org/internal/widgets/sero_sailor_moon-0d3706dd.png"
+          },
+          "subMessage": {
+            "en": "Morning!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#00A1FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#014EAE"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 216,
+              "offsetX": 28,
+              "offsetY": 20,
+              "width": 216
+            },
+            "key": "sero_sailor_moon",
+            "url": "https://cdn0.matiks.org/internal/widgets/sero_sailor_moon-0d3706dd.png"
+          },
+          "subMessage": {
+            "en": "Morning!"
+          }
+        },
+        "id": "inactive_safe_v2_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Morning!"
+                },
+                {
+                  "en": "Streak O'Clock"
+                },
+                {
+                  "en": "Early Game?"
+                },
+                {
+                  "en": "You're up!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 180,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#81C7FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#0091DF"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_spotlight_glowing",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_spotlight_glowing-dfdd2f67.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 98,
+              "offsetX": 1,
+              "offsetY": -40,
+              "width": 116
+            },
+            "key": "mascot_big_shinny_eyes_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_big_shinny_eyes_img-1a93eb0a.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 180,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#81C7FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#0091DF"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_spotlight_glowing",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_spotlight_glowing-89b19744.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 121,
+              "offsetX": -14,
+              "offsetY": 6,
+              "width": 131
+            },
+            "key": "mascot_big_shinny_eyes_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_big_shinny_eyes_img-1a93eb0a.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "id": "inactive_safe_v2_v2_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Gooood Morning!"
+                },
+                {
+                  "en": "Streak before scroll?"
+                },
+                {
+                  "en": "Breakfast for your brain"
+                },
+                {
+                  "en": "Get Started Early!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#BC003F"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF5C8D"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_spotlight_glowing",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_spotlight_glowing-dfdd2f67.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 98,
+              "offsetX": -1,
+              "offsetY": -44,
+              "width": 116
+            },
+            "key": "mascot_big_shinny_eyes_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_big_shinny_eyes_img-1a93eb0a.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#BC003F"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF5C8D"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_spotlight_glowing",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_spotlight_glowing-89b19744.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 121,
+              "offsetX": -14,
+              "offsetY": 6,
+              "width": 131
+            },
+            "key": "mascot_big_shinny_eyes_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_big_shinny_eyes_img-1a93eb0a.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "id": "inactive_safe_v2_v2_copy_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Gooood Morning!"
+                },
+                {
+                  "en": "Streak before scroll?"
+                },
+                {
+                  "en": "Breakfast for your brain"
+                },
+                {
+                  "en": "Get Started Early!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "inactive_unsafe": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#0F0F0F"
+                },
+                {
+                  "at": 1,
+                  "color": "#595959"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_white_arcs",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_white_arcs.png"
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_bored_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_bored_img.png"
+          },
+          "subMessage": {
+            "en": "I'm bored here"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#0F0F0F"
+                },
+                {
+                  "at": 1,
+                  "color": "#595959"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_white_arcs",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_white_arcs.png"
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_bored_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_bored_img.png"
+          },
+          "subMessage": {
+            "en": "I'm bored here"
+          }
+        },
+        "id": "inactive_unsafe_v1"
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#141141"
+                },
+                {
+                  "at": 1,
+                  "color": "#5850D7"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_white_questions",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_white_questions.png"
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_questioning_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_questioning_img.png"
+          },
+          "subMessage": {
+            "en": "One quick game?"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#141141"
+                },
+                {
+                  "at": 1,
+                  "color": "#5850D7"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_white_questions",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_white_questions.png"
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_questioning_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_questioning_img.png"
+          },
+          "subMessage": {
+            "en": "One quick game?"
+          }
+        },
+        "id": "inactive_unsafe_v2"
+      }
+    ],
+    "inactive_unsafe_v1": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 180,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#CA1290"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF5FCC"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 139,
+              "offsetX": -1,
+              "offsetY": -5,
+              "width": 140
+            },
+            "key": "mascot_teaching_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_teaching_img-6b1dcab2.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 180,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#CA1290"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF5FCC"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 188,
+              "offsetX": 40,
+              "offsetY": 40,
+              "width": 189
+            },
+            "key": "mascot_teaching_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_teaching_img-6b1dcab2.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          },
+          "transform": {
+            "android": {
+              "rotation": -10
+            },
+            "ios": {
+              "rotation": -10
+            }
+          }
+        },
+        "id": "inactive_unsafe_v1_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Game Time!"
+                },
+                {
+                  "en": "Got a min?"
+                },
+                {
+                  "en": "Quick Game ?"
+                },
+                {
+                  "en": "Let's Go!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 180,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#CA1290"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF5FCC"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 139,
+              "offsetX": 7,
+              "offsetY": -30,
+              "width": 140
+            },
+            "key": "mascot_window_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_window_img.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 180,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#CA1290"
+                },
+                {
+                  "at": 1,
+                  "color": "#FF5FCC"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_window_glare",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_window_glare.png"
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 167,
+              "offsetX": 13,
+              "offsetY": 22,
+              "width": 168
+            },
+            "key": "mascot_window_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_window_img.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "id": "inactive_unsafe_v1_v_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Game Time!"
+                },
+                {
+                  "en": "Got a min?"
+                },
+                {
+                  "en": "Quick Game ?"
+                },
+                {
+                  "en": "Let's Go!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#00A1FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#014EAE"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 139,
+              "offsetX": 7,
+              "offsetY": -30,
+              "width": 140
+            },
+            "key": "mascot_window_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_window_img.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#00A1FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#014EAE"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_window_glare",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_window_glare.png"
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 167,
+              "offsetX": 13,
+              "offsetY": 22,
+              "width": 168
+            },
+            "key": "mascot_window_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_window_img.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "id": "inactive_unsafe_v1_v_copy_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Game Time!"
+                },
+                {
+                  "en": "Got a min?"
+                },
+                {
+                  "en": "Quick Game ?"
+                },
+                {
+                  "en": "Let's Go!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "inactive_unsafe_v2": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#C46BFB"
+                },
+                {
+                  "at": 1,
+                  "color": "#5516D0"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 86,
+              "offsetX": 1,
+              "offsetY": -49,
+              "width": 121
+            },
+            "key": "mascot_clown_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_clown_img.png"
+          },
+          "subMessage": {
+            "en": "Consistency counts!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#C46BFB"
+                },
+                {
+                  "at": 1,
+                  "color": "#5516D0"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 99,
+              "offsetX": -1,
+              "offsetY": 29,
+              "width": 139
+            },
+            "key": "mascot_clown_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_clown_img.png"
+          },
+          "subMessage": {
+            "en": "Consistency counts!"
+          }
+        },
+        "id": "inactive_unsafe_v2_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "I'm waitingggg!"
+                },
+                {
+                  "en": "Sero's Waiting!"
+                },
+                {
+                  "en": "Sero's bored. Help!"
+                },
+                {
+                  "en": "Ditch them. Play me."
+                },
+                {
+                  "en": "Plans? Add me"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000F49"
+                },
+                {
+                  "at": 1,
+                  "color": "#1C3189"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 90,
+              "offsetX": 1,
+              "offsetY": -49,
+              "width": 127
+            },
+            "key": "mascot_uhhh_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_uhhh_img.png"
+          },
+          "subMessage": {
+            "en": "Consistency counts!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#000F49"
+                },
+                {
+                  "at": 1,
+                  "color": "#1C3189"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 105,
+              "offsetX": -1,
+              "offsetY": 29,
+              "width": 148
+            },
+            "key": "mascot_uhhh_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_uhhh_img.png"
+          },
+          "subMessage": {
+            "en": "Consistency counts!"
+          }
+        },
+        "id": "inactive_unsafe_v2_v_copy2",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "I'm waitingggg!"
+                },
+                {
+                  "en": "Watching You!"
+                },
+                {
+                  "en": "Golden hour duel?"
+                },
+                {
+                  "en": "U Coming?"
+                },
+                {
+                  "en": "One Game then go."
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#222222"
+                },
+                {
+                  "at": 1,
+                  "color": "#0A0A0A"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 155,
+              "offsetX": 5,
+              "offsetY": -46,
+              "width": 120
+            },
+            "key": "mascot_poker_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_poker_img.png"
+          },
+          "subMessage": {
+            "en": "Consistency counts!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#222222"
+                },
+                {
+                  "at": 1,
+                  "color": "#0A0A0A"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 174,
+              "offsetX": -2,
+              "offsetY": -9,
+              "width": 151
+            },
+            "key": "mascot_poker_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_poker_img.png"
+          },
+          "subMessage": {
+            "en": "Consistency counts!"
+          }
+        },
+        "id": "inactive_unsafe_v2_v_copy_copy",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Pleaseeee"
+                },
+                {
+                  "en": "Sero's Waiting!"
+                },
+                {
+                  "en": "U Coming ?"
+                },
+                {
+                  "en": "I am bored!"
+                },
+                {
+                  "en": "Helppppp"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "logged_out": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#353535"
+                },
+                {
+                  "at": 1,
+                  "color": "#C8C8C8"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "logged_out",
+            "key": "mascot_mad_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_mad_img.png"
+          },
+          "subMessage": {
+            "en": "Logged Out"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#353535"
+                },
+                {
+                  "at": 1,
+                  "color": "#C8C8C8"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "logged_out",
+            "key": "mascot_mad_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_mad_img.png"
+          },
+          "subMessage": {
+            "en": "Logged Out"
+          },
+          "transform": {
+            "android": {
+              "scale": 1,
+              "translationX": -30,
+              "translationY": 10
+            }
+          }
+        },
+        "id": "logged_out_v1"
+      }
+    ],
+    "no_shield": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 180,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#010419"
+                },
+                {
+                  "at": 1,
+                  "color": "#0B124E"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "offsetX": -2,
+              "offsetY": -16
+            },
+            "key": "mascot_crying_river_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_crying_river_img.png"
+          },
+          "subMessage": {
+            "en": "Zero Shields"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 180,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#010419"
+                },
+                {
+                  "at": 1,
+                  "color": "#0B124E"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "offsetX": 5,
+              "offsetY": 34
+            },
+            "key": "mascot_crying_river_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_crying_river_img.png"
+          },
+          "subMessage": {
+            "en": "Zero Shields"
+          }
+        },
+        "id": "no_shield_v",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Zero Shields"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#155ECA"
+                },
+                {
+                  "at": 1,
+                  "color": "#002869"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 85,
+              "offsetX": -1,
+              "offsetY": -55,
+              "width": 139
+            },
+            "key": "mascot_white_flag_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_white_flag_img.png"
+          },
+          "subMessage": {
+            "en": "Watching You!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 0,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#155ECA"
+                },
+                {
+                  "at": 1,
+                  "color": "#002869"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 85,
+              "offsetX": -3,
+              "offsetY": 19,
+              "width": 139
+            },
+            "key": "mascot_white_flag_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_white_flag_img.png"
+          },
+          "subMessage": {
+            "en": "Watching You!"
+          }
+        },
+        "id": "no_shield_v2",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Watching You!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 180,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#002480"
+                },
+                {
+                  "at": 1,
+                  "color": "#3C67D0"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 85,
+              "offsetY": -46,
+              "width": 138
+            },
+            "key": "mascot_crying_river_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_crying_river_img.png"
+          },
+          "subMessage": {
+            "en": "Zero Shields"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 180,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#002480"
+                },
+                {
+                  "at": 1,
+                  "color": "#3C67D0"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "offsetX": 4,
+              "offsetY": 36
+            },
+            "key": "mascot_crying_river_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_crying_river_img.png"
+          },
+          "subMessage": {
+            "en": "Zero Shields"
+          }
+        },
+        "id": "no_shield_v3",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Zero Shields !"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#0D0D0D"
+                },
+                {
+                  "at": 1,
+                  "color": "#1F172B"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 102,
+              "offsetY": -46,
+              "width": 112
+            },
+            "key": "mascot_coffin_v2_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_coffin_v2_img.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 90,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#0D0D0D"
+                },
+                {
+                  "at": 1,
+                  "color": "#1F172B"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 131,
+              "offsetY": 11,
+              "width": 143
+            },
+            "key": "mascot_coffin_v2_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_coffin_v2_img.png"
+          },
+          "subMessage": {
+            "en": "Keep your streak going!"
+          }
+        },
+        "id": "no_shield_v4",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "Watching You!"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      },
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#6B1709"
+                },
+                {
+                  "at": 1,
+                  "color": "#EB5E46"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_white_sparkles_v2",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_white_sparkles_v2.png"
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "frame": {
+              "height": 146,
+              "offsetY": -3,
+              "width": 127
+            },
+            "key": "mascot_weapon_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_weapon_img.png"
+          },
+          "subMessage": {
+            "en": "NO SHIELD TODAY"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#6B1709"
+                },
+                {
+                  "at": 1,
+                  "color": "#EB5E46"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_white_sparkles_v2",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_white_sparkles_v2.png"
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_weapon_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_weapon_img.png"
+          },
+          "subMessage": {
+            "en": "NO SHIELD TODAY"
+          }
+        },
+        "id": "no_shield_v5",
+        "messages": {
+          "bands": [
+            {
+              "fromHour": 0,
+              "lines": [
+                {
+                  "en": "NO SHIELD TODAY"
+                }
+              ]
+            }
+          ],
+          "placement": "subMessage"
+        }
+      }
+    ],
+    "not_started": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#F26900"
+                },
+                {
+                  "at": 1,
+                  "color": "#FFB27A"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 111,
+              "offsetX": -2,
+              "offsetY": -37,
+              "width": 134
+            },
+            "key": "mascot_thumbsup_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_thumbsup_img-1014d76a.png"
+          },
+          "subMessage": {
+            "en": "Start your streak !"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#F26900"
+                },
+                {
+                  "at": 1,
+                  "color": "#FFB27A"
+                }
+              ]
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "offsetX": 15,
+              "offsetY": 20
+            },
+            "key": "mascot_thumbsup_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_thumbsup_img-1014d76a.png"
+          },
+          "subMessage": {
+            "en": "Start your streak !"
+          }
+        },
+        "id": "not_started_v1"
+      }
+    ],
+    "reclaimed": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2D72FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#0091DF"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_white_sparkles_v2",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_white_sparkles_v2.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 158,
+              "offsetX": 36,
+              "width": 159
+            },
+            "key": "mascot_celebrating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_celebrating_img-5c0c875a.png"
+          },
+          "subMessage": {
+            "en": "You're back !!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#2D72FF"
+                },
+                {
+                  "at": 1,
+                  "color": "#0091DF"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_white_sparkles_v2",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_white_sparkles_v2.png"
+            }
+          },
+          "mascot": {
+            "fallback": "positive",
+            "frame": {
+              "height": 207,
+              "offsetX": 60,
+              "offsetY": 38,
+              "width": 208
+            },
+            "key": "mascot_celebrating_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_celebrating_img-5c0c875a.png"
+          },
+          "subMessage": {
+            "en": "You're back !!"
+          }
+        },
+        "id": "reclaimed_v1"
+      }
+    ],
+    "shield_used": [
+      {
+        "compact": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#146BFF"
+                },
+                {
+                  "at": 1,
+                  "color": "#146BFF"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "compact_iceblue_flames",
+              "url": "https://cdn0.matiks.org/internal/widgets/compact_iceblue_flames.png"
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_shield_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_shield_img.png"
+          },
+          "subMessage": {
+            "en": "Saved your streak!"
+          }
+        },
+        "expanded": {
+          "background": {
+            "gradient": {
+              "angle": 270,
+              "cornerRadius": 28,
+              "stops": [
+                {
+                  "at": 0,
+                  "color": "#146BFF"
+                },
+                {
+                  "at": 1,
+                  "color": "#146BFF"
+                }
+              ]
+            },
+            "overlay": {
+              "key": "expanded_iceblue_flames",
+              "url": "https://cdn0.matiks.org/internal/widgets/expanded_iceblue_flames.png"
+            }
+          },
+          "mascot": {
+            "fallback": "worried",
+            "key": "mascot_shield_img",
+            "url": "https://cdn0.matiks.org/internal/widgets/mascot_shield_img.png"
+          },
+          "subMessage": {
+            "en": "Saved your streak!"
+          }
+        },
+        "id": "shield_used_v1"
+      }
+    ]
+  },
+  "states": {
+    "LOGGED_OUT": {
+      "bands": [
+        {
+          "fromHour": 0,
+          "scene": "logged_out"
+        }
+      ]
+    },
+    "STREAK_BROKEN": {
+      "bands": [
+        {
+          "fromDay": 0,
+          "scene": "broken_verdict_pending"
+        },
+        {
+          "fromDay": 2,
+          "scene": "broken_w1_sobbing"
+        },
+        {
+          "fromDay": 4,
+          "scene": "broken_w1_floor"
+        },
+        {
+          "fromDay": 6,
+          "scene": "broken_w1_cloudy"
+        }
+      ],
+      "cycles": [
+        {
+          "afterLastLap": "stop",
+          "laps": 2,
+          "lengthDays": 3,
+          "slots": [
+            {
+              "day": 1,
+              "fromHour": 0,
+              "scene": "broken_w1_sobbing"
+            },
+            {
+              "day": 1,
+              "fromHour": 14,
+              "scene": "dormant_at_the_window"
+            },
+            {
+              "day": 2,
+              "fromHour": 0,
+              "scene": "broken_w1_floor"
+            },
+            {
+              "day": 2,
+              "fromHour": 14,
+              "scene": "dormant_begging"
+            },
+            {
+              "day": 3,
+              "fromHour": 0,
+              "scene": "broken_w1_cloudy"
+            },
+            {
+              "day": 3,
+              "fromHour": 14,
+              "scene": "dormant_your_move"
+            }
+          ],
+          "startDay": 2
+        },
+        {
+          "afterLastLap": "repeat",
+          "laps": 3,
+          "lengthDays": 7,
+          "slots": [
+            {
+              "day": 1,
+              "fromHour": 0,
+              "scene": "dormant_first_tear"
+            },
+            {
+              "day": 1,
+              "fromHour": 14,
+              "scene": "dormant_grey_mood"
+            },
+            {
+              "day": 2,
+              "fromHour": 0,
+              "scene": "dormant_at_the_window"
+            },
+            {
+              "day": 2,
+              "fromHour": 14,
+              "scene": "dormant_floor_collapse"
+            },
+            {
+              "day": 3,
+              "fromHour": 0,
+              "scene": "dormant_begging"
+            },
+            {
+              "day": 3,
+              "fromHour": 14,
+              "scene": "dormant_shock"
+            },
+            {
+              "day": 4,
+              "fromHour": 0,
+              "scene": "dormant_your_move"
+            },
+            {
+              "day": 4,
+              "fromHour": 14,
+              "scene": "dormant_surrender"
+            },
+            {
+              "day": 5,
+              "fromHour": 0,
+              "scene": "dormant_interrogation"
+            },
+            {
+              "day": 5,
+              "fromHour": 14,
+              "scene": "dormant_on_fire"
+            },
+            {
+              "day": 6,
+              "fromHour": 0,
+              "scene": "dormant_coffin"
+            },
+            {
+              "day": 6,
+              "fromHour": 14,
+              "scene": "dormant_haunting"
+            },
+            {
+              "day": 7,
+              "fromHour": 0,
+              "scene": "dormant_awkward_hello"
+            },
+            {
+              "day": 7,
+              "fromHour": 14,
+              "scene": "dormant_fool_for_you"
+            }
+          ],
+          "startDay": 8
+        }
+      ]
+    },
+    "STREAK_GAINED": {
+      "bands": [
+        {
+          "fromHour": 0,
+          "scene": "gained_day_celebrating"
+        },
+        {
+          "fromHour": 8,
+          "scene": "gained_day_whistle"
+        },
+        {
+          "fromHour": 14,
+          "scene": "gained_day_thumbsup"
+        },
+        {
+          "fromHour": 20,
+          "scene": "gained_day_fire_hold"
+        }
+      ]
+    },
+    "STREAK_PENDING": {
+      "bands": [
+        {
+          "fromHour": 0,
+          "scene": "inactive_safe_v1"
+        },
+        {
+          "fromHour": 4,
+          "scene": "inactive_safe_v2"
+        },
+        {
+          "fromHour": 12,
+          "scene": "inactive_unsafe_v1"
+        },
+        {
+          "fromHour": 16,
+          "scene": "inactive_unsafe_v2"
+        },
+        {
+          "fromHour": 20,
+          "scene": "at_risk_v1",
+          "sceneWithoutShield": "no_shield"
+        },
+        {
+          "fromHour": 22,
+          "scene": "at_risk_v2",
+          "sceneWithoutShield": "no_shield"
+        }
+      ]
+    },
+    "STREAK_RECLAIMED": {
+      "bands": [
+        {
+          "fromHour": 0,
+          "scene": "reclaimed"
+        }
+      ]
+    },
+    "STREAK_SHIELD_USED": {
+      "bands": [
+        {
+          "fromHour": 0,
+          "scene": "shield_used"
+        },
+        {
+          "fromHour": 21,
+          "scene": "at_risk_v1",
+          "sceneWithoutShield": "no_shield"
+        }
+      ]
+    }
+  }
+}

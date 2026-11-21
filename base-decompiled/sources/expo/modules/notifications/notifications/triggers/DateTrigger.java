@@ -1,0 +1,85 @@
+package expo.modules.notifications.notifications.triggers;
+
+import Ul.y;
+import Wn.b;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import com.revenuecat.purchases.common.diagnostics.DiagnosticsEntry;
+import expo.modules.notifications.notifications.interfaces.SchedulableNotificationTrigger;
+import java.util.Date;
+import kotlin.Metadata;
+import kotlin.jvm.internal.Intrinsics;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes5.dex */
+@b
+@Metadata(d1 = {"\u0000:\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u000e\n\u0000\n\u0002\u0010\t\n\u0002\b\u0007\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\b\n\u0000\b\u0007\u0018\u00002\u00020\u00012\u00020\u0002B\u0019\u0012\b\u0010\u0003\u001a\u0004\u0018\u00010\u0004\u0012\u0006\u0010\u0005\u001a\u00020\u0006¢\u0006\u0004\b\u0007\u0010\bJ\b\u0010\r\u001a\u00020\u000eH\u0016J\n\u0010\u000f\u001a\u0004\u0018\u00010\u0010H\u0016J\u0016\u0010\u0011\u001a\u00020\u00122\u0006\u0010\u0013\u001a\u00020\u00142\u0006\u0010\u0015\u001a\u00020\u0016R\u0016\u0010\u0003\u001a\u0004\u0018\u00010\u0004X\u0096\u0004¢\u0006\b\n\u0000\u001a\u0004\b\t\u0010\nR\u0011\u0010\u0005\u001a\u00020\u0006¢\u0006\b\n\u0000\u001a\u0004\b\u000b\u0010\f¨\u0006\u0017"}, d2 = {"Lexpo/modules/notifications/notifications/triggers/DateTrigger;", "Lexpo/modules/notifications/notifications/triggers/ChannelAwareTrigger;", "Lexpo/modules/notifications/notifications/interfaces/SchedulableNotificationTrigger;", "channelId", "", DiagnosticsEntry.TIMESTAMP_KEY, "", "<init>", "(Ljava/lang/String;J)V", "getChannelId", "()Ljava/lang/String;", "getTimestamp", "()J", "toBundle", "Landroid/os/Bundle;", "nextTriggerDate", "Ljava/util/Date;", "writeToParcel", "", "dest", "Landroid/os/Parcel;", "flags", "", "expo-notifications_release"}, k = 1, mv = {2, 1, 0}, xi = 48)
+public final class DateTrigger extends ChannelAwareTrigger implements SchedulableNotificationTrigger {
+
+    @NotNull
+    public static final Parcelable.Creator<DateTrigger> CREATOR = new Creator();
+
+    @Nullable
+    private final String channelId;
+    private final long timestamp;
+
+    /* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+    @Metadata(k = 3, mv = {2, 1, 0}, xi = 48)
+    public static final class Creator implements Parcelable.Creator<DateTrigger> {
+        /* JADX WARN: Can't rename method to resolve collision */
+        @Override // android.os.Parcelable.Creator
+        public final DateTrigger createFromParcel(Parcel parcel) {
+            Intrinsics.checkNotNullParameter(parcel, "parcel");
+            return new DateTrigger(parcel.readString(), parcel.readLong());
+        }
+
+        /* JADX WARN: Can't rename method to resolve collision */
+        @Override // android.os.Parcelable.Creator
+        public final DateTrigger[] newArray(int i10) {
+            return new DateTrigger[i10];
+        }
+    }
+
+    public DateTrigger(@Nullable String str, long j10) {
+        super(str);
+        this.channelId = str;
+        this.timestamp = j10;
+    }
+
+    @Override // expo.modules.notifications.notifications.triggers.ChannelAwareTrigger
+    @Nullable
+    public String getChannelId() {
+        return this.channelId;
+    }
+
+    public final long getTimestamp() {
+        return this.timestamp;
+    }
+
+    @Override // expo.modules.notifications.notifications.interfaces.SchedulableNotificationTrigger
+    @Nullable
+    public Date nextTriggerDate() {
+        Date date = new Date();
+        Date date2 = new Date(this.timestamp);
+        if (date2.before(date)) {
+            return null;
+        }
+        return date2;
+    }
+
+    @Override // expo.modules.notifications.notifications.triggers.ChannelAwareTrigger, expo.modules.notifications.notifications.interfaces.NotificationTrigger
+    @NotNull
+    public Bundle toBundle() {
+        return bundleWithChannelId(y.a("type", "date"), y.a("repeats", Boolean.FALSE), y.a("value", Long.valueOf(this.timestamp)));
+    }
+
+    @Override // expo.modules.notifications.notifications.triggers.ChannelAwareTrigger, android.os.Parcelable
+    public final void writeToParcel(@NotNull Parcel dest, int flags) {
+        Intrinsics.checkNotNullParameter(dest, "dest");
+        dest.writeString(this.channelId);
+        dest.writeLong(this.timestamp);
+    }
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt"
+    android:height="160dp"
+    android:width="330dp"
+    android:viewportWidth="330"
+    android:viewportHeight="160">
+    <path
+        android:fillColor="@drawable/_bg_exp_streak_at_risk_v2__0_res_0x7f08000c"
+        android:pathData="M0 22c0-12.15 9.85-22 22-22h286c12.15 0 22 9.85 22 22v116c0 12.15-9.85 22-22 22h-286c-12.15 0-22-9.85-22-22z"/>
+</vector>

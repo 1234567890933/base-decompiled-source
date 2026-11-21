@@ -1,0 +1,24 @@
+package Re;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes3.dex */
+public abstract class c {
+    static {
+        c.class.getClassLoader();
+    }
+
+    public static Parcelable a(Parcel parcel, Parcelable.Creator creator) {
+        if (parcel.readInt() == 0) {
+            return null;
+        }
+        return (Parcelable) creator.createFromParcel(parcel);
+    }
+
+    public static void b(Parcel parcel, Parcelable parcelable) {
+        parcel.writeInt(1);
+        parcelable.writeToParcel(parcel, 0);
+    }
+}

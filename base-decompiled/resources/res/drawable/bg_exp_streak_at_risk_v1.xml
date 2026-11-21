@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt"
+    android:height="215dp"
+    android:width="398dp"
+    android:viewportWidth="398"
+    android:viewportHeight="215">
+    <group>
+        <clip-path android:pathData="M 28 0 L 370 0 Q 398 0 398 28 L 398 187 Q 398 215 370 215 L 28 215 Q 0 215 0 187 L 0 28 Q 0 0 28 0 Z"/>
+        <path
+            android:fillColor="@drawable/_bg_exp_streak_at_risk_v1__0_res_0x7f08000b"
+            android:pathData="M 28 0 L 370 0 Q 398 0 398 28 L 398 187 Q 398 215 370 215 L 28 215 Q 0 215 0 187 L 0 28 Q 0 0 28 0 Z"/>
+    </group>
+</vector>

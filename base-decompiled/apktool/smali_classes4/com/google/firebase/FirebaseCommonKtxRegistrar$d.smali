@@ -1,0 +1,124 @@
+.class public final Lcom/google/firebase/FirebaseCommonKtxRegistrar$d;
+.super Ljava/lang/Object;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements LIh/g;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lcom/google/firebase/FirebaseCommonKtxRegistrar;->getComponents()Ljava/util/List;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = null
+.end annotation
+
+
+# static fields
+.field public static final a:Lcom/google/firebase/FirebaseCommonKtxRegistrar$d;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .line 1
+    new-instance v0, Lcom/google/firebase/FirebaseCommonKtxRegistrar$d;
+
+    .line 2
+    .line 3
+    invoke-direct {v0}, Lcom/google/firebase/FirebaseCommonKtxRegistrar$d;-><init>()V
+
+    .line 4
+    .line 5
+    .line 6
+    sput-object v0, Lcom/google/firebase/FirebaseCommonKtxRegistrar$d;->a:Lcom/google/firebase/FirebaseCommonKtxRegistrar$d;
+
+    .line 7
+    .line 8
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 2
+    .line 3
+    .line 4
+    return-void
+.end method
+
+
+# virtual methods
+.method public bridge synthetic a(LIh/d;)Ljava/lang/Object;
+    .locals 0
+
+    .line 1
+    invoke-virtual {p0, p1}, Lcom/google/firebase/FirebaseCommonKtxRegistrar$d;->b(LIh/d;)LLn/K;
+
+    .line 2
+    .line 3
+    .line 4
+    move-result-object p1
+
+    .line 5
+    return-object p1
+.end method
+
+.method public final b(LIh/d;)LLn/K;
+    .locals 2
+
+    .line 1
+    const-class v0, Lzh/d;
+
+    .line 2
+    .line 3
+    const-class v1, Ljava/util/concurrent/Executor;
+
+    .line 4
+    .line 5
+    invoke-static {v0, v1}, LIh/E;->a(Ljava/lang/Class;Ljava/lang/Class;)LIh/E;
+
+    .line 6
+    .line 7
+    .line 8
+    move-result-object v0
+
+    .line 9
+    invoke-interface {p1, v0}, LIh/d;->b(LIh/E;)Ljava/lang/Object;
+
+    .line 10
+    .line 11
+    .line 12
+    move-result-object p1
+
+    .line 13
+    const-string v0, "get(...)"
+
+    .line 14
+    .line 15
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNullExpressionValue(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 16
+    .line 17
+    .line 18
+    check-cast p1, Ljava/util/concurrent/Executor;
+
+    .line 19
+    .line 20
+    invoke-static {p1}, LLn/u0;->b(Ljava/util/concurrent/Executor;)LLn/K;
+
+    .line 21
+    .line 22
+    .line 23
+    move-result-object p1
+
+    .line 24
+    return-object p1
+.end method

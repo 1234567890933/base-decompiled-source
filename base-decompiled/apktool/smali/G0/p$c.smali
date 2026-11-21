@@ -1,0 +1,98 @@
+.class public final LG0/p$c;
+.super Lkotlin/jvm/internal/Lambda;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements Lkotlin/jvm/functions/Function1;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = LG0/p;->a(LH0/M0;Landroidx/compose/ui/Modifier;LH0/O;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = null
+.end annotation
+
+
+# instance fields
+.field public final synthetic g:LH0/M0;
+
+
+# direct methods
+.method public constructor <init>(LH0/M0;)V
+    .locals 0
+
+    .line 1
+    iput-object p1, p0, LG0/p$c;->g:LH0/M0;
+
+    .line 2
+    .line 3
+    const/4 p1, 0x1
+
+    .line 4
+    invoke-direct {p0, p1}, Lkotlin/jvm/internal/Lambda;-><init>(I)V
+
+    .line 5
+    .line 6
+    .line 7
+    return-void
+.end method
+
+
+# virtual methods
+.method public final a(Ljava/lang/Object;)Ljava/lang/Boolean;
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, LG0/p$c;->g:LH0/M0;
+
+    .line 2
+    .line 3
+    invoke-virtual {v0}, LH0/M0;->v()Ljava/lang/Object;
+
+    .line 4
+    .line 5
+    .line 6
+    move-result-object v0
+
+    .line 7
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->areEqual(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    .line 8
+    .line 9
+    .line 10
+    move-result p1
+
+    .line 11
+    xor-int/lit8 p1, p1, 0x1
+
+    .line 12
+    .line 13
+    invoke-static {p1}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    .line 14
+    .line 15
+    .line 16
+    move-result-object p1
+
+    .line 17
+    return-object p1
+.end method
+
+.method public bridge synthetic invoke(Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 0
+
+    .line 1
+    invoke-virtual {p0, p1}, LG0/p$c;->a(Ljava/lang/Object;)Ljava/lang/Boolean;
+
+    .line 2
+    .line 3
+    .line 4
+    move-result-object p1
+
+    .line 5
+    return-object p1
+.end method

@@ -1,0 +1,270 @@
+.class public final Lcom/microsoft/clarity/models/display/commands/DrawArc;
+.super Lcom/microsoft/clarity/models/display/commands/PaintableCommand;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+
+# annotations
+.annotation runtime Lkotlin/Metadata;
+    d1 = {
+        "\u00004\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0007\n\u0002\u0008\u0002\n\u0002\u0010\u000b\n\u0000\n\u0002\u0010\u0008\n\u0002\u0008\u0007\n\u0002\u0018\u0002\n\u0002\u0008\u0005\n\u0002\u0018\u0002\n\u0000\u0008\u0000\u0018\u00002\u00020\u0001B/\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u0012\u0006\u0010\u0004\u001a\u00020\u0005\u0012\u0006\u0010\u0006\u001a\u00020\u0005\u0012\u0006\u0010\u0007\u001a\u00020\u0008\u0012\u0008\u0010\t\u001a\u0004\u0018\u00010\n\u00a2\u0006\u0002\u0010\u000bJ\u0008\u0010\u0017\u001a\u00020\u0018H\u0016R\u0011\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\u0008\n\u0000\u001a\u0004\u0008\u000c\u0010\rR\u0011\u0010\u0004\u001a\u00020\u0005\u00a2\u0006\u0008\n\u0000\u001a\u0004\u0008\u000e\u0010\u000fR\u0011\u0010\u0006\u001a\u00020\u0005\u00a2\u0006\u0008\n\u0000\u001a\u0004\u0008\u0010\u0010\u000fR\u0014\u0010\u0011\u001a\u00020\u0012X\u0096\u0004\u00a2\u0006\u0008\n\u0000\u001a\u0004\u0008\u0013\u0010\u0014R\u0011\u0010\u0007\u001a\u00020\u0008\u00a2\u0006\u0008\n\u0000\u001a\u0004\u0008\u0015\u0010\u0016\u00a8\u0006\u0019"
+    }
+    d2 = {
+        "Lcom/microsoft/clarity/models/display/commands/DrawArc;",
+        "Lcom/microsoft/clarity/models/display/commands/PaintableCommand;",
+        "rect",
+        "Lcom/microsoft/clarity/models/display/common/Rect;",
+        "startAngle",
+        "",
+        "sweepAngle",
+        "useCenter",
+        "",
+        "paintIndex",
+        "",
+        "(Lcom/microsoft/clarity/models/display/common/Rect;FFZLjava/lang/Integer;)V",
+        "getRect",
+        "()Lcom/microsoft/clarity/models/display/common/Rect;",
+        "getStartAngle",
+        "()F",
+        "getSweepAngle",
+        "type",
+        "Lcom/microsoft/clarity/models/display/commands/DisplayCommandType;",
+        "getType",
+        "()Lcom/microsoft/clarity/models/display/commands/DisplayCommandType;",
+        "getUseCenter",
+        "()Z",
+        "toProtobufInstance",
+        "Lcom/microsoft/clarity/protomodels/mutationpayload/MutationPayload$DisplayCommandV2;",
+        "sdk_prodRelease"
+    }
+    k = 0x1
+    mv = {
+        0x1,
+        0x8,
+        0x0
+    }
+    xi = 0x30
+.end annotation
+
+
+# instance fields
+.field private final rect:Lcom/microsoft/clarity/models/display/common/Rect;
+
+.field private final startAngle:F
+
+.field private final sweepAngle:F
+
+.field private final type:Lcom/microsoft/clarity/models/display/commands/DisplayCommandType;
+
+.field private final useCenter:Z
+
+
+# direct methods
+.method public constructor <init>(Lcom/microsoft/clarity/models/display/common/Rect;FFZLjava/lang/Integer;)V
+    .locals 1
+
+    .line 1
+    const-string v0, "rect"
+
+    .line 2
+    .line 3
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNullParameter(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 4
+    .line 5
+    .line 6
+    invoke-direct {p0, p5}, Lcom/microsoft/clarity/models/display/commands/PaintableCommand;-><init>(Ljava/lang/Integer;)V
+
+    .line 7
+    .line 8
+    .line 9
+    iput-object p1, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->rect:Lcom/microsoft/clarity/models/display/common/Rect;
+
+    .line 10
+    .line 11
+    iput p2, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->startAngle:F
+
+    .line 12
+    .line 13
+    iput p3, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->sweepAngle:F
+
+    .line 14
+    .line 15
+    iput-boolean p4, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->useCenter:Z
+
+    .line 16
+    .line 17
+    sget-object p1, Lcom/microsoft/clarity/models/display/commands/DisplayCommandType;->DrawArc:Lcom/microsoft/clarity/models/display/commands/DisplayCommandType;
+
+    .line 18
+    .line 19
+    iput-object p1, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->type:Lcom/microsoft/clarity/models/display/commands/DisplayCommandType;
+
+    .line 20
+    .line 21
+    return-void
+.end method
+
+
+# virtual methods
+.method public final getRect()Lcom/microsoft/clarity/models/display/common/Rect;
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->rect:Lcom/microsoft/clarity/models/display/common/Rect;
+
+    .line 2
+    .line 3
+    return-object v0
+.end method
+
+.method public final getStartAngle()F
+    .locals 1
+
+    .line 1
+    iget v0, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->startAngle:F
+
+    .line 2
+    .line 3
+    return v0
+.end method
+
+.method public final getSweepAngle()F
+    .locals 1
+
+    .line 1
+    iget v0, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->sweepAngle:F
+
+    .line 2
+    .line 3
+    return v0
+.end method
+
+.method public getType()Lcom/microsoft/clarity/models/display/commands/DisplayCommandType;
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->type:Lcom/microsoft/clarity/models/display/commands/DisplayCommandType;
+
+    .line 2
+    .line 3
+    return-object v0
+.end method
+
+.method public final getUseCenter()Z
+    .locals 1
+
+    .line 1
+    iget-boolean v0, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->useCenter:Z
+
+    .line 2
+    .line 3
+    return v0
+.end method
+
+.method public toProtobufInstance()Lcom/microsoft/clarity/protomodels/mutationpayload/MutationPayload$DisplayCommandV2;
+    .locals 3
+
+    .line 2
+    invoke-static {}, Lcom/microsoft/clarity/protomodels/mutationpayload/MutationPayload$DrawArcCommandPayload;->newBuilder()Lcom/microsoft/clarity/protomodels/mutationpayload/z;
+
+    move-result-object v0
+
+    .line 3
+    iget-object v1, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->rect:Lcom/microsoft/clarity/models/display/common/Rect;
+
+    invoke-virtual {v1}, Lcom/microsoft/clarity/models/display/common/Rect;->toProtobufInstance()Lcom/microsoft/clarity/protomodels/mutationpayload/MutationPayload$Rect;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Lcom/microsoft/clarity/protomodels/mutationpayload/z;->a(Lcom/microsoft/clarity/protomodels/mutationpayload/MutationPayload$Rect;)Lcom/microsoft/clarity/protomodels/mutationpayload/z;
+
+    move-result-object v0
+
+    .line 4
+    iget v1, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->startAngle:F
+
+    invoke-virtual {v0, v1}, Lcom/microsoft/clarity/protomodels/mutationpayload/z;->a(F)Lcom/microsoft/clarity/protomodels/mutationpayload/z;
+
+    move-result-object v0
+
+    .line 5
+    iget v1, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->sweepAngle:F
+
+    invoke-virtual {v0, v1}, Lcom/microsoft/clarity/protomodels/mutationpayload/z;->b(F)Lcom/microsoft/clarity/protomodels/mutationpayload/z;
+
+    move-result-object v0
+
+    .line 6
+    iget-boolean v1, p0, Lcom/microsoft/clarity/models/display/commands/DrawArc;->useCenter:Z
+
+    invoke-virtual {v0, v1}, Lcom/microsoft/clarity/protomodels/mutationpayload/z;->a(Z)Lcom/microsoft/clarity/protomodels/mutationpayload/z;
+
+    move-result-object v0
+
+    .line 7
+    invoke-virtual {p0}, Lcom/microsoft/clarity/models/display/commands/PaintableCommand;->getPaintIndex()Ljava/lang/Integer;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_0
+
+    invoke-virtual {v1}, Ljava/lang/Number;->intValue()I
+
+    move-result v1
+
+    invoke-virtual {v0, v1}, Lcom/microsoft/clarity/protomodels/mutationpayload/z;->a(I)V
+
+    .line 8
+    :cond_0
+    invoke-static {}, Lcom/microsoft/clarity/protomodels/mutationpayload/MutationPayload$DisplayCommandV2;->newBuilder()Lcom/microsoft/clarity/protomodels/mutationpayload/q;
+
+    move-result-object v1
+
+    .line 9
+    invoke-virtual {p0}, Lcom/microsoft/clarity/models/display/commands/DrawArc;->getType()Lcom/microsoft/clarity/models/display/commands/DisplayCommandType;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Lcom/microsoft/clarity/models/display/commands/DisplayCommandType;->toProtobufType()Lcom/microsoft/clarity/protomodels/mutationpayload/p;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Lcom/microsoft/clarity/protomodels/mutationpayload/q;->a(Lcom/microsoft/clarity/protomodels/mutationpayload/p;)Lcom/microsoft/clarity/protomodels/mutationpayload/q;
+
+    move-result-object v1
+
+    .line 10
+    invoke-virtual {v0}, Lcom/google/protobuf/GeneratedMessageLite$b;->build()Lcom/google/protobuf/GeneratedMessageLite;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/microsoft/clarity/protomodels/mutationpayload/MutationPayload$DrawArcCommandPayload;
+
+    invoke-virtual {v1, v0}, Lcom/microsoft/clarity/protomodels/mutationpayload/q;->a(Lcom/microsoft/clarity/protomodels/mutationpayload/MutationPayload$DrawArcCommandPayload;)Lcom/microsoft/clarity/protomodels/mutationpayload/q;
+
+    move-result-object v0
+
+    .line 11
+    invoke-virtual {v0}, Lcom/google/protobuf/GeneratedMessageLite$b;->build()Lcom/google/protobuf/GeneratedMessageLite;
+
+    move-result-object v0
+
+    const-string v1, "newBuilder()\n           \u2026d())\n            .build()"
+
+    invoke-static {v0, v1}, Lkotlin/jvm/internal/Intrinsics;->checkNotNullExpressionValue(Ljava/lang/Object;Ljava/lang/String;)V
+
+    check-cast v0, Lcom/microsoft/clarity/protomodels/mutationpayload/MutationPayload$DisplayCommandV2;
+
+    return-object v0
+.end method
+
+.method public bridge synthetic toProtobufInstance()Ljava/lang/Object;
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Lcom/microsoft/clarity/models/display/commands/DrawArc;->toProtobufInstance()Lcom/microsoft/clarity/protomodels/mutationpayload/MutationPayload$DisplayCommandV2;
+
+    move-result-object v0
+
+    return-object v0
+.end method

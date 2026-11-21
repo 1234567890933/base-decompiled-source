@@ -1,0 +1,30 @@
+package com.revenuecat.purchases.amazon;
+
+import Ul.y;
+import java.util.Map;
+import kotlin.Metadata;
+import kotlin.collections.W;
+import kotlin.jvm.internal.Intrinsics;
+import org.jetbrains.annotations.NotNull;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes4.dex */
+@Metadata(d1 = {"\u0000\u0018\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0010$\n\u0002\u0010\u000e\n\u0002\b\u0003\bÀ\u0002\u0018\u00002\u00020\u0001B\u0007\b\u0002¢\u0006\u0002\u0010\u0002J\u000e\u0010\u0006\u001a\u00020\u00052\u0006\u0010\u0007\u001a\u00020\u0005R\u001a\u0010\u0003\u001a\u000e\u0012\u0004\u0012\u00020\u0005\u0012\u0004\u0012\u00020\u00050\u0004X\u0082\u0004¢\u0006\u0002\n\u0000¨\u0006\b"}, d2 = {"Lcom/revenuecat/purchases/amazon/ISO3166Alpha2ToISO42170Converter;", "", "()V", "conversions", "", "", "convertOrEmpty", "iso3166Alpha2Code", "purchases_defaultsBc8Release"}, k = 1, mv = {1, 8, 0}, xi = 48)
+public final class ISO3166Alpha2ToISO42170Converter {
+
+    @NotNull
+    public static final ISO3166Alpha2ToISO42170Converter INSTANCE = new ISO3166Alpha2ToISO42170Converter();
+
+    @NotNull
+    private static final Map<String, String> conversions = W.n(y.a("AF", "AFN"), y.a("AL", "ALL"), y.a("DZ", "DZD"), y.a("AS", "USD"), y.a("AD", "EUR"), y.a("AO", "AOA"), y.a("AI", "XCD"), y.a("AG", "XCD"), y.a("AR", "ARS"), y.a("AM", "AMD"), y.a("AW", "AWG"), y.a("AU", "AUD"), y.a("AT", "EUR"), y.a("AZ", "AZN"), y.a("BS", "BSD"), y.a("BH", "BHD"), y.a("BD", "BDT"), y.a("BB", "BBD"), y.a("BY", "BYR"), y.a("BE", "EUR"), y.a("BZ", "BZD"), y.a("BJ", "XOF"), y.a("BM", "BMD"), y.a("BT", "INR"), y.a("BO", "BOB"), y.a("BQ", "USD"), y.a("BA", "BAM"), y.a("BW", "BWP"), y.a("BV", "NOK"), y.a("BR", "BRL"), y.a("IO", "USD"), y.a("BN", "BND"), y.a("BG", "BGN"), y.a("BF", "XOF"), y.a("BI", "BIF"), y.a("KH", "KHR"), y.a("CM", "XAF"), y.a("CA", "CAD"), y.a("CV", "CVE"), y.a("KY", "KYD"), y.a("CF", "XAF"), y.a("TD", "XAF"), y.a("CL", "CLP"), y.a("CN", "CNY"), y.a("CX", "AUD"), y.a("CC", "AUD"), y.a("CO", "COP"), y.a("KM", "KMF"), y.a("CG", "XAF"), y.a("CK", "NZD"), y.a("CR", "CRC"), y.a("HR", "HRK"), y.a("CU", "CUP"), y.a("CW", "ANG"), y.a("CY", "EUR"), y.a("CZ", "CZK"), y.a("CI", "XOF"), y.a("DK", "DKK"), y.a("DJ", "DJF"), y.a("DM", "XCD"), y.a("DO", "DOP"), y.a("EC", "USD"), y.a("EG", "EGP"), y.a("SV", "USD"), y.a("GQ", "XAF"), y.a("ER", "ERN"), y.a("EE", "EUR"), y.a("ET", "ETB"), y.a("FK", "FKP"), y.a("FO", "DKK"), y.a("FJ", "FJD"), y.a("FI", "EUR"), y.a("FR", "EUR"), y.a("GF", "EUR"), y.a("PF", "XPF"), y.a("TF", "EUR"), y.a("GA", "XAF"), y.a("GM", "GMD"), y.a("GE", "GEL"), y.a("DE", "EUR"), y.a("GH", "GHS"), y.a("GI", "GIP"), y.a("GR", "EUR"), y.a("GL", "DKK"), y.a("GD", "XCD"), y.a("GP", "EUR"), y.a("GU", "USD"), y.a("GT", "GTQ"), y.a("GG", "GBP"), y.a("GN", "GNF"), y.a("GW", "XOF"), y.a("GY", "GYD"), y.a("HT", "USD"), y.a("HM", "AUD"), y.a("VA", "EUR"), y.a("HN", "HNL"), y.a("HK", "HKD"), y.a("HU", "HUF"), y.a("IS", "ISK"), y.a("IN", "INR"), y.a("ID", "IDR"), y.a("IR", "IRR"), y.a("IQ", "IQD"), y.a("IE", "EUR"), y.a("IM", "GBP"), y.a("IL", "ILS"), y.a("IT", "EUR"), y.a("JM", "JMD"), y.a("JP", "JPY"), y.a("JE", "GBP"), y.a("JO", "JOD"), y.a("KZ", "KZT"), y.a("KE", "KES"), y.a("KI", "AUD"), y.a("KP", "KPW"), y.a("KR", "KRW"), y.a("KW", "KWD"), y.a("KG", "KGS"), y.a("LA", "LAK"), y.a("LV", "EUR"), y.a("LB", "LBP"), y.a("LS", "ZAR"), y.a("LR", "LRD"), y.a("LY", "LYD"), y.a("LI", "CHF"), y.a("LT", "EUR"), y.a("LU", "EUR"), y.a("MO", "MOP"), y.a("MK", "MKD"), y.a("MG", "MGA"), y.a("MW", "MWK"), y.a("MY", "MYR"), y.a("MV", "MVR"), y.a("ML", "XOF"), y.a("MT", "EUR"), y.a("MH", "USD"), y.a("MQ", "EUR"), y.a("MR", "MRO"), y.a("MU", "MUR"), y.a("YT", "EUR"), y.a("MX", "MXN"), y.a("FM", "USD"), y.a("MD", "MDL"), y.a("MC", "EUR"), y.a("MN", "MNT"), y.a("ME", "EUR"), y.a("MS", "XCD"), y.a("MA", "MAD"), y.a("MZ", "MZN"), y.a("MM", "MMK"), y.a("NA", "ZAR"), y.a("NR", "AUD"), y.a("NP", "NPR"), y.a("NL", "EUR"), y.a("NC", "XPF"), y.a("NZ", "NZD"), y.a("NI", "NIO"), y.a("NE", "XOF"), y.a("NG", "NGN"), y.a("NU", "NZD"), y.a("NF", "AUD"), y.a("MP", "USD"), y.a("NO", "NOK"), y.a("OM", "OMR"), y.a("PK", "PKR"), y.a("PW", "USD"), y.a("PA", "USD"), y.a("PG", "PGK"), y.a("PY", "PYG"), y.a("PE", "PEN"), y.a("PH", "PHP"), y.a("PN", "NZD"), y.a("PL", "PLN"), y.a("PT", "EUR"), y.a("PR", "USD"), y.a("QA", "QAR"), y.a("RO", "RON"), y.a("RU", "RUB"), y.a("RW", "RWF"), y.a("RE", "EUR"), y.a("BL", "EUR"), y.a("SH", "SHP"), y.a("KN", "XCD"), y.a("LC", "XCD"), y.a("MF", "EUR"), y.a("PM", "EUR"), y.a("VC", "XCD"), y.a("WS", "WST"), y.a("SM", "EUR"), y.a("ST", "STD"), y.a("SA", "SAR"), y.a("SN", "XOF"), y.a("RS", "RSD"), y.a("SC", "SCR"), y.a("SL", "SLL"), y.a("SG", "SGD"), y.a("SX", "ANG"), y.a("SK", "EUR"), y.a("SI", "EUR"), y.a("SB", "SBD"), y.a("SO", "SOS"), y.a("ZA", "ZAR"), y.a("SS", "SSP"), y.a("ES", "EUR"), y.a("LK", "LKR"), y.a("SD", "SDG"), y.a("SR", "SRD"), y.a("SJ", "NOK"), y.a("SZ", "SZL"), y.a("SE", "SEK"), y.a("CH", "CHF"), y.a("SY", "SYP"), y.a("TW", "TWD"), y.a("TJ", "TJS"), y.a("TZ", "TZS"), y.a("TH", "THB"), y.a("TL", "USD"), y.a("TG", "XOF"), y.a("TK", "NZD"), y.a("TO", "TOP"), y.a("TT", "TTD"), y.a("TN", "TND"), y.a("TR", "TRY"), y.a("TM", "TMT"), y.a("TC", "USD"), y.a("TV", "AUD"), y.a("UG", "UGX"), y.a("UA", "UAH"), y.a("AE", "AED"), y.a("GB", "GBP"), y.a("US", "USD"), y.a("UM", "USD"), y.a("UY", "UYU"), y.a("UZ", "UZS"), y.a("VU", "VUV"), y.a("VE", "VEF"), y.a("VN", "VND"), y.a("VG", "USD"), y.a("VI", "USD"), y.a("WF", "XPF"), y.a("EH", "MAD"), y.a("YE", "YER"), y.a("ZM", "ZMW"), y.a("ZW", "ZWL"), y.a("AX", "EUR"));
+
+    private ISO3166Alpha2ToISO42170Converter() {
+    }
+
+    @NotNull
+    public final String convertOrEmpty(@NotNull String iso3166Alpha2Code) {
+        Intrinsics.checkNotNullParameter(iso3166Alpha2Code, "iso3166Alpha2Code");
+        String str = conversions.get(iso3166Alpha2Code);
+        return str == null ? "" : str;
+    }
+}

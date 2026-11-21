@@ -1,0 +1,21 @@
+package p572vo;
+
+import java.io.FilterInputStream;
+import java.io.InputStream;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes6.dex */
+public class b extends d {
+    public b(InputStream inputStream) {
+        super(inputStream);
+    }
+
+    public static b f(InputStream inputStream) {
+        return new b(inputStream);
+    }
+
+    @Override // java.io.FilterInputStream, java.io.InputStream, java.io.Closeable, java.lang.AutoCloseable
+    public void close() {
+        ((FilterInputStream) this).in = c.f97439a;
+    }
+}

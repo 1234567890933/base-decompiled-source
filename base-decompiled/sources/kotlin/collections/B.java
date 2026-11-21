@@ -1,0 +1,25 @@
+package kotlin.collections;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import kotlin.jvm.internal.Intrinsics;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes6.dex */
+public class B extends A {
+    public static void D(List list) {
+        Intrinsics.checkNotNullParameter(list, "<this>");
+        if (list.size() > 1) {
+            Collections.sort(list);
+        }
+    }
+
+    public static void E(List list, Comparator comparator) {
+        Intrinsics.checkNotNullParameter(list, "<this>");
+        Intrinsics.checkNotNullParameter(comparator, "comparator");
+        if (list.size() > 1) {
+            Collections.sort(list, comparator);
+        }
+    }
+}

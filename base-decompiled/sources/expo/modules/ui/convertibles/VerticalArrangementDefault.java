@@ -1,0 +1,95 @@
+package expo.modules.ui.convertibles;
+
+import S0.C3402h;
+import Ul.q;
+import expo.modules.kotlin.types.Enumerable;
+import kotlin.Metadata;
+import kotlin.enums.EnumEntries;
+import org.jetbrains.annotations.NotNull;
+import p077cm.a;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes5.dex */
+@Metadata(d1 = {"\u0000\u001c\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0010\n\u0002\u0010\u000e\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\f\b\u0086\u0081\u0002\u0018\u00002\u00020\u00012\b\u0012\u0004\u0012\u00020\u00000\u0002B\u0011\b\u0002\u0012\u0006\u0010\u0004\u001a\u00020\u0003¢\u0006\u0004\b\u0005\u0010\u0006J\r\u0010\b\u001a\u00020\u0007¢\u0006\u0004\b\b\u0010\tR\u0017\u0010\u0004\u001a\u00020\u00038\u0006¢\u0006\f\n\u0004\b\u0004\u0010\n\u001a\u0004\b\u000b\u0010\fj\u0002\b\rj\u0002\b\u000ej\u0002\b\u000fj\u0002\b\u0010j\u0002\b\u0011j\u0002\b\u0012¨\u0006\u0013"}, d2 = {"Lexpo/modules/ui/convertibles/VerticalArrangementDefault;", "Lexpo/modules/kotlin/types/Enumerable;", "", "", "value", "<init>", "(Ljava/lang/String;ILjava/lang/String;)V", "LS0/h$n;", "toComposeArrangement", "()LS0/h$n;", "Ljava/lang/String;", "getValue", "()Ljava/lang/String;", "TOP", "BOTTOM", "CENTER", "SPACE_BETWEEN", "SPACE_AROUND", "SPACE_EVENLY", "expo-ui_release"}, k = 1, mv = {2, 1, 0}, xi = 48)
+public enum VerticalArrangementDefault implements Enumerable {
+    TOP("top"),
+    BOTTOM("bottom"),
+    CENTER("center"),
+    SPACE_BETWEEN("spaceBetween"),
+    SPACE_AROUND("spaceAround"),
+    SPACE_EVENLY("spaceEvenly");
+
+    private static final /* synthetic */ EnumEntries $ENTRIES = a.a(values());
+
+    @NotNull
+    private final String value;
+
+    /* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+    @Metadata(k = 3, mv = {2, 1, 0}, xi = 48)
+    public /* synthetic */ class WhenMappings {
+        public static final /* synthetic */ int[] $EnumSwitchMapping$0;
+
+        static {
+            int[] iArr = new int[VerticalArrangementDefault.values().length];
+            try {
+                iArr[VerticalArrangementDefault.TOP.ordinal()] = 1;
+            } catch (NoSuchFieldError unused) {
+            }
+            try {
+                iArr[VerticalArrangementDefault.BOTTOM.ordinal()] = 2;
+            } catch (NoSuchFieldError unused2) {
+            }
+            try {
+                iArr[VerticalArrangementDefault.CENTER.ordinal()] = 3;
+            } catch (NoSuchFieldError unused3) {
+            }
+            try {
+                iArr[VerticalArrangementDefault.SPACE_BETWEEN.ordinal()] = 4;
+            } catch (NoSuchFieldError unused4) {
+            }
+            try {
+                iArr[VerticalArrangementDefault.SPACE_AROUND.ordinal()] = 5;
+            } catch (NoSuchFieldError unused5) {
+            }
+            try {
+                iArr[VerticalArrangementDefault.SPACE_EVENLY.ordinal()] = 6;
+            } catch (NoSuchFieldError unused6) {
+            }
+            $EnumSwitchMapping$0 = iArr;
+        }
+    }
+
+    VerticalArrangementDefault(String str) {
+        this.value = str;
+    }
+
+    @NotNull
+    public static EnumEntries getEntries() {
+        return $ENTRIES;
+    }
+
+    @NotNull
+    public final String getValue() {
+        return this.value;
+    }
+
+    @NotNull
+    public final C3402h.n toComposeArrangement() {
+        switch (WhenMappings.$EnumSwitchMapping$0[ordinal()]) {
+            case 1:
+                return C3402h.f29534a.j();
+            case 2:
+                return C3402h.f29534a.c();
+            case 3:
+                return C3402h.f29534a.d();
+            case 4:
+                return C3402h.f29534a.g();
+            case 5:
+                return C3402h.f29534a.f();
+            case 6:
+                return C3402h.f29534a.h();
+            default:
+                throw new q();
+        }
+    }
+}

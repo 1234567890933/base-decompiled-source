@@ -1,0 +1,1107 @@
+.class public final Lexpo/modules/camera/common/BarcodeScannedEvent$__Pika;
+.super Ljava/lang/Object;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements Lwl/n;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lexpo/modules/camera/common/BarcodeScannedEvent;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "__Pika"
+.end annotation
+
+.annotation runtime Lkotlin/Metadata;
+    d1 = {
+        "\u0000\u000c\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\u0008\u0003\u0008\u00c6\u0002\u0018\u00002\u00020\u0001B\t\u0008\u0002\u00a2\u0006\u0004\u0008\u0002\u0010\u0003\u00a8\u0006\u0004"
+    }
+    d2 = {
+        "Lexpo/modules/camera/common/BarcodeScannedEvent$__Pika;",
+        "",
+        "<init>",
+        "()V",
+        "expo-camera_release"
+    }
+    k = 0x1
+    mv = {
+        0x2,
+        0x1,
+        0x0
+    }
+    xi = 0x30
+.end annotation
+
+
+# static fields
+.field public static final INSTANCE:Lexpo/modules/camera/common/BarcodeScannedEvent$__Pika;
+    .annotation build Lorg/jetbrains/annotations/NotNull;
+    .end annotation
+.end field
+
+.field public static final __pika$IntrospectionData:Lwl/k;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Lwl/k;"
+        }
+    .end annotation
+
+    .annotation build Lorg/jetbrains/annotations/NotNull;
+    .end annotation
+.end field
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 22
+
+    .line 1
+    new-instance v6, Lexpo/modules/camera/common/BarcodeScannedEvent$__Pika;
+
+    .line 2
+    .line 3
+    invoke-direct {v6}, Lexpo/modules/camera/common/BarcodeScannedEvent$__Pika;-><init>()V
+
+    .line 4
+    .line 5
+    .line 6
+    sput-object v6, Lexpo/modules/camera/common/BarcodeScannedEvent$__Pika;->INSTANCE:Lexpo/modules/camera/common/BarcodeScannedEvent$__Pika;
+
+    .line 7
+    .line 8
+    new-instance v10, Lwl/k;
+
+    .line 9
+    .line 10
+    new-instance v0, Lwl/h;
+
+    .line 11
+    .line 12
+    const-class v1, Lexpo/modules/kotlin/types/OptimizedRecord;
+
+    .line 13
+    .line 14
+    invoke-static {}, Lkotlin/collections/W;->j()Ljava/util/Map;
+
+    .line 15
+    .line 16
+    .line 17
+    move-result-object v2
+
+    .line 18
+    invoke-direct {v0, v1, v2}, Lwl/h;-><init>(Ljava/lang/Class;Ljava/util/Map;)V
+
+    .line 19
+    .line 20
+    .line 21
+    filled-new-array {v0}, [Lwl/h;
+
+    .line 22
+    .line 23
+    .line 24
+    move-result-object v11
+
+    .line 25
+    new-instance v0, Lwl/m;
+
+    .line 26
+    .line 27
+    sget-object v2, Lwl/v;->a:Lwl/v;
+
+    .line 28
+    .line 29
+    new-instance v1, Lwl/h;
+
+    .line 30
+    .line 31
+    invoke-static {}, Lkotlin/collections/W;->j()Ljava/util/Map;
+
+    .line 32
+    .line 33
+    .line 34
+    move-result-object v3
+
+    .line 35
+    const-class v12, Lexpo/modules/kotlin/records/Field;
+
+    .line 36
+    .line 37
+    invoke-direct {v1, v12, v3}, Lwl/h;-><init>(Ljava/lang/Class;Ljava/util/Map;)V
+
+    .line 38
+    .line 39
+    .line 40
+    filled-new-array {v1}, [Lwl/h;
+
+    .line 41
+    .line 42
+    .line 43
+    move-result-object v3
+
+    .line 44
+    sget-object v4, Lwl/u;->b:Lwl/p$a;
+
+    .line 45
+    .line 46
+    const/4 v8, 0x1
+
+    .line 47
+    const/4 v9, 0x0
+
+    .line 48
+    const-string v1, "target"
+
+    .line 49
+    .line 50
+    const/4 v5, 0x0
+
+    .line 51
+    const/4 v7, 0x0
+
+    .line 52
+    invoke-direct/range {v0 .. v9}, Lwl/m;-><init>(Ljava/lang/String;Lwl/v;[Lwl/h;Lwl/p;ILwl/n;ZZZ)V
+
+    .line 53
+    .line 54
+    .line 55
+    move-object v13, v0
+
+    .line 56
+    new-instance v0, Lwl/m;
+
+    .line 57
+    .line 58
+    new-instance v1, Lwl/h;
+
+    .line 59
+    .line 60
+    invoke-static {}, Lkotlin/collections/W;->j()Ljava/util/Map;
+
+    .line 61
+    .line 62
+    .line 63
+    move-result-object v3
+
+    .line 64
+    invoke-direct {v1, v12, v3}, Lwl/h;-><init>(Ljava/lang/Class;Ljava/util/Map;)V
+
+    .line 65
+    .line 66
+    .line 67
+    filled-new-array {v1}, [Lwl/h;
+
+    .line 68
+    .line 69
+    .line 70
+    move-result-object v3
+
+    .line 71
+    sget-object v4, Lwl/u;->l:Lwl/p$a;
+
+    .line 72
+    .line 73
+    const-string v1, "data"
+
+    .line 74
+    .line 75
+    const/4 v5, 0x1
+
+    .line 76
+    invoke-direct/range {v0 .. v9}, Lwl/m;-><init>(Ljava/lang/String;Lwl/v;[Lwl/h;Lwl/p;ILwl/n;ZZZ)V
+
+    .line 77
+    .line 78
+    .line 79
+    move-object v14, v13
+
+    .line 80
+    move-object v13, v0
+
+    .line 81
+    new-instance v0, Lwl/m;
+
+    .line 82
+    .line 83
+    new-instance v1, Lwl/h;
+
+    .line 84
+    .line 85
+    invoke-static {}, Lkotlin/collections/W;->j()Ljava/util/Map;
+
+    .line 86
+    .line 87
+    .line 88
+    move-result-object v3
+
+    .line 89
+    invoke-direct {v1, v12, v3}, Lwl/h;-><init>(Ljava/lang/Class;Ljava/util/Map;)V
+
+    .line 90
+    .line 91
+    .line 92
+    filled-new-array {v1}, [Lwl/h;
+
+    .line 93
+    .line 94
+    .line 95
+    move-result-object v3
+
+    .line 96
+    const-string v1, "raw"
+
+    .line 97
+    .line 98
+    const/4 v5, 0x2
+
+    .line 99
+    invoke-direct/range {v0 .. v9}, Lwl/m;-><init>(Ljava/lang/String;Lwl/v;[Lwl/h;Lwl/p;ILwl/n;ZZZ)V
+
+    .line 100
+    .line 101
+    .line 102
+    move-object v15, v14
+
+    .line 103
+    move-object v14, v0
+
+    .line 104
+    new-instance v0, Lwl/m;
+
+    .line 105
+    .line 106
+    new-instance v1, Lwl/h;
+
+    .line 107
+    .line 108
+    invoke-static {}, Lkotlin/collections/W;->j()Ljava/util/Map;
+
+    .line 109
+    .line 110
+    .line 111
+    move-result-object v3
+
+    .line 112
+    invoke-direct {v1, v12, v3}, Lwl/h;-><init>(Ljava/lang/Class;Ljava/util/Map;)V
+
+    .line 113
+    .line 114
+    .line 115
+    filled-new-array {v1}, [Lwl/h;
+
+    .line 116
+    .line 117
+    .line 118
+    move-result-object v3
+
+    .line 119
+    const-string v1, "type"
+
+    .line 120
+    .line 121
+    const/4 v5, 0x3
+
+    .line 122
+    invoke-direct/range {v0 .. v9}, Lwl/m;-><init>(Ljava/lang/String;Lwl/v;[Lwl/h;Lwl/p;ILwl/n;ZZZ)V
+
+    .line 123
+    .line 124
+    .line 125
+    move-object/from16 v16, v15
+
+    .line 126
+    .line 127
+    move-object v15, v0
+
+    .line 128
+    new-instance v0, Lwl/m;
+
+    .line 129
+    .line 130
+    new-instance v1, Lwl/h;
+
+    .line 131
+    .line 132
+    invoke-static {}, Lkotlin/collections/W;->j()Ljava/util/Map;
+
+    .line 133
+    .line 134
+    .line 135
+    move-result-object v3
+
+    .line 136
+    invoke-direct {v1, v12, v3}, Lwl/h;-><init>(Ljava/lang/Class;Ljava/util/Map;)V
+
+    .line 137
+    .line 138
+    .line 139
+    filled-new-array {v1}, [Lwl/h;
+
+    .line 140
+    .line 141
+    .line 142
+    move-result-object v3
+
+    .line 143
+    const-class v1, Landroid/os/Bundle;
+
+    .line 144
+    .line 145
+    const/4 v4, 0x0
+
+    .line 146
+    const/4 v5, 0x0
+
+    .line 147
+    invoke-static {v1, v4, v5}, Lwl/u;->h(Ljava/lang/Class;ZLwl/k;)Lwl/p$a;
+
+    .line 148
+    .line 149
+    .line 150
+    move-result-object v7
+
+    .line 151
+    new-array v9, v8, [Lwl/p;
+
+    .line 152
+    .line 153
+    aput-object v7, v9, v4
+
+    .line 154
+    .line 155
+    invoke-static {v9}, Lkotlin/collections/x;->r([Ljava/lang/Object;)Ljava/util/List;
+
+    .line 156
+    .line 157
+    .line 158
+    move-result-object v7
+
+    .line 159
+    const-class v9, Ljava/util/ArrayList;
+
+    .line 160
+    .line 161
+    invoke-static {v9, v4, v7, v5}, Lwl/u;->i(Ljava/lang/Class;ZLjava/util/List;Lwl/k;)Lwl/p$a$a;
+
+    .line 162
+    .line 163
+    .line 164
+    move-result-object v7
+
+    .line 165
+    move v9, v8
+
+    .line 166
+    move/from16 v17, v9
+
+    .line 167
+    .line 168
+    const/4 v9, 0x0
+
+    .line 169
+    move-object/from16 v18, v1
+
+    .line 170
+    .line 171
+    const-string v1, "cornerPoints"
+
+    .line 172
+    .line 173
+    move-object/from16 v19, v5
+
+    .line 174
+    .line 175
+    const/4 v5, 0x4
+
+    .line 176
+    move/from16 v20, v4
+
+    .line 177
+    .line 178
+    move-object v4, v7
+
+    .line 179
+    const/4 v7, 0x0
+
+    .line 180
+    move-object/from16 v21, v10
+
+    .line 181
+    .line 182
+    move-object/from16 v17, v13
+
+    .line 183
+    .line 184
+    move-object/from16 v13, v19
+
+    .line 185
+    .line 186
+    move/from16 v10, v20
+
+    .line 187
+    .line 188
+    move-object/from16 v19, v11
+
+    .line 189
+    .line 190
+    move-object/from16 v11, v18
+
+    .line 191
+    .line 192
+    invoke-direct/range {v0 .. v9}, Lwl/m;-><init>(Ljava/lang/String;Lwl/v;[Lwl/h;Lwl/p;ILwl/n;ZZZ)V
+
+    .line 193
+    .line 194
+    .line 195
+    move-object/from16 v18, v16
+
+    .line 196
+    .line 197
+    move-object/from16 v16, v0
+
+    .line 198
+    .line 199
+    new-instance v0, Lwl/m;
+
+    .line 200
+    .line 201
+    new-instance v1, Lwl/h;
+
+    .line 202
+    .line 203
+    invoke-static {}, Lkotlin/collections/W;->j()Ljava/util/Map;
+
+    .line 204
+    .line 205
+    .line 206
+    move-result-object v3
+
+    .line 207
+    invoke-direct {v1, v12, v3}, Lwl/h;-><init>(Ljava/lang/Class;Ljava/util/Map;)V
+
+    .line 208
+    .line 209
+    .line 210
+    filled-new-array {v1}, [Lwl/h;
+
+    .line 211
+    .line 212
+    .line 213
+    move-result-object v3
+
+    .line 214
+    invoke-static {v11, v10, v13}, Lwl/u;->h(Ljava/lang/Class;ZLwl/k;)Lwl/p$a;
+
+    .line 215
+    .line 216
+    .line 217
+    move-result-object v4
+
+    .line 218
+    const-string v1, "bounds"
+
+    .line 219
+    .line 220
+    const/4 v5, 0x5
+
+    .line 221
+    invoke-direct/range {v0 .. v9}, Lwl/m;-><init>(Ljava/lang/String;Lwl/v;[Lwl/h;Lwl/p;ILwl/n;ZZZ)V
+
+    .line 222
+    .line 223
+    .line 224
+    move-object/from16 v10, v17
+
+    .line 225
+    .line 226
+    move-object/from16 v17, v0
+
+    .line 227
+    .line 228
+    new-instance v0, Lwl/m;
+
+    .line 229
+    .line 230
+    new-instance v1, Lwl/h;
+
+    .line 231
+    .line 232
+    invoke-static {}, Lkotlin/collections/W;->j()Ljava/util/Map;
+
+    .line 233
+    .line 234
+    .line 235
+    move-result-object v3
+
+    .line 236
+    invoke-direct {v1, v12, v3}, Lwl/h;-><init>(Ljava/lang/Class;Ljava/util/Map;)V
+
+    .line 237
+    .line 238
+    .line 239
+    filled-new-array {v1}, [Lwl/h;
+
+    .line 240
+    .line 241
+    .line 242
+    move-result-object v3
+
+    .line 243
+    const/4 v9, 0x1
+
+    .line 244
+    invoke-static {v11, v9, v13}, Lwl/u;->h(Ljava/lang/Class;ZLwl/k;)Lwl/p$a;
+
+    .line 245
+    .line 246
+    .line 247
+    move-result-object v4
+
+    .line 248
+    const/4 v9, 0x0
+
+    .line 249
+    const-string v1, "extra"
+
+    .line 250
+    .line 251
+    const/4 v5, 0x6
+
+    .line 252
+    invoke-direct/range {v0 .. v9}, Lwl/m;-><init>(Ljava/lang/String;Lwl/v;[Lwl/h;Lwl/p;ILwl/n;ZZZ)V
+
+    .line 253
+    .line 254
+    .line 255
+    move-object v13, v10
+
+    .line 256
+    move-object/from16 v12, v18
+
+    .line 257
+    .line 258
+    move-object/from16 v18, v0
+
+    .line 259
+    .line 260
+    filled-new-array/range {v12 .. v18}, [Lwl/m;
+
+    .line 261
+    .line 262
+    .line 263
+    move-result-object v3
+
+    .line 264
+    sget-object v4, Lwl/i;->c:[Lwl/j;
+
+    .line 265
+    .line 266
+    const/4 v5, 0x0
+
+    .line 267
+    const-class v1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 268
+    .line 269
+    move-object/from16 v2, v19
+
+    .line 270
+    .line 271
+    move-object/from16 v0, v21
+
+    .line 272
+    .line 273
+    invoke-direct/range {v0 .. v5}, Lwl/k;-><init>(Ljava/lang/Class;[Lwl/h;[Lwl/m;[Lwl/j;Lwl/k;)V
+
+    .line 274
+    .line 275
+    .line 276
+    sput-object v0, Lexpo/modules/camera/common/BarcodeScannedEvent$__Pika;->__pika$IntrospectionData:Lwl/k;
+
+    .line 277
+    .line 278
+    return-void
+.end method
+
+.method private constructor <init>()V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 2
+    .line 3
+    .line 4
+    return-void
+.end method
+
+
+# virtual methods
+.method public __pika$PropertyGet(Ljava/lang/Object;I)Ljava/lang/Object;
+    .locals 1
+    .param p1    # Ljava/lang/Object;
+        .annotation build Lorg/jetbrains/annotations/Nullable;
+        .end annotation
+    .end param
+    .annotation build Lorg/jetbrains/annotations/Nullable;
+    .end annotation
+
+    .line 1
+    const-string v0, "null cannot be cast to non-null type expo.modules.camera.common.BarcodeScannedEvent"
+
+    .line 2
+    .line 3
+    packed-switch p2, :pswitch_data_0
+
+    .line 4
+    .line 5
+    .line 6
+    new-instance p1, Ljava/lang/IndexOutOfBoundsException;
+
+    .line 7
+    .line 8
+    invoke-static {p2}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
+
+    .line 9
+    .line 10
+    .line 11
+    move-result-object p2
+
+    .line 12
+    invoke-direct {p1, p2}, Ljava/lang/IndexOutOfBoundsException;-><init>(Ljava/lang/String;)V
+
+    .line 13
+    .line 14
+    .line 15
+    throw p1
+
+    .line 16
+    :pswitch_0
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 17
+    .line 18
+    .line 19
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 20
+    .line 21
+    invoke-virtual {p1}, Lexpo/modules/camera/common/BarcodeScannedEvent;->getExtra()Landroid/os/Bundle;
+
+    .line 22
+    .line 23
+    .line 24
+    move-result-object p1
+
+    .line 25
+    return-object p1
+
+    .line 26
+    :pswitch_1
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 27
+    .line 28
+    .line 29
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 30
+    .line 31
+    invoke-virtual {p1}, Lexpo/modules/camera/common/BarcodeScannedEvent;->getBounds()Landroid/os/Bundle;
+
+    .line 32
+    .line 33
+    .line 34
+    move-result-object p1
+
+    .line 35
+    return-object p1
+
+    .line 36
+    :pswitch_2
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 37
+    .line 38
+    .line 39
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 40
+    .line 41
+    invoke-virtual {p1}, Lexpo/modules/camera/common/BarcodeScannedEvent;->getCornerPoints()Ljava/util/ArrayList;
+
+    .line 42
+    .line 43
+    .line 44
+    move-result-object p1
+
+    .line 45
+    return-object p1
+
+    .line 46
+    :pswitch_3
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 47
+    .line 48
+    .line 49
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 50
+    .line 51
+    invoke-virtual {p1}, Lexpo/modules/camera/common/BarcodeScannedEvent;->getType()Ljava/lang/String;
+
+    .line 52
+    .line 53
+    .line 54
+    move-result-object p1
+
+    .line 55
+    return-object p1
+
+    .line 56
+    :pswitch_4
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 57
+    .line 58
+    .line 59
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 60
+    .line 61
+    invoke-virtual {p1}, Lexpo/modules/camera/common/BarcodeScannedEvent;->getRaw()Ljava/lang/String;
+
+    .line 62
+    .line 63
+    .line 64
+    move-result-object p1
+
+    .line 65
+    return-object p1
+
+    .line 66
+    :pswitch_5
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 67
+    .line 68
+    .line 69
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 70
+    .line 71
+    invoke-virtual {p1}, Lexpo/modules/camera/common/BarcodeScannedEvent;->getData()Ljava/lang/String;
+
+    .line 72
+    .line 73
+    .line 74
+    move-result-object p1
+
+    .line 75
+    return-object p1
+
+    .line 76
+    :pswitch_6
+    invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 77
+    .line 78
+    .line 79
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 80
+    .line 81
+    invoke-virtual {p1}, Lexpo/modules/camera/common/BarcodeScannedEvent;->getTarget()I
+
+    .line 82
+    .line 83
+    .line 84
+    move-result p1
+
+    .line 85
+    invoke-static {p1}, Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;
+
+    .line 86
+    .line 87
+    .line 88
+    move-result-object p1
+
+    .line 89
+    return-object p1
+
+    .line 90
+    nop
+
+    .line 91
+    :pswitch_data_0
+    .packed-switch 0x0
+        :pswitch_6
+        :pswitch_5
+        :pswitch_4
+        :pswitch_3
+        :pswitch_2
+        :pswitch_1
+        :pswitch_0
+    .end packed-switch
+.end method
+
+.method public __pika$PropertySet(Ljava/lang/Object;ILjava/lang/Object;)V
+    .locals 2
+    .param p1    # Ljava/lang/Object;
+        .annotation build Lorg/jetbrains/annotations/Nullable;
+        .end annotation
+    .end param
+    .param p3    # Ljava/lang/Object;
+        .annotation build Lorg/jetbrains/annotations/Nullable;
+        .end annotation
+    .end param
+
+    .line 1
+    const-string v0, "null cannot be cast to non-null type kotlin.String"
+
+    .line 2
+    .line 3
+    const-string v1, "null cannot be cast to non-null type expo.modules.camera.common.BarcodeScannedEvent"
+
+    .line 4
+    .line 5
+    packed-switch p2, :pswitch_data_0
+
+    .line 6
+    .line 7
+    .line 8
+    new-instance p1, Ljava/lang/IndexOutOfBoundsException;
+
+    .line 9
+    .line 10
+    invoke-static {p2}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
+
+    .line 11
+    .line 12
+    .line 13
+    move-result-object p2
+
+    .line 14
+    invoke-direct {p1, p2}, Ljava/lang/IndexOutOfBoundsException;-><init>(Ljava/lang/String;)V
+
+    .line 15
+    .line 16
+    .line 17
+    throw p1
+
+    .line 18
+    :pswitch_0
+    invoke-static {p1, v1}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 19
+    .line 20
+    .line 21
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 22
+    .line 23
+    check-cast p3, Landroid/os/Bundle;
+
+    .line 24
+    .line 25
+    iput-object p3, p1, Lexpo/modules/camera/common/BarcodeScannedEvent;->extra:Landroid/os/Bundle;
+
+    .line 26
+    .line 27
+    return-void
+
+    .line 28
+    :pswitch_1
+    invoke-static {p1, v1}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 29
+    .line 30
+    .line 31
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 32
+    .line 33
+    const-string p2, "null cannot be cast to non-null type android.os.Bundle"
+
+    .line 34
+    .line 35
+    invoke-static {p3, p2}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 36
+    .line 37
+    .line 38
+    check-cast p3, Landroid/os/Bundle;
+
+    .line 39
+    .line 40
+    iput-object p3, p1, Lexpo/modules/camera/common/BarcodeScannedEvent;->bounds:Landroid/os/Bundle;
+
+    .line 41
+    .line 42
+    return-void
+
+    .line 43
+    :pswitch_2
+    invoke-static {p1, v1}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 44
+    .line 45
+    .line 46
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 47
+    .line 48
+    const-string p2, "null cannot be cast to non-null type java.util.ArrayList<android.os.Bundle>"
+
+    .line 49
+    .line 50
+    invoke-static {p3, p2}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 51
+    .line 52
+    .line 53
+    check-cast p3, Ljava/util/ArrayList;
+
+    .line 54
+    .line 55
+    iput-object p3, p1, Lexpo/modules/camera/common/BarcodeScannedEvent;->cornerPoints:Ljava/util/ArrayList;
+
+    .line 56
+    .line 57
+    return-void
+
+    .line 58
+    :pswitch_3
+    invoke-static {p1, v1}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 59
+    .line 60
+    .line 61
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 62
+    .line 63
+    invoke-static {p3, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 64
+    .line 65
+    .line 66
+    check-cast p3, Ljava/lang/String;
+
+    .line 67
+    .line 68
+    iput-object p3, p1, Lexpo/modules/camera/common/BarcodeScannedEvent;->type:Ljava/lang/String;
+
+    .line 69
+    .line 70
+    return-void
+
+    .line 71
+    :pswitch_4
+    invoke-static {p1, v1}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 72
+    .line 73
+    .line 74
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 75
+    .line 76
+    invoke-static {p3, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 77
+    .line 78
+    .line 79
+    check-cast p3, Ljava/lang/String;
+
+    .line 80
+    .line 81
+    iput-object p3, p1, Lexpo/modules/camera/common/BarcodeScannedEvent;->raw:Ljava/lang/String;
+
+    .line 82
+    .line 83
+    return-void
+
+    .line 84
+    :pswitch_5
+    invoke-static {p1, v1}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 85
+    .line 86
+    .line 87
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 88
+    .line 89
+    invoke-static {p3, v0}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 90
+    .line 91
+    .line 92
+    check-cast p3, Ljava/lang/String;
+
+    .line 93
+    .line 94
+    iput-object p3, p1, Lexpo/modules/camera/common/BarcodeScannedEvent;->data:Ljava/lang/String;
+
+    .line 95
+    .line 96
+    return-void
+
+    .line 97
+    :pswitch_6
+    invoke-static {p1, v1}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 98
+    .line 99
+    .line 100
+    check-cast p1, Lexpo/modules/camera/common/BarcodeScannedEvent;
+
+    .line 101
+    .line 102
+    const-string p2, "null cannot be cast to non-null type kotlin.Int"
+
+    .line 103
+    .line 104
+    invoke-static {p3, p2}, Lkotlin/jvm/internal/Intrinsics;->checkNotNull(Ljava/lang/Object;Ljava/lang/String;)V
+
+    .line 105
+    .line 106
+    .line 107
+    check-cast p3, Ljava/lang/Integer;
+
+    .line 108
+    .line 109
+    invoke-virtual {p3}, Ljava/lang/Integer;->intValue()I
+
+    .line 110
+    .line 111
+    .line 112
+    move-result p2
+
+    .line 113
+    iput p2, p1, Lexpo/modules/camera/common/BarcodeScannedEvent;->target:I
+
+    .line 114
+    .line 115
+    return-void
+
+    .line 116
+    nop
+
+    .line 117
+    :pswitch_data_0
+    .packed-switch 0x0
+        :pswitch_6
+        :pswitch_5
+        :pswitch_4
+        :pswitch_3
+        :pswitch_2
+        :pswitch_1
+        :pswitch_0
+    .end packed-switch
+.end method

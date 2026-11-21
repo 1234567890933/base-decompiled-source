@@ -1,0 +1,1132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>Wend — How to Play</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #171717;
+        --green: #0ab963;
+        --word-box-size: 32px;
+        --board-size: min(250px, calc(100vw - 48px), calc(100vh - 262px));
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: var(--bg);
+        color: white;
+      }
+      body {
+        font-family:
+          'Nunito Sans',
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        font-weight: 700;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .stage {
+        position: relative;
+        min-height: 400px;
+        height: 100%;
+        padding: 0 16px 24px;
+      }
+      .word-info {
+        position: absolute;
+        top: 20px;
+        left: 16px;
+        right: 16px;
+        animation: reveal 220ms ease-out;
+      }
+      .lengths {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        height: 36px;
+      }
+      .length-label {
+        color: #a2a2a2;
+        font-family: 'Nunito Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        white-space: nowrap;
+      }
+      .chip {
+        position: relative;
+        width: var(--word-box-size);
+        height: var(--word-box-size);
+        flex-shrink: 0;
+        border: 1px solid #383838;
+        border-radius: 6px;
+        background: #252525;
+        color: #a2a2a2;
+        display: grid;
+        place-items: center;
+        font-size: 14px;
+        line-height: 1;
+        transition:
+          background-color 200ms ease,
+          border-color 200ms ease,
+          color 200ms ease,
+          opacity 200ms ease;
+      }
+      .chip.current {
+        border-color: white;
+        color: white;
+      }
+      .chip.tracing {
+        background: var(--dark);
+        border-color: var(--color);
+        color: white;
+      }
+      .chip.completed {
+        background: var(--color);
+        border-color: var(--color);
+        /* Separate the colored center from its matching outer outline, as in Figma. */
+        box-shadow: inset 0 0 0 1px var(--bg);
+        color: #000;
+      }
+      .chip.dimmed {
+        opacity: 0.5;
+      }
+      .check {
+        position: absolute;
+        right: -5px;
+        bottom: -4px;
+        display: grid;
+        place-items: center;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #252525;
+        color: var(--color);
+        font-size: 11px;
+        line-height: 1;
+        animation: reveal 180ms ease-out;
+      }
+      .preview-slot {
+        height: 56px;
+        margin-top: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .preview {
+        display: flex;
+        width: max-content;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 12px;
+        background: #252525;
+        animation: reveal 160ms ease-out;
+      }
+      .preview-letter {
+        display: grid;
+        place-items: center;
+        width: var(--word-box-size);
+        height: var(--word-box-size);
+        flex-shrink: 0;
+        border: 1px dashed var(--light);
+        border-radius: 4px;
+        background: var(--dark);
+        color: white;
+        font-size: 16px;
+        line-height: 1;
+      }
+      .content {
+        /* Reserve the enlarged word row and live preview even while they are hidden. */
+        padding-top: clamp(140px, calc(100vh - 534px), 170px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .coach {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: min(264px, 100%);
+        min-height: 56px;
+        padding: 8px 12px;
+        border-radius: 4px;
+        background: #16271f;
+        color: var(--green);
+        text-align: center;
+        font-size: 13px;
+        line-height: 16px;
+      }
+      .coach strong {
+        color: white;
+        font-weight: 700;
+      }
+      .coach-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+      .board-wrap {
+        position: relative;
+        margin-top: 24px;
+        width: var(--board-size);
+        height: var(--board-size);
+        flex-shrink: 0;
+      }
+      .board {
+        display: block;
+        width: 100%;
+        height: 100%;
+        /* Rounded clipping and borders are drawn inside the canvas, not by CSS. */
+        touch-action: none;
+        cursor: crosshair;
+      }
+      .board:focus-visible {
+        outline: 2px solid #8e7ee0;
+        outline-offset: 4px;
+      }
+      .hand-hint {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .drag-hand {
+        position: absolute;
+        width: 20%;
+        left: 6%;
+        top: 24%;
+      }
+      .drag-hand svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .drag-hand-inner {
+        animation: drag 2.4s ease-in-out infinite;
+      }
+      @keyframes drag {
+        0%,
+        10% {
+          transform: translateX(0);
+        }
+        55%,
+        70% {
+          transform: translateX(calc(var(--board-size) / 2));
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      .feedback {
+        min-height: 18px;
+        margin-top: 12px;
+        font-size: 12px;
+        text-align: center;
+        color: #ffa366;
+      }
+      @keyframes reveal {
+        from {
+          opacity: 0;
+          transform: translateY(3px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      [hidden] {
+        display: none !important;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .drag-hand-inner,
+        .word-info,
+        .preview,
+        .check {
+          animation: none;
+        }
+        .chip {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- InteractiveHTPWithHeader supplies the safe area, title and close button. -->
+    <main class="stage">
+      <section
+        id="word-info"
+        class="word-info"
+        aria-label="Word lengths"
+        hidden
+      >
+        <div id="lengths" class="lengths">
+          <span class="length-label">Word Length</span>
+        </div>
+        <div class="preview-slot">
+          <div
+            id="preview"
+            class="preview"
+            role="status"
+            aria-label="Selected letters"
+            hidden
+          ></div>
+        </div>
+      </section>
+      <section class="content">
+        <div id="coach" class="coach" role="status" aria-live="polite"></div>
+        <div class="board-wrap">
+          <canvas
+            id="board"
+            class="board"
+            tabindex="0"
+            role="application"
+            aria-label="Wend tutorial board. Drag adjacent letters to form a word. Keyboard: type the word, Backspace to backtrack, Enter to submit, Escape to clear."
+          ></canvas>
+          <div id="hand" class="hand-hint" aria-hidden="true" hidden>
+            <div class="drag-hand">
+              <div class="drag-hand-inner">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="51"
+                  height="90"
+                  viewBox="0 0 51 90"
+                  fill="none"
+                >
+                  <mask id="dragHandOutline" fill="white">
+                    <path
+                      d="M8.9248 0C13.8538 0 17.8496 3.99577 17.8496 8.9248V20.9414C20.209 20.2144 22.7156 19.8232 25.3135 19.8232C39.2937 19.8233 50.627 31.1565 50.627 45.1367C50.6269 54.4725 45.572 62.6264 38.0508 67.0146C38.065 67.2682 38.0732 67.5241 38.0732 67.7812V76.2959C38.0732 83.7168 32.0575 89.7322 24.6367 89.7324C17.2157 89.7324 11.1992 83.7169 11.1992 76.2959V67.7812C11.1992 67.2508 11.2312 66.7273 11.291 66.2129C4.48478 61.6755 1.03749e-05 53.9304 0 45.1367C0 44.5332 0.0229127 43.9347 0.0644531 43.3418C0.0233643 42.9944 0 42.6407 0 42.2822L0 8.9248C0 3.99577 3.99577 0 8.9248 0Z"
+                    />
+                  </mask>
+                  <path
+                    d="M8.9248 0C13.8538 0 17.8496 3.99577 17.8496 8.9248V20.9414C20.209 20.2144 22.7156 19.8232 25.3135 19.8232C39.2937 19.8233 50.627 31.1565 50.627 45.1367C50.6269 54.4725 45.572 62.6264 38.0508 67.0146C38.065 67.2682 38.0732 67.5241 38.0732 67.7812V76.2959C38.0732 83.7168 32.0575 89.7322 24.6367 89.7324C17.2157 89.7324 11.1992 83.7169 11.1992 76.2959V67.7812C11.1992 67.2508 11.2312 66.7273 11.291 66.2129C4.48478 61.6755 1.03749e-05 53.9304 0 45.1367C0 44.5332 0.0229127 43.9347 0.0644531 43.3418C0.0233643 42.9944 0 42.6407 0 42.2822L0 8.9248C0 3.99577 3.99577 0 8.9248 0Z"
+                    fill="#8E7EE0"
+                  />
+                  <path
+                    d="M17.8496 20.9414H15.8496V23.6504L18.4385 22.8527L17.8496 20.9414ZM25.3135 19.8232L25.3135 17.8232H25.3135V19.8232ZM50.627 45.1367L52.627 45.1367V45.1367H50.627ZM38.0508 67.0146L37.0429 65.2872L35.9852 65.9043L36.0539 67.1269L38.0508 67.0146ZM38.0732 76.2959H40.0732V76.2959H38.0732ZM24.6367 89.7324V91.7324H24.6368L24.6367 89.7324ZM11.1992 76.2959H9.19922V76.2959H11.1992ZM11.291 66.2129L13.2776 66.4438L13.419 65.2278L12.4004 64.5488L11.291 66.2129ZM0 45.1367H-2V45.1367L0 45.1367ZM0.0644531 43.3418L2.05956 43.4816L2.07272 43.2938L2.05061 43.1069L0.0644531 43.3418ZM8.9248 0V2C12.7493 2 15.8496 5.10034 15.8496 8.9248H17.8496H19.8496C19.8496 2.8912 14.9584 -2 8.9248 -2V0ZM17.8496 8.9248H15.8496V20.9414H17.8496H19.8496V8.9248H17.8496ZM17.8496 20.9414L18.4385 22.8527C20.6092 22.1839 22.9173 21.8232 25.3135 21.8232V19.8232V17.8232C22.5138 17.8232 19.8088 18.245 17.2607 19.0301L17.8496 20.9414ZM25.3135 19.8232L25.3135 21.8232C38.1891 21.8233 48.627 32.2611 48.627 45.1367H50.627H52.627C52.627 30.0519 40.3983 17.8233 25.3135 17.8232L25.3135 19.8232ZM50.627 45.1367L48.627 45.1367C48.6269 53.7322 43.9753 61.2424 37.0429 65.2872L38.0508 67.0146L39.0587 68.7421C47.1686 64.0103 52.6269 55.213 52.627 45.1367L50.627 45.1367ZM38.0508 67.0146L36.0539 67.1269C36.0664 67.3484 36.0732 67.5664 36.0732 67.7812H38.0732H40.0732C40.0732 67.4817 40.0637 67.1881 40.0476 66.9024L38.0508 67.0146ZM38.0732 67.7812H36.0732V76.2959H38.0732H40.0732V67.7812H38.0732ZM38.0732 76.2959H36.0732C36.0732 82.6121 30.953 87.7322 24.6367 87.7324L24.6367 89.7324L24.6368 91.7324C33.1621 91.7322 40.0732 84.8214 40.0732 76.2959H38.0732ZM24.6367 89.7324V87.7324C18.3201 87.7324 13.1992 82.6122 13.1992 76.2959H11.1992H9.19922C9.19922 84.8217 16.1113 91.7324 24.6367 91.7324V89.7324ZM11.1992 76.2959H13.1992V67.7812H11.1992H9.19922V76.2959H11.1992ZM11.1992 67.7812H13.1992C13.1992 67.3313 13.2264 66.8849 13.2776 66.4438L11.291 66.2129L9.30439 65.982C9.23609 66.5696 9.19922 67.1703 9.19922 67.7812H11.1992ZM11.291 66.2129L12.4004 64.5488C6.12666 60.3664 2.00001 53.2334 2 45.1367L0 45.1367L-2 45.1367C-1.99999 54.6273 2.84289 62.9846 10.1816 67.877L11.291 66.2129ZM0 45.1367H2C2 44.5838 2.02099 44.0321 2.05956 43.4816L0.0644531 43.3418L-1.93066 43.202C-1.97517 43.8374 -2 44.4826 -2 45.1367H0ZM0.0644531 43.3418L2.05061 43.1069C2.01771 42.8287 2 42.5539 2 42.2822H0H-2C-2 42.7275 -1.97098 43.16 -1.9217 43.5767L0.0644531 43.3418ZM0 42.2822H2L2 8.9248H0H-2L-2 42.2822H0ZM0 8.9248H2C2 5.10034 5.10034 2 8.9248 2V0V-2C2.8912 -2 -2 2.8912 -2 8.9248H0Z"
+                    fill="white"
+                    mask="url(#dragHandOutline)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          id="feedback"
+          class="feedback"
+          role="status"
+          aria-live="polite"
+        ></div>
+      </section>
+    </main>
+    <script>
+      (function () {
+        'use strict';
+        // Frames 1–3: DEW. 4: lengths. 5–7: SONG. 8–10: TRACK.
+        // Frames 11–12: solved board. 13: shared native/web completion screen.
+        var LETTERS = 'DEW##S##TONGRACK';
+        var WORDS = [
+          {
+            word: 'DEW',
+            path: [0, 1, 2],
+            color: '#0ab963',
+            light: '#3bc782',
+            dark: '#044e2a',
+          },
+          {
+            word: 'SONG',
+            path: [5, 9, 10, 11],
+            color: '#ff761a',
+            light: '#ffa366',
+            dark: '#944108',
+          },
+          {
+            word: 'TRACK',
+            path: [8, 12, 13, 14, 15],
+            color: '#e24b8b',
+            light: '#f2acca',
+            dark: '#5f203a',
+          },
+        ];
+        var STRINGS = {
+          documentTitle: 'Wend — How to Play',
+          wordLengthsLabel: 'Word Length',
+          wordLengthsAriaLabel: 'Word lengths',
+          selectedLettersAriaLabel: 'Selected letters',
+          boardAriaLabel:
+            'Wend tutorial board. Drag adjacent letters to form a word. Keyboard: type the word, Backspace to backtrack, Enter to submit, Escape to clear.',
+          firstCoach: 'Drag through the letters to spell {word}',
+          nextCoach:
+            'Now find a {length}-letter word. It can go in any direction',
+          lengthsCoach:
+            'As you drag, keep an eye on the word lengths at the top.',
+          retry: 'Try again. Start at {letter} and connect adjacent letters.',
+          chipLabel: '{length} letters{status}',
+          completedStatus: ', completed: {word}',
+        };
+        var board = document.getElementById('board');
+        var ctx = board.getContext('2d');
+        var coach = document.getElementById('coach');
+        var info = document.getElementById('word-info');
+        var lengths = document.getElementById('lengths');
+        var preview = document.getElementById('preview');
+        var hand = document.getElementById('hand');
+        var feedback = document.getElementById('feedback');
+        var current = 0,
+          phase = 'practice',
+          selected = [],
+          completed = [],
+          completedSet = new Set();
+        var activePointer = null,
+          transitionTimer = null,
+          hintTimer = null,
+          finished = false;
+        var hintVisible = false;
+        var previousRenderKey = null,
+          boardAnimation = null,
+          coachAnimation = null;
+        var BOARD_SIZE = 250,
+          BOARD_INSET = 2,
+          TRANSITION_MS = 220;
+        function reducedMotion() {
+          return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        }
+        function setCoach(html) {
+          if (coachAnimation) coachAnimation.cancel();
+          coach.innerHTML = '<span class="coach-copy">' + html + '</span>';
+          if (!reducedMotion())
+            coachAnimation = coach.firstElementChild.animate(
+              [
+                { opacity: 0, transform: 'translateY(3px)' },
+                { opacity: 1, transform: 'translateY(0)' },
+              ],
+              { duration: TRANSITION_MS, easing: 'ease-out' },
+            );
+        }
+        function escapeHtml(value) {
+          return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+        }
+        function interpolate(template, values) {
+          return Object.keys(values).reduce(function (result, key) {
+            return result.split('{' + key + '}').join(String(values[key]));
+          }, template);
+        }
+        function withStrong(template, key, value) {
+          var marker = '{' + key + '}';
+          return (
+            '<span>' +
+            template
+              .split(marker)
+              .map(escapeHtml)
+              .join('<strong>' + escapeHtml(value) + '</strong>') +
+            '</span>'
+          );
+        }
+        var chips = WORDS.map(function (word) {
+          var chip = document.createElement('span');
+          chip.className = 'chip';
+          chip.textContent = word.word.length;
+          setPalette(chip, word);
+          lengths.appendChild(chip);
+          return chip;
+        });
+        function setPalette(element, word) {
+          element.style.setProperty('--color', word.color);
+          element.style.setProperty('--light', word.light);
+          element.style.setProperty('--dark', word.dark);
+        }
+        function post(message) {
+          var payload = JSON.stringify(message);
+          if (
+            window.ReactNativeWebView &&
+            window.ReactNativeWebView.postMessage
+          )
+            window.ReactNativeWebView.postMessage(payload);
+          else if (window.parent !== window)
+            window.parent.postMessage(payload, '*');
+        }
+        function announceStep(id, index) {
+          post({ type: 'step', step: id, index: index });
+        }
+        function schedule(callback, delay) {
+          clearTimeout(transitionTimer);
+          transitionTimer = setTimeout(callback, delay);
+        }
+        function showPractice() {
+          phase = 'practice';
+          if (current === 0)
+            setCoach(withStrong(STRINGS.firstCoach, 'word', WORDS[0].word));
+          else
+            setCoach(
+              withStrong(
+                STRINGS.nextCoach,
+                'length',
+                WORDS[current].word.length,
+              ),
+            );
+          announceStep(
+            WORDS[current].word.toLowerCase(),
+            current === 0 ? 0 : current + 1,
+          );
+          render();
+          if (current === 0 || current === 2)
+            hintTimer = setTimeout(function () {
+              hintVisible = true;
+              render();
+            }, 1300);
+        }
+        function render() {
+          info.hidden =
+            current === 0 && phase !== 'lengths' && phase !== 'solved';
+          chips.forEach(function (chip, i) {
+            var done = completedSet.has(i);
+            chip.className =
+              'chip' +
+              (done ? ' completed' : '') +
+              (i === current && phase === 'practice'
+                ? selected.length
+                  ? ' tracing'
+                  : ' current'
+                : '');
+            if (done && phase === 'practice' && i !== current)
+              chip.classList.add('dimmed');
+            chip.setAttribute(
+              'aria-label',
+              interpolate(STRINGS.chipLabel, {
+                length: WORDS[i].word.length,
+                status: done
+                  ? interpolate(STRINGS.completedStatus, {
+                      word: WORDS[i].word,
+                    })
+                  : '',
+              }),
+            );
+            if (done && !chip.querySelector('.check')) {
+              var check = document.createElement('span');
+              check.className = 'check';
+              check.textContent = '✓';
+              check.setAttribute('aria-hidden', 'true');
+              chip.appendChild(check);
+            }
+            if (!done && chip.querySelector('.check'))
+              chip.querySelector('.check').remove();
+          });
+          preview.hidden = selected.length === 0 || current === 0;
+          while (preview.children.length > selected.length)
+            preview.lastElementChild.remove();
+          if (!preview.hidden) {
+            setPalette(preview, WORDS[current]);
+            selected.forEach(function (n, i) {
+              var tile = preview.children[i];
+              if (!tile) {
+                tile = document.createElement('span');
+                tile.className = 'preview-letter';
+                preview.appendChild(tile);
+              }
+              tile.textContent = LETTERS[n];
+            });
+          }
+          hand.hidden =
+            !hintVisible ||
+            current !== 0 ||
+            selected.length > 0 ||
+            phase !== 'practice';
+          var key = [phase, current, completed.join(','), hintVisible].join(
+            ':',
+          );
+          draw(
+            previousRenderKey !== null &&
+              key !== previousRenderKey &&
+              !selected.length,
+          );
+          previousRenderKey = key;
+        }
+        function center(n) {
+          return {
+            x: ((n % 4) + 0.5) * 62.5,
+            y: (Math.floor(n / 4) + 0.5) * 62.5,
+          };
+        }
+        // Continuous rounded ribbons, including square-ended turns, just like the game.
+        function ribbon(path, half, radius, fill, startAtCenter) {
+          var points = path.map(center),
+            polygon = [];
+          if (points.length === 1) {
+            var left = points[0].x - half,
+              right = points[0].x + half;
+            var top = points[0].y - half,
+              bottom = points[0].y + half;
+            ctx.beginPath();
+            ctx.moveTo(left + radius, top);
+            ctx.lineTo(right - radius, top);
+            ctx.quadraticCurveTo(right, top, right, top + radius);
+            ctx.lineTo(right, bottom - radius);
+            ctx.quadraticCurveTo(right, bottom, right - radius, bottom);
+            ctx.lineTo(left + radius, bottom);
+            ctx.quadraticCurveTo(left, bottom, left, bottom - radius);
+            ctx.lineTo(left, top + radius);
+            ctx.quadraticCurveTo(left, top, left + radius, top);
+            ctx.closePath();
+            ctx.fillStyle = fill;
+            ctx.fill();
+            return;
+          }
+          var dirs = points.slice(1).map(function (p, i) {
+            return {
+              x: Math.sign(p.x - points[i].x),
+              y: Math.sign(p.y - points[i].y),
+            };
+          });
+          [1, -1].forEach(function (side) {
+            var edge = points.map(function (p, i) {
+              var prev = dirs[Math.max(0, i - 1)],
+                next = dirs[Math.min(i, dirs.length - 1)];
+              var nx = -prev.y,
+                ny = prev.x;
+              if (
+                i > 0 &&
+                i < points.length - 1 &&
+                (prev.x !== next.x || prev.y !== next.y)
+              ) {
+                nx -= next.y;
+                ny += next.x;
+              }
+              var cap =
+                i === 0
+                  ? startAtCenter
+                    ? 0
+                    : -half
+                  : i === points.length - 1
+                    ? half
+                    : 0;
+              return {
+                x: p.x + side * nx * half + cap * next.x,
+                y: p.y + side * ny * half + cap * next.y,
+              };
+            });
+            polygon = polygon.concat(side === 1 ? edge : edge.reverse());
+          });
+          ctx.beginPath();
+          polygon.forEach(function (p, i) {
+            var prev = polygon[(i + polygon.length - 1) % polygon.length],
+              next = polygon[(i + 1) % polygon.length];
+            var d1 = Math.hypot(prev.x - p.x, prev.y - p.y),
+              d2 = Math.hypot(next.x - p.x, next.y - p.y);
+            var r = Math.min(radius, d1 / 2, d2 / 2);
+            var a = {
+              x: p.x + ((prev.x - p.x) * r) / d1,
+              y: p.y + ((prev.y - p.y) * r) / d1,
+            };
+            var b = {
+              x: p.x + ((next.x - p.x) * r) / d2,
+              y: p.y + ((next.y - p.y) * r) / d2,
+            };
+            if (i === 0) ctx.moveTo(a.x, a.y);
+            else ctx.lineTo(a.x, a.y);
+            ctx.quadraticCurveTo(p.x, p.y, b.x, b.y);
+          });
+          ctx.closePath();
+          ctx.fillStyle = fill;
+          ctx.fill();
+        }
+        function wordOpacity(i) {
+          if (phase === 'solved' || (phase === 'success' && current === 0))
+            return 1;
+          return i === current && phase !== 'lengths' ? 1 : 0.45;
+        }
+        function roundedOutline(points, radius) {
+          ctx.beginPath();
+          points.forEach(function (point, i) {
+            var prev = points[(i + points.length - 1) % points.length],
+              next = points[(i + 1) % points.length];
+            var before = Math.hypot(prev.x - point.x, prev.y - point.y),
+              after = Math.hypot(next.x - point.x, next.y - point.y);
+            var r = Math.min(radius, before / 2, after / 2);
+            var x = point.x + ((prev.x - point.x) * r) / before,
+              y = point.y + ((prev.y - point.y) * r) / before;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+            ctx.quadraticCurveTo(
+              point.x,
+              point.y,
+              point.x + ((next.x - point.x) * r) / after,
+              point.y + ((next.y - point.y) * r) / after,
+            );
+          });
+          ctx.closePath();
+        }
+        function boardOutline() {
+          roundedOutline(
+            [
+              { x: 0, y: 0 },
+              { x: 250, y: 0 },
+              { x: 250, y: 250 },
+              { x: 0, y: 250 },
+            ],
+            8,
+          );
+        }
+        function guideOutline(region) {
+          var edges = [];
+          region.forEach(function (n) {
+            var x = n % 4,
+              y = Math.floor(n / 4);
+            if (y === 0 || region.indexOf(n - 4) < 0)
+              edges.push([
+                [x, y],
+                [x + 1, y],
+              ]);
+            if (x === 3 || region.indexOf(n + 1) < 0)
+              edges.push([
+                [x + 1, y],
+                [x + 1, y + 1],
+              ]);
+            if (y === 3 || region.indexOf(n + 4) < 0)
+              edges.push([
+                [x + 1, y + 1],
+                [x, y + 1],
+              ]);
+            if (x === 0 || region.indexOf(n - 1) < 0)
+              edges.push([
+                [x, y + 1],
+                [x, y],
+              ]);
+          });
+          var edge = edges.shift(),
+            points = [edge[0]],
+            end = edge[1];
+          while (edges.length) {
+            points.push(end);
+            var index = edges.findIndex(function (item) {
+              return item[0][0] === end[0] && item[0][1] === end[1];
+            });
+            if (index < 0) break;
+            end = edges.splice(index, 1)[0][1];
+          }
+          points = points
+            .filter(function (point, i, all) {
+              var prev = all[(i + all.length - 1) % all.length],
+                next = all[(i + 1) % all.length];
+              return (
+                (point[0] - prev[0]) * (next[1] - point[1]) !==
+                (point[1] - prev[1]) * (next[0] - point[0])
+              );
+            })
+            .map(function (point) {
+              return { x: point[0] * 62.5, y: point[1] * 62.5 };
+            });
+          roundedOutline(points, 8);
+        }
+        function snapshot() {
+          var copy = document.createElement('canvas');
+          copy.width = board.width;
+          copy.height = board.height;
+          copy.getContext('2d').drawImage(board, 0, 0);
+          return copy;
+        }
+        function draw(animate) {
+          cancelAnimationFrame(boardAnimation);
+          var from = animate === true && !reducedMotion() ? snapshot() : null;
+          paintBoard();
+          if (!from) return;
+          var target = snapshot(),
+            started = performance.now();
+          function frame(now) {
+            var progress = Math.min(1, (now - started) / TRANSITION_MS);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, board.width, board.height);
+            ctx.globalAlpha = 1;
+            ctx.drawImage(from, 0, 0, board.width, board.height);
+            ctx.globalAlpha = eased;
+            ctx.drawImage(target, 0, 0);
+            ctx.globalAlpha = 1;
+            if (progress < 1) boardAnimation = requestAnimationFrame(frame);
+            else {
+              boardAnimation = null;
+              paintBoard();
+            }
+          }
+          frame(started);
+        }
+        function paintBoard() {
+          var size = board.getBoundingClientRect().width;
+          var pixels = Math.round(size * (window.devicePixelRatio || 1));
+          if (board.width !== pixels) {
+            board.width = pixels;
+            board.height = pixels;
+          }
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.clearRect(0, 0, pixels, pixels);
+          var inset = (BOARD_INSET * pixels) / size,
+            scale = (pixels - inset * 2) / BOARD_SIZE;
+          ctx.setTransform(scale, 0, 0, scale, inset, inset);
+          ctx.save();
+          boardOutline();
+          ctx.clip();
+          for (var n = 0; n < 16; n++) {
+            ctx.globalAlpha = LETTERS[n] === '#' ? 0.7 : 1;
+            ctx.fillStyle = LETTERS[n] === '#' ? '#252525' : '#464646';
+            ctx.fillRect((n % 4) * 62.5, Math.floor(n / 4) * 62.5, 62.5, 62.5);
+            ctx.strokeStyle = '#747474';
+            ctx.lineWidth = 0.7;
+            ctx.strokeRect(
+              (n % 4) * 62.5,
+              Math.floor(n / 4) * 62.5,
+              62.5,
+              62.5,
+            );
+          }
+          WORDS.forEach(function (word, i) {
+            var done = completedSet.has(i);
+            var path = done ? word.path : i === current ? selected : [];
+            ctx.globalAlpha = 1;
+            if (path.length) {
+              path.forEach(function (n) {
+                ctx.fillStyle = word.dark;
+                ctx.fillRect(
+                  (n % 4) * 62.5,
+                  Math.floor(n / 4) * 62.5,
+                  62.5,
+                  62.5,
+                );
+              });
+              ribbon(path, 19, 6, word.light, done);
+              ribbon(path, 15, 3, word.color, done);
+              if (done) {
+                var start = center(path[0]);
+                ctx.beginPath();
+                ctx.arc(start.x, start.y, 19, 0, Math.PI * 2);
+                ctx.fillStyle = word.color;
+                ctx.fill();
+                ctx.strokeStyle = word.dark;
+                ctx.lineWidth = 3.5;
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(start.x + 14, start.y - 14, 6.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#252525';
+                ctx.fill();
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 1.3;
+                ctx.stroke();
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('✓', start.x + 14, start.y - 14);
+              }
+            } else if (i === current && hintVisible && phase === 'practice') {
+              ctx.globalAlpha = 0.4;
+              ribbon(word.path, 19, 6, word.color);
+            }
+            ctx.globalAlpha = 1;
+            word.path.forEach(function (n) {
+              var p = center(n);
+              ctx.fillStyle = path.indexOf(n) !== -1 ? '#000' : '#fff';
+              ctx.font = '700 20px "Nunito Sans", sans-serif';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(LETTERS[n], p.x, p.y + 1);
+            });
+          });
+          // Dim the completed word as one image, so its overlapping layers stay opaque.
+          WORDS.forEach(function (word, i) {
+            ctx.globalAlpha = 1 - wordOpacity(i);
+            ctx.fillStyle = '#171717';
+            word.path.forEach(function (n) {
+              ctx.fillRect(
+                (n % 4) * 62.5,
+                Math.floor(n / 4) * 62.5,
+                62.5,
+                62.5,
+              );
+            });
+          });
+          ctx.restore();
+          ctx.globalAlpha = 1;
+          // Draw grid seams AFTER backgrounds. Hide only seams inside the same ribbon.
+          function pathOwner(n) {
+            return WORDS.findIndex(function (word, i) {
+              var path =
+                completedSet.has(i)
+                  ? word.path
+                  : i === current
+                    ? selected
+                    : [];
+              return path.indexOf(n) >= 0;
+            });
+          }
+          function seam(a, b, x1, y1, x2, y2) {
+            if (pathOwner(a) >= 0 && pathOwner(a) === pathOwner(b)) return;
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+          }
+          ctx.beginPath();
+          ctx.strokeStyle = '#747474';
+          ctx.lineWidth = 0.7;
+          for (var cell = 0; cell < 16; cell++) {
+            var x = (cell % 4) * 62.5,
+              y = Math.floor(cell / 4) * 62.5;
+            if (cell % 4 < 3)
+              seam(cell, cell + 1, x + 62.5, y, x + 62.5, y + 62.5);
+            if (cell < 12)
+              seam(cell, cell + 4, x, y + 62.5, x + 62.5, y + 62.5);
+          }
+          ctx.stroke();
+          // Both outlines stay inside the canvas and above every fill/dimming layer.
+          boardOutline();
+          ctx.strokeStyle = '#747474';
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+          if (
+            phase === 'practice' &&
+            selected.length === 0 &&
+            (!hintVisible || current === 2)
+          ) {
+            guideOutline(WORDS[current].path);
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 1.4;
+            ctx.stroke();
+          }
+          ctx.globalAlpha = 1;
+        }
+        function cellAt(e) {
+          var box = board.getBoundingClientRect(),
+            x =
+              (e.clientX - box.left - BOARD_INSET) /
+              (box.width - BOARD_INSET * 2),
+            y =
+              (e.clientY - box.top - BOARD_INSET) /
+              (box.height - BOARD_INSET * 2);
+          return x >= 0 && x < 1 && y >= 0 && y < 1
+            ? Math.floor(y * 4) * 4 + Math.floor(x * 4)
+            : -1;
+        }
+        function select(n) {
+          if (
+            n < 0 ||
+            LETTERS[n] === '#' ||
+            completed.some(function (i) {
+              return WORDS[i].path.indexOf(n) !== -1;
+            })
+          )
+            return;
+          var last = selected[selected.length - 1];
+          if (n === last) return;
+          if (selected.length > 1 && n === selected[selected.length - 2])
+            selected.pop();
+          else {
+            if (
+              selected.indexOf(n) !== -1 ||
+              selected.length >= WORDS[current].word.length
+            )
+              return;
+            if (
+              last !== undefined &&
+              Math.abs((n % 4) - (last % 4)) +
+                Math.abs(Math.floor(n / 4) - Math.floor(last / 4)) !==
+                1
+            )
+              return;
+            selected.push(n);
+          }
+          clearTimeout(hintTimer);
+          hintVisible = false;
+          feedback.textContent = '';
+          render();
+          post({ type: 'haptic', style: 'Soft' });
+        }
+        function submit() {
+          if (phase !== 'practice' || !selected.length) return;
+          var word = selected
+            .map(function (n) {
+              return LETTERS[n];
+            })
+            .join('');
+          if (word !== WORDS[current].word) {
+            selected = [];
+            feedback.textContent = interpolate(STRINGS.retry, {
+              letter: WORDS[current].word[0],
+            });
+            render();
+            return;
+          }
+          completed.push(current);
+          completedSet.add(current);
+          selected = [];
+          phase = 'success';
+          render();
+          post({ type: 'haptic', style: 'Medium' });
+          if (current === 0)
+            schedule(function () {
+              phase = 'lengths';
+              setCoach(escapeHtml(STRINGS.lengthsCoach));
+              announceStep('word-lengths', 1);
+              render();
+              schedule(nextWord, 2800);
+            }, 650);
+          else if (current === 1) schedule(nextWord, 850);
+          else {
+            phase = 'solved';
+            render();
+            announceStep('solved', 4);
+            // The shared completion hook owns the final solved-board pause.
+            if (!finished) {
+              finished = true;
+              post({ type: 'completed' });
+            }
+          }
+        }
+        function nextWord() {
+          clearTimeout(transitionTimer);
+          current++;
+          feedback.textContent = '';
+          showPractice();
+        }
+        board.addEventListener('pointerdown', function (e) {
+          if (phase !== 'practice' || activePointer !== null || e.button !== 0)
+            return;
+          e.preventDefault();
+          activePointer = e.pointerId;
+          selected = [];
+          board.setPointerCapture(e.pointerId);
+          select(cellAt(e));
+        });
+        board.addEventListener('pointermove', function (e) {
+          if (e.pointerId === activePointer) select(cellAt(e));
+        });
+        board.addEventListener('pointerup', function (e) {
+          if (e.pointerId !== activePointer) return;
+          select(cellAt(e));
+          activePointer = null;
+          board.releasePointerCapture(e.pointerId);
+          submit();
+        });
+        function cancel() {
+          activePointer = null;
+          selected = [];
+          render();
+        }
+        board.addEventListener('pointercancel', cancel);
+        board.addEventListener('lostpointercapture', function () {
+          if (activePointer !== null) cancel();
+        });
+        board.addEventListener('keydown', function (e) {
+          if (phase !== 'practice') return;
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            cancel();
+          } else if (e.key === 'Backspace') {
+            e.preventDefault();
+            selected.pop();
+            render();
+          } else if (e.key === 'Enter') {
+            e.preventDefault();
+            submit();
+          } else if (/^[a-z]$/i.test(e.key)) {
+            e.preventDefault();
+            select(LETTERS.indexOf(e.key.toUpperCase()));
+          }
+        });
+        document.addEventListener('click', function () {
+          if (phase === 'lengths') nextWord();
+        });
+        function reset() {
+          clearTimeout(transitionTimer);
+          clearTimeout(hintTimer);
+          cancelAnimationFrame(boardAnimation);
+          previousRenderKey = null;
+          current = 0;
+          phase = 'practice';
+          selected = [];
+          completed = [];
+          completedSet = new Set();
+          activePointer = null;
+          finished = false;
+          hintVisible = false;
+          feedback.textContent = '';
+          showPractice();
+        }
+        function onMessage(e) {
+          if (e.source && e.source !== window && e.source !== window.parent)
+            return;
+          var data;
+          try {
+            data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+          } catch (_) {
+            return;
+          }
+          if (data && data.type === 'reset') reset();
+          else if (data && data.type === 'localize' && data.strings) {
+            Object.keys(STRINGS).forEach(function (key) {
+              if (typeof data.strings[key] === 'string')
+                STRINGS[key] = data.strings[key];
+            });
+            if (typeof data.locale === 'string')
+              document.documentElement.lang = data.locale;
+            document.title = STRINGS.documentTitle;
+            document.querySelector('.length-label').textContent =
+              STRINGS.wordLengthsLabel;
+            info.setAttribute('aria-label', STRINGS.wordLengthsAriaLabel);
+            preview.setAttribute(
+              'aria-label',
+              STRINGS.selectedLettersAriaLabel,
+            );
+            board.setAttribute('aria-label', STRINGS.boardAriaLabel);
+            if (phase === 'practice') {
+              if (current === 0)
+                setCoach(
+                  withStrong(STRINGS.firstCoach, 'word', WORDS[0].word),
+                );
+              else
+                setCoach(
+                  withStrong(
+                    STRINGS.nextCoach,
+                    'length',
+                    WORDS[current].word.length,
+                  ),
+                );
+            } else if (phase === 'lengths') {
+              setCoach(escapeHtml(STRINGS.lengthsCoach));
+            }
+            render();
+          }
+        }
+        window.addEventListener('message', onMessage);
+        document.addEventListener('message', onMessage);
+        window.addEventListener('resize', draw);
+        window.addEventListener('pagehide', function () {
+          cancelAnimationFrame(boardAnimation);
+          if (coachAnimation) coachAnimation.cancel();
+          clearTimeout(transitionTimer);
+          clearTimeout(hintTimer);
+        });
+        document.fonts.ready.then(draw);
+        reset();
+        post({ type: 'ready' });
+      })();
+    </script>
+  </body>
+</html>

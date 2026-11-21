@@ -1,0 +1,1071 @@
+<!-- design-tokens: snapshot-sha256=855ba5ab1f9418e52cd19cef2258e6bafd08b5f29ce85f8ffaafa17159f09dd8 generator=task13-v2 -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover"
+    />
+    <title>Pipes — How to Play</title>
+    <script>
+      (function () {
+        if (/Android/i.test(navigator.userAgent || '')) {
+          document.documentElement.classList.add('is-android-webview');
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #171717;
+        --text: #FFFFFF;
+        --muted: rgba(255, 255, 255, 0.42);
+        --coach-text: #0AB963;
+        --coach-bg: #16271f;
+        --font-body:
+          'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Inter, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        min-height: 100dvh;
+        min-height: -webkit-fill-available;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        overflow: hidden;
+        font-weight: 700;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .stage {
+        position: relative;
+        height: 100%;
+        min-height: 100dvh;
+        min-height: -webkit-fill-available;
+        display: flex;
+        flex-direction: column;
+        /* Default top inset; last step overrides via --stage-padding-top. */
+        --stage-padding-top: 140px;
+        padding: var(--stage-padding-top) 18px 32px;
+      }
+
+      /* Top-aligned so the stage padding is consistent across steps (same as zip/tango). */
+      .content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 26px;
+        min-height: 0;
+      }
+
+      /* Coach caption */
+      .coach-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        max-width: 280px;
+        width: 100%;
+        flex-shrink: 0;
+      }
+      .coach {
+        width: 100%;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.35;
+        color: var(--coach-text);
+        background: var(--coach-bg);
+        border-radius: 10px;
+        padding: 12px 16px;
+        opacity: 0;
+        transform: translateY(4px);
+        transition:
+          opacity 200ms ease,
+          transform 200ms ease;
+      }
+      .coach.is-on {
+        opacity: 1;
+        transform: none;
+      }
+      .coach-text {
+        min-height: 20px;
+      }
+      .coach-text .word {
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .coach-text .char {
+        display: inline-block;
+        opacity: 0;
+        animation: coachCharIn 90ms ease-out forwards;
+      }
+      @keyframes coachCharIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Reference art above the caption on the final step only.
+         Must not reserve space when off (visibility:hidden still occupies layout —
+         that was pushing the coach ~80px below zip/tango). */
+      .reference {
+        flex-shrink: 0;
+        width: 74px;
+        height: 80px;
+        display: none;
+        pointer-events: none;
+      }
+      .reference.is-on {
+        display: block;
+      }
+
+      /* Pipes float on the page — no board frame / grid lines. */
+      .pipes-wrap {
+        position: relative;
+        touch-action: manipulation;
+        transition: transform 200ms ease;
+      }
+      .pipes-wrap svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+      }
+
+      /* Tap hint: a finger that bobs below the tile it wants rotated, gliding between tiles.
+         The outer element owns the position so the bob on the inner one is never overwritten. */
+      .tap-hand {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        transition:
+          left 240ms ease,
+          top 240ms ease;
+      }
+      .tap-hand-inner {
+        animation: handBob 800ms ease-in-out infinite alternate;
+      }
+      .tap-hand svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      @keyframes handBob {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(var(--hand-bob, 12px));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="content">
+        <div class="reference" id="reference" aria-hidden="true">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="74"
+            height="80"
+            viewBox="0 0 74 80"
+            fill="none"
+          >
+            <mask
+              id="referenceNetwork"
+              maskUnits="userSpaceOnUse"
+              x="-0.183594"
+              y="-0.184326"
+              width="74"
+              height="80"
+              fill="black"
+            >
+              <rect
+                fill="white"
+                x="-0.183594"
+                y="-0.184326"
+                width="74"
+                height="80"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M37.0517 0.817058C37.605 0.826283 41.3402 0.945958 44.0797 3.82267C46.2885 6.14239 46.4459 8.78017 46.4812 9.60094C46.5149 10.3771 46.5916 13.5613 44.094 16.0591C43.2143 16.9386 42.4501 17.8175 41.7855 18.1289C41.7678 19.4114 41.8032 20.3449 41.7855 21.6274V31.5848H41.7505V36.7703C43.2481 37.62 44.4973 38.8543 45.3619 40.3386H50.7516L56.9847 40.3013C58.0551 40.3013 58.936 39.4943 59.0492 38.4574V22.0156H59.0094C58.9839 20.7811 58.959 19.5457 58.9339 18.3111L58.9323 18.2453C58.1927 17.856 57.096 17.161 56.1206 15.9941C53.5615 12.9314 54.1009 9.32359 54.1802 8.85052C54.335 7.92717 54.8887 5.53967 57.1127 3.58416C57.6228 3.13592 60.0019 1.14413 63.6352 1.20534C64.173 1.21455 67.8069 1.33324 70.4716 4.21016C72.6197 6.52963 72.7727 9.16735 72.8071 9.98843C72.8399 10.7643 72.9137 13.9486 70.4843 16.4466C69.6286 17.3262 68.6681 18.2059 68.0216 18.5171C68.0062 19.6671 68.0309 20.5362 68.024 21.6282H68.0749V28.9865L68.0757 28.9873V45.803C68.0756 48.09 66.2156 49.9442 63.9213 49.9442L50.7516 50.0496H45.3619C44.9279 50.7945 44.396 51.4761 43.7856 52.0781C43.191 52.6772 42.5193 53.2 41.7855 53.6289V64.2979L49.4583 64.3914C50.6961 64.3652 51.145 64.4172 52.3828 64.3914C52.7735 63.6335 53.7052 62.7039 54.8758 61.7044C57.9483 59.0815 61.5675 59.6349 62.0421 59.7162C62.9684 59.8749 65.3635 60.4418 67.3253 62.721C67.7749 63.2438 69.773 65.6822 69.7117 69.4058C69.7024 69.957 69.5834 73.6813 66.6973 76.4123C64.3703 78.6139 61.7242 78.7709 60.9006 78.8062C60.1222 78.8397 56.9278 78.9156 54.4218 76.4258C53.5394 75.5487 52.6672 74.7293 52.355 74.0668C51.0685 74.0491 50.7449 74.0844 49.4583 74.0668H36.1391C33.8447 74.0668 31.9848 72.2127 31.9847 69.9256V53.6344C30.507 52.7732 29.2782 51.5337 28.4306 50.0496H23.1792V50.0615H15.09V55.1709L15.0971 56.1068C15.0947 57.0515 15.0706 58.0157 15.09 58.9412C15.8503 59.3305 17.1723 60.025 18.1751 61.1917C20.8066 64.2545 20.2519 67.863 20.1704 68.336C20.0112 69.2596 19.4417 71.647 17.1552 73.6024C16.6305 74.0508 14.1845 76.0425 10.4491 75.9812C9.8956 75.972 6.16053 75.8523 3.42107 72.9756C1.21241 70.6559 1.05494 68.0181 1.01957 67.1973C0.985921 66.421 0.910099 63.2369 3.40756 60.7392C4.28732 59.8597 5.27487 58.9806 5.93943 58.6694C5.9557 57.4896 5.92877 56.6053 5.93784 55.4728V22.5331H5.88538C5.85912 21.2992 5.83331 20.0649 5.80747 18.8309L5.80588 18.7628C5.04551 18.3734 3.91817 17.679 2.91549 16.5123C0.284034 13.4496 0.838683 9.84105 0.920202 9.36797C1.07942 8.44446 1.64883 6.05701 3.9354 4.1016C4.45987 3.65336 6.90591 1.66153 10.6415 1.72278C11.1944 1.732 14.9298 1.85148 17.6695 4.7284C19.8783 7.04812 20.0365 9.68589 20.0718 10.5067C20.1055 11.2832 20.1809 14.4665 17.6838 16.964C16.8039 17.8437 15.8158 18.7233 15.1512 19.0346C15.1335 20.3172 15.1688 21.2505 15.1512 22.5331H15.09V40.3362H23.1792V40.3386H28.5061C28.9303 39.6223 29.4442 38.9647 30.0324 38.3821C30.6205 37.7896 31.2848 37.2719 32.0094 36.8456V31.5848H31.9847V21.6274C31.9585 20.3935 32.0106 19.3627 31.9847 18.1289V17.8634C31.2244 17.4741 30.3284 16.7734 29.3257 15.6066C26.6948 12.5445 27.2487 8.93729 27.3304 8.46303C27.4895 7.53972 28.0588 5.15147 30.3456 3.19588C30.8704 2.74738 33.3164 0.755776 37.0517 0.817058ZM36.88 40.9028C35.6854 40.9029 34.6024 41.3819 33.8139 42.1572C33.0476 42.9415 32.5755 44.0128 32.5754 45.1937C32.5756 47.598 34.5324 49.5478 36.9459 49.548C38.1386 49.5479 39.2195 49.0707 40.008 48.2991C40.7747 47.5142 41.248 46.4425 41.2481 45.2602C41.2481 42.8543 39.2921 40.903 36.88 40.9028Z"
+              />
+            </mask>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M37.0517 0.817058C37.605 0.826283 41.3402 0.945958 44.0797 3.82267C46.2885 6.14239 46.4459 8.78017 46.4812 9.60094C46.5149 10.3771 46.5916 13.5613 44.094 16.0591C43.2143 16.9386 42.4501 17.8175 41.7855 18.1289C41.7678 19.4114 41.8032 20.3449 41.7855 21.6274V31.5848H41.7505V36.7703C43.2481 37.62 44.4973 38.8543 45.3619 40.3386H50.7516L56.9847 40.3013C58.0551 40.3013 58.936 39.4943 59.0492 38.4574V22.0156H59.0094C58.9839 20.7811 58.959 19.5457 58.9339 18.3111L58.9323 18.2453C58.1927 17.856 57.096 17.161 56.1206 15.9941C53.5615 12.9314 54.1009 9.32359 54.1802 8.85052C54.335 7.92717 54.8887 5.53967 57.1127 3.58416C57.6228 3.13592 60.0019 1.14413 63.6352 1.20534C64.173 1.21455 67.8069 1.33324 70.4716 4.21016C72.6197 6.52963 72.7727 9.16735 72.8071 9.98843C72.8399 10.7643 72.9137 13.9486 70.4843 16.4466C69.6286 17.3262 68.6681 18.2059 68.0216 18.5171C68.0062 19.6671 68.0309 20.5362 68.024 21.6282H68.0749V28.9865L68.0757 28.9873V45.803C68.0756 48.09 66.2156 49.9442 63.9213 49.9442L50.7516 50.0496H45.3619C44.9279 50.7945 44.396 51.4761 43.7856 52.0781C43.191 52.6772 42.5193 53.2 41.7855 53.6289V64.2979L49.4583 64.3914C50.6961 64.3652 51.145 64.4172 52.3828 64.3914C52.7735 63.6335 53.7052 62.7039 54.8758 61.7044C57.9483 59.0815 61.5675 59.6349 62.0421 59.7162C62.9684 59.8749 65.3635 60.4418 67.3253 62.721C67.7749 63.2438 69.773 65.6822 69.7117 69.4058C69.7024 69.957 69.5834 73.6813 66.6973 76.4123C64.3703 78.6139 61.7242 78.7709 60.9006 78.8062C60.1222 78.8397 56.9278 78.9156 54.4218 76.4258C53.5394 75.5487 52.6672 74.7293 52.355 74.0668C51.0685 74.0491 50.7449 74.0844 49.4583 74.0668H36.1391C33.8447 74.0668 31.9848 72.2127 31.9847 69.9256V53.6344C30.507 52.7732 29.2782 51.5337 28.4306 50.0496H23.1792V50.0615H15.09V55.1709L15.0971 56.1068C15.0947 57.0515 15.0706 58.0157 15.09 58.9412C15.8503 59.3305 17.1723 60.025 18.1751 61.1917C20.8066 64.2545 20.2519 67.863 20.1704 68.336C20.0112 69.2596 19.4417 71.647 17.1552 73.6024C16.6305 74.0508 14.1845 76.0425 10.4491 75.9812C9.8956 75.972 6.16053 75.8523 3.42107 72.9756C1.21241 70.6559 1.05494 68.0181 1.01957 67.1973C0.985921 66.421 0.910099 63.2369 3.40756 60.7392C4.28732 59.8597 5.27487 58.9806 5.93943 58.6694C5.9557 57.4896 5.92877 56.6053 5.93784 55.4728V22.5331H5.88538C5.85912 21.2992 5.83331 20.0649 5.80747 18.8309L5.80588 18.7628C5.04551 18.3734 3.91817 17.679 2.91549 16.5123C0.284034 13.4496 0.838683 9.84105 0.920202 9.36797C1.07942 8.44446 1.64883 6.05701 3.9354 4.1016C4.45987 3.65336 6.90591 1.66153 10.6415 1.72278C11.1944 1.732 14.9298 1.85148 17.6695 4.7284C19.8783 7.04812 20.0365 9.68589 20.0718 10.5067C20.1055 11.2832 20.1809 14.4665 17.6838 16.964C16.8039 17.8437 15.8158 18.7233 15.1512 19.0346C15.1335 20.3172 15.1688 21.2505 15.1512 22.5331H15.09V40.3362H23.1792V40.3386H28.5061C28.9303 39.6223 29.4442 38.9647 30.0324 38.3821C30.6205 37.7896 31.2848 37.2719 32.0094 36.8456V31.5848H31.9847V21.6274C31.9585 20.3935 32.0106 19.3627 31.9847 18.1289V17.8634C31.2244 17.4741 30.3284 16.7734 29.3257 15.6066C26.6948 12.5445 27.2487 8.93729 27.3304 8.46303C27.4895 7.53972 28.0588 5.15147 30.3456 3.19588C30.8704 2.74738 33.3164 0.755776 37.0517 0.817058ZM36.88 40.9028C35.6854 40.9029 34.6024 41.3819 33.8139 42.1572C33.0476 42.9415 32.5755 44.0128 32.5754 45.1937C32.5756 47.598 34.5324 49.5478 36.9459 49.548C38.1386 49.5479 39.2195 49.0707 40.008 48.2991C40.7747 47.5142 41.248 46.4425 41.2481 45.2602C41.2481 42.8543 39.2921 40.903 36.88 40.9028Z"
+              stroke="white"
+              stroke-width="1.6315"
+              mask="url(#referenceNetwork)"
+            />
+          </svg>
+        </div>
+        <div class="coach-stack" id="coach-stack">
+          <div class="coach" id="coach">
+            <div class="coach-text" id="coach-text"></div>
+          </div>
+        </div>
+        <div id="board-host"></div>
+      </div>
+    </div>
+
+    <template id="tap-hand-template">
+      <div class="tap-hand">
+        <div class="tap-hand-inner">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="51"
+            height="90"
+            viewBox="0 0 51 90"
+            fill="none"
+          >
+            <mask id="tapHandOutline" fill="white">
+              <path
+                d="M8.9248 0C13.8538 0 17.8496 3.99577 17.8496 8.9248V20.9414C20.209 20.2144 22.7156 19.8232 25.3135 19.8232C39.2937 19.8233 50.627 31.1565 50.627 45.1367C50.6269 54.4725 45.572 62.6264 38.0508 67.0146C38.065 67.2682 38.0732 67.5241 38.0732 67.7812V76.2959C38.0732 83.7168 32.0575 89.7322 24.6367 89.7324C17.2157 89.7324 11.1992 83.7169 11.1992 76.2959V67.7812C11.1992 67.2508 11.2312 66.7273 11.291 66.2129C4.48478 61.6755 1.03749e-05 53.9304 0 45.1367C0 44.5332 0.0229127 43.9347 0.0644531 43.3418C0.0233643 42.9944 0 42.6407 0 42.2822L0 8.9248C0 3.99577 3.99577 0 8.9248 0Z"
+              />
+            </mask>
+            <path
+              d="M8.9248 0C13.8538 0 17.8496 3.99577 17.8496 8.9248V20.9414C20.209 20.2144 22.7156 19.8232 25.3135 19.8232C39.2937 19.8233 50.627 31.1565 50.627 45.1367C50.6269 54.4725 45.572 62.6264 38.0508 67.0146C38.065 67.2682 38.0732 67.5241 38.0732 67.7812V76.2959C38.0732 83.7168 32.0575 89.7322 24.6367 89.7324C17.2157 89.7324 11.1992 83.7169 11.1992 76.2959V67.7812C11.1992 67.2508 11.2312 66.7273 11.291 66.2129C4.48478 61.6755 1.03749e-05 53.9304 0 45.1367C0 44.5332 0.0229127 43.9347 0.0644531 43.3418C0.0233643 42.9944 0 42.6407 0 42.2822L0 8.9248C0 3.99577 3.99577 0 8.9248 0Z"
+              fill="#8e7ee0"
+            />
+            <path
+              d="M17.8496 20.9414H15.8496V23.6504L18.4385 22.8527L17.8496 20.9414ZM25.3135 19.8232L25.3135 17.8232H25.3135V19.8232ZM50.627 45.1367L52.627 45.1367V45.1367H50.627ZM38.0508 67.0146L37.0429 65.2872L35.9852 65.9043L36.0539 67.1269L38.0508 67.0146ZM38.0732 76.2959H40.0732V76.2959H38.0732ZM24.6367 89.7324V91.7324H24.6368L24.6367 89.7324ZM11.1992 76.2959H9.19922V76.2959H11.1992ZM11.291 66.2129L13.2776 66.4438L13.419 65.2278L12.4004 64.5488L11.291 66.2129ZM0 45.1367H-2V45.1367L0 45.1367ZM0.0644531 43.3418L2.05956 43.4816L2.07272 43.2938L2.05061 43.1069L0.0644531 43.3418ZM8.9248 0V2C12.7493 2 15.8496 5.10034 15.8496 8.9248H17.8496H19.8496C19.8496 2.8912 14.9584 -2 8.9248 -2V0ZM17.8496 8.9248H15.8496V20.9414H17.8496H19.8496V8.9248H17.8496ZM17.8496 20.9414L18.4385 22.8527C20.6092 22.1839 22.9173 21.8232 25.3135 21.8232V19.8232V17.8232C22.5138 17.8232 19.8088 18.245 17.2607 19.0301L17.8496 20.9414ZM25.3135 19.8232L25.3135 21.8232C38.1891 21.8233 48.627 32.2611 48.627 45.1367H50.627H52.627C52.627 30.0519 40.3983 17.8233 25.3135 17.8232L25.3135 19.8232ZM50.627 45.1367L48.627 45.1367C48.6269 53.7322 43.9753 61.2424 37.0429 65.2872L38.0508 67.0146L39.0587 68.7421C47.1686 64.0103 52.6269 55.213 52.627 45.1367L50.627 45.1367ZM38.0508 67.0146L36.0539 67.1269C36.0664 67.3484 36.0732 67.5664 36.0732 67.7812H38.0732H40.0732C40.0732 67.4817 40.0637 67.1881 40.0476 66.9024L38.0508 67.0146ZM38.0732 67.7812H36.0732V76.2959H38.0732H40.0732V67.7812H38.0732ZM38.0732 76.2959H36.0732C36.0732 82.6121 30.953 87.7322 24.6367 87.7324L24.6367 89.7324L24.6368 91.7324C33.1621 91.7322 40.0732 84.8214 40.0732 76.2959H38.0732ZM24.6367 89.7324V87.7324C18.3201 87.7324 13.1992 82.6122 13.1992 76.2959H11.1992H9.19922C9.19922 84.8217 16.1113 91.7324 24.6367 91.7324V89.7324ZM11.1992 76.2959H13.1992V67.7812H11.1992H9.19922V76.2959H11.1992ZM11.1992 67.7812H13.1992C13.1992 67.3313 13.2264 66.8849 13.2776 66.4438L11.291 66.2129L9.30439 65.982C9.23609 66.5696 9.19922 67.1703 9.19922 67.7812H11.1992ZM11.291 66.2129L12.4004 64.5488C6.12666 60.3664 2.00001 53.2334 2 45.1367L0 45.1367L-2 45.1367C-1.99999 54.6273 2.84289 62.9846 10.1816 67.877L11.291 66.2129ZM0 45.1367H2C2 44.5838 2.02099 44.0321 2.05956 43.4816L0.0644531 43.3418L-1.93066 43.202C-1.97517 43.8374 -2 44.4826 -2 45.1367H0ZM0.0644531 43.3418L2.05061 43.1069C2.01771 42.8287 2 42.5539 2 42.2822H0H-2C-2 42.7275 -1.97098 43.16 -1.9217 43.5767L0.0644531 43.3418ZM0 42.2822H2L2 8.9248H0H-2L-2 42.2822H0ZM0 8.9248H2C2 5.10034 5.10034 2 8.9248 2V0V-2C2.8912 -2 -2 2.8912 -2 8.9248H0Z"
+              fill="white"
+              mask="url(#tapHandOutline)"
+            />
+          </svg>
+        </div>
+      </div>
+    </template>
+
+    <script>
+      (function () {
+        var SVGNS = 'http://www.w3.org/2000/svg';
+        // Colours mirror PIPES_COLORS in pipesPuzzleConstants.ts.
+        var COL = {
+          page: '#171717',
+          wall: '#e8e8e8',
+          sourceOutline: '#FFFFFF',
+          fill: '#3CA862',
+          fillBorder: '#2A6F46',
+        };
+        var DR = [-1, 0, 1, 0];
+        var DC = [0, 1, 0, -1];
+
+        // Fractions of the cell edge. Deliberately chunkier than PIPES_RATIOS in
+        // pipesPuzzleConstants.ts — the how-to-play boards are a few big tiles rather than a full
+        // grid, so the design scales the tube and the hub up. Bulb and hub diameters are both kept
+        // at 2× the tube width, as they are in game.
+        var RATIOS = {
+          pipeWidth: 0.35,
+          bulbRadius: 0.35,
+          sourceRadius: 0.35,
+          sourceHole: 0.155,
+        };
+
+        // Tap hint geometry, as fractions of the cell — measured off the design frames. The finger
+        // sits just below and slightly right of the tile centre and bobs towards it.
+        var HAND = {
+          widthRatio: 0.56,
+          leftRatio: 0.065, // left edge, back from the tile centre
+          topRatio: 0.4, // resting top, below the tile centre
+          bobRatio: 0.26, // distance the bob travels
+        };
+
+        // Let the tap's rotation land before the next board swaps in.
+        var STEP_ADVANCE_DELAY_MS = 400;
+
+        // ---- Steps ----------------------------------------------------------
+        // All interactive (tap a tile to rotate it 90° CW). Step 1 just teaches
+        // the gesture; steps 2–3 advance once everything is connected to the
+        // source. No Continue button.
+        var STEPS = [
+          {
+            id: 'rotate',
+            text: 'Tap the pipe to rotate it.',
+            R: 1,
+            C: 1,
+            size: 92,
+            source: 0,
+            advanceOnTap: true,
+            tiles: [10], // a lone source, pipe running straight through E–W
+          },
+          {
+            id: 'connect',
+            text: 'Rotate pipes to connect them into one group.',
+            R: 1,
+            C: 3,
+            size: 72,
+            source: 1,
+            // Source starts already lined up, so only the two end bulbs need turning.
+            tiles: [8, 10, 2], // solution: [2,10,8]
+            hintTiles: [0, 2], // finger works left to right, one bulb at a time
+          },
+          {
+            id: 'puzzle',
+            text: 'All the pipes should be connected back to the source to complete the puzzle',
+            R: 3,
+            C: 3,
+            size: 76,
+            source: 4,
+            // solution: [4,4,4, 7,15,9, 1,3,8]
+            tiles: [2, 4, 8, 14, 15, 3, 2, 3, 1],
+            reference: true, // the shape to aim for, drawn above the caption
+            // Tighter top inset — reference preview needs the vertical room.
+            stagePaddingTop: 24,
+          },
+        ];
+
+        var els = {
+          stage: document.querySelector('.stage'),
+          coachStack: document.getElementById('coach-stack'),
+          coach: document.getElementById('coach'),
+          coachText: document.getElementById('coach-text'),
+          boardHost: document.getElementById('board-host'),
+          reference: document.getElementById('reference'),
+          handTemplate: document.getElementById('tap-hand-template'),
+        };
+
+        var stepIndex = 0;
+        var TYPE_SPEED = 15;
+        var typingTimer = null;
+        var coachState = 'idle';
+        var interactiveDone = false;
+        var advanceTimer = null;
+
+        function clearAdvanceTimer() {
+          if (advanceTimer) {
+            clearTimeout(advanceTimer);
+            advanceTimer = null;
+          }
+        }
+
+        function postToHost(msg) {
+          try {
+            var payload = JSON.stringify(msg);
+            if (
+              window.ReactNativeWebView &&
+              window.ReactNativeWebView.postMessage
+            ) {
+              window.ReactNativeWebView.postMessage(payload);
+            } else if (window.parent && window.parent !== window) {
+              window.parent.postMessage(payload, '*');
+            }
+          } catch (e) {}
+        }
+
+        // ---- Coach typewriter ----------------------------------------------
+        function clearTyping() {
+          if (typingTimer) {
+            clearTimeout(typingTimer);
+            typingTimer = null;
+          }
+        }
+        function typewrite(el, text, onDone) {
+          clearTyping();
+          coachState = 'typing';
+          el.textContent = text || '';
+          var totalChars = 0;
+          var children = Array.prototype.slice.call(el.childNodes);
+          children.forEach(function (child) {
+            if (child.nodeType !== 3) return;
+            var frag = document.createDocumentFragment();
+            var words = child.nodeValue.split(' ');
+            words.forEach(function (word, wIdx) {
+              if (word.length > 0) {
+                var wordSpan = document.createElement('span');
+                wordSpan.className = 'word';
+                for (var i = 0; i < word.length; i++) {
+                  var charSpan = document.createElement('span');
+                  charSpan.className = 'char';
+                  charSpan.style.animationDelay =
+                    totalChars * TYPE_SPEED + 'ms';
+                  charSpan.textContent = word.charAt(i);
+                  wordSpan.appendChild(charSpan);
+                  totalChars += 1;
+                }
+                frag.appendChild(wordSpan);
+              }
+              if (wIdx < words.length - 1) {
+                frag.appendChild(document.createTextNode(' '));
+                totalChars += 1;
+              }
+            });
+            el.replaceChild(frag, child);
+          });
+          var done = function () {
+            typingTimer = null;
+            if (onDone) onDone();
+          };
+          if (totalChars === 0) {
+            done();
+            return;
+          }
+          typingTimer = setTimeout(done, totalChars * TYPE_SPEED + 90);
+        }
+        function completeTyping() {
+          clearTyping();
+          var step = STEPS[stepIndex];
+          if (step) els.coachText.textContent = step.text || '';
+          coachState = 'done';
+        }
+        function handleScreenTap() {
+          if (coachState === 'typing') completeTyping();
+        }
+        function lockCoachSize(text) {
+          els.coach.style.minWidth = '';
+          els.coach.style.minHeight = '';
+          els.coachText.textContent = text || '';
+          void els.coach.offsetWidth;
+          var capH = els.coach.offsetHeight || 60;
+          var capW = els.coach.offsetWidth || 200;
+          els.coach.style.minWidth = capW + 'px';
+          els.coach.style.minHeight = capH + 'px';
+          els.coachText.textContent = '';
+        }
+        function measureCoachStackHeight(text) {
+          els.coach.style.minWidth = '';
+          els.coach.style.minHeight = '';
+          els.coachText.textContent = text || '';
+          void els.coachStack.offsetWidth;
+          var h = els.coachStack.offsetHeight || 0;
+          els.coachText.textContent = '';
+          return h;
+        }
+        function lockCoachStackSize() {
+          var maxH = 0;
+          STEPS.forEach(function (step) {
+            if (!step.text) return;
+            var h = measureCoachStackHeight(step.text);
+            if (h > maxH) maxH = h;
+          });
+          els.coachStack.style.minHeight = (maxH || 64) + 'px';
+        }
+        function showCoachCaption(step) {
+          coachState = 'idle';
+          lockCoachSize(step.text);
+          requestAnimationFrame(function () {
+            els.coach.classList.add('is-on');
+            typewrite(els.coachText, step.text, function () {
+              coachState = 'done';
+            });
+          });
+        }
+
+        // ---- Pipes logic ---------------------------------------------------
+        function rotateCW(m) {
+          return ((m << 1) | (m >> 3)) & 0xf;
+        }
+        // Flood fill from the source through matched edges (mirrors computeGreen).
+        function computeGreen(masks, R, C, source) {
+          var empty = { set: {}, flood: [], count: 0 };
+          if (source < 0 || masks[source] === 0) return empty;
+          var visited = {};
+          visited[source] = true;
+          var queue = [source];
+          var count = 1;
+          var flood = []; // BFS-ordered [idx, side, ...] arms (source outward)
+          for (var qi = 0; qi < queue.length; qi++) {
+            var idx = queue[qi];
+            var m = masks[idx];
+            var r = Math.floor(idx / C);
+            var c = idx % C;
+            for (var s = 0; s < 4; s++) {
+              if (!(m & (1 << s))) continue;
+              flood.push(idx, s); // every arm of a connected tile gets filled
+              var nr = r + DR[s];
+              var nc = c + DC[s];
+              if (nr < 0 || nr >= R || nc < 0 || nc >= C) continue;
+              var nb = nr * C + nc;
+              if (masks[nb] === 0 || !(masks[nb] & (1 << ((s + 2) % 4))))
+                continue;
+              if (!visited[nb]) {
+                visited[nb] = true;
+                count += 1;
+                queue.push(nb);
+              }
+            }
+          }
+          if (count < 2) return empty; // a lone source reads as not connected
+          return { set: visited, flood: flood, count: count };
+        }
+        // Solved when every opening is matched and the graph is `networks` trees.
+        function isSolved(masks, R, C, networks) {
+          var total = R * C;
+          var parent = [];
+          for (var i = 0; i < total; i++) parent[i] = i;
+          function find(x) {
+            var root = x;
+            while (parent[root] !== root) root = parent[root];
+            while (parent[x] !== root) {
+              var nx = parent[x];
+              parent[x] = root;
+              x = nx;
+            }
+            return root;
+          }
+          var vertices = 0;
+          var openings = 0;
+          for (var idx = 0; idx < total; idx++) {
+            var m = masks[idx];
+            if (m === 0) continue;
+            vertices += 1;
+            var r = Math.floor(idx / C);
+            var c = idx % C;
+            for (var s = 0; s < 4; s++) {
+              if (!(m & (1 << s))) continue;
+              var nr = r + DR[s];
+              var nc = c + DC[s];
+              if (nr < 0 || nr >= R || nc < 0 || nc >= C) return false;
+              var nb = nr * C + nc;
+              if (masks[nb] === 0) return false;
+              if (!(masks[nb] & (1 << ((s + 2) % 4)))) return false;
+              openings += 1;
+              parent[find(idx)] = find(nb);
+            }
+          }
+          if (openings / 2 !== vertices - networks) return false;
+          var comps = 0;
+          for (var k = 0; k < total; k++) {
+            if (masks[k] !== 0 && find(k) === k) comps += 1;
+          }
+          return comps === networks;
+        }
+
+        // ---- Pipe rendering (mirrors PipesPuzzleGrid + pipesUtils) ----
+        function isStraightPipeMask(m) {
+          return m === 5 || m === 10;
+        }
+        function tubeHalfWidth(tubeWidth) {
+          return tubeWidth / 2;
+        }
+        function straightPipeRect(m, cx, cy, cellSize, tubeWidth) {
+          var half = cellSize / 2;
+          var hw = tubeHalfWidth(tubeWidth);
+          if (m === 5)
+            return { x: cx - hw, y: cy - half, w: tubeWidth, h: cellSize };
+          if (m === 10)
+            return { x: cx - half, y: cy - hw, w: cellSize, h: tubeWidth };
+          return null;
+        }
+        function sourceArmRect(side, cx, cy, half, srcR, tubeWidth) {
+          var hw = tubeHalfWidth(tubeWidth);
+          var armLen = half - srcR;
+          if (side === 0)
+            return { x: cx - hw, y: cy - half, w: tubeWidth, h: armLen };
+          if (side === 1)
+            return { x: cx + srcR, y: cy - hw, w: armLen, h: tubeWidth };
+          if (side === 2)
+            return { x: cx - hw, y: cy + srcR, w: tubeWidth, h: armLen };
+          return { x: cx - half, y: cy - hw, w: armLen, h: tubeWidth };
+        }
+        function rectPathD(r) {
+          return (
+            'M' + r.x + ' ' + r.y + 'h' + r.w + 'v' + r.h + 'h' + -r.w + 'Z'
+          );
+        }
+        function circlePathD(cx, cy, r) {
+          return (
+            'M' +
+            (cx + r) +
+            ' ' +
+            cy +
+            'A' +
+            r +
+            ' ' +
+            r +
+            ' 0 1 1 ' +
+            (cx - r) +
+            ' ' +
+            cy +
+            'A' +
+            r +
+            ' ' +
+            r +
+            ' 0 1 1 ' +
+            (cx + r) +
+            ' ' +
+            cy
+          );
+        }
+        function buildSourceNodePathD(mask, cx, cy, cellSize) {
+          var half = cellSize / 2;
+          var srcR = cellSize * 0.2;
+          var armW = srcR * 2 * 0.65;
+          var d = circlePathD(cx, cy, srcR);
+          for (var side = 0; side < 4; side++) {
+            if (!(mask & (1 << side))) continue;
+            d += rectPathD(sourceArmRect(side, cx, cy, half, srcR, armW));
+          }
+          return d;
+        }
+        // Centreline for one tile. `ext` pushes wall endpoints past the cell edge so neighbouring
+        // fill strokes overlap (mirrors addTileArms in PipesPuzzleGrid).
+        function tileArmD(m, cx, cy, h, ext) {
+          var reach = h + (ext || 0);
+          function ex(s) {
+            return cx + (s === 1 ? reach : s === 3 ? -reach : 0);
+          }
+          function ey(s) {
+            return cy + (s === 0 ? -reach : s === 2 ? reach : 0);
+          }
+          var d = '';
+          function through(a, b) {
+            d +=
+              'M' +
+              ex(a) +
+              ' ' +
+              ey(a) +
+              'L' +
+              cx +
+              ' ' +
+              cy +
+              'L' +
+              ex(b) +
+              ' ' +
+              ey(b);
+          }
+          function stub(s) {
+            d += 'M' + cx + ' ' + cy + 'L' + ex(s) + ' ' + ey(s);
+          }
+          var sides = [];
+          for (var s = 0; s < 4; s++) if (m & (1 << s)) sides.push(s);
+          if (sides.length === 1) stub(sides[0]);
+          else if (sides.length === 2) through(sides[0], sides[1]);
+          else if (sides.length === 3) {
+            if (m & 1 && m & 4) {
+              through(0, 2);
+              stub(m & 2 ? 1 : 3);
+            } else {
+              through(1, 3);
+              stub(m & 1 ? 0 : 2);
+            }
+          } else if (sides.length === 4) {
+            through(0, 2);
+            through(1, 3);
+          }
+          return d;
+        }
+
+        function buildPipes(masks, R, C, SIZE, source, prevGreen) {
+          var half = SIZE / 2;
+          var WALL = 1.125;
+          var outerW = SIZE * RATIOS.pipeWidth;
+          var innerW = Math.max(1, outerW - 2 * WALL);
+          var bulbR = SIZE * RATIOS.bulbRadius;
+          var holeR = Math.max(1, bulbR - WALL);
+          var srcR = SIZE * RATIOS.sourceRadius;
+          var srcHole = SIZE * RATIOS.sourceHole;
+
+          var g = computeGreen(masks, R, C, source);
+          var green = g.set;
+          var whiteArms = '';
+          var srcWhiteArms = '';
+          var srcGreenArms = '';
+          var greenArms = '';
+          var straightWhiteOuter = [];
+          var straightWhiteInner = [];
+          var straightGreenOuter = [];
+          var whiteDiscs = [];
+          var greenBulbs = [];
+          var whiteHoles = [];
+          var greenHoles = [];
+          var donut = null;
+
+          for (var idx = 0; idx < masks.length; idx++) {
+            var m = masks[idx];
+            if (m === 0) continue;
+            var cx = (idx % C) * SIZE + half;
+            var cy = Math.floor(idx / C) * SIZE + half;
+            var isGreen = !!green[idx];
+            var pop = 0;
+            for (var b = 0; b < 4; b++) if (m & (1 << b)) pop += 1;
+            if (idx === source) {
+              if (isGreen) srcGreenArms += tileArmD(m, cx, cy, half);
+              else srcWhiteArms += tileArmD(m, cx, cy, half);
+              donut = { green: isGreen, cx: cx, cy: cy };
+            } else if (isStraightPipeMask(m)) {
+              if (isGreen) {
+                straightGreenOuter.push(
+                  straightPipeRect(m, cx, cy, SIZE, outerW),
+                );
+              } else {
+                straightWhiteOuter.push(
+                  straightPipeRect(m, cx, cy, SIZE, outerW),
+                );
+                straightWhiteInner.push(
+                  straightPipeRect(m, cx, cy, SIZE, innerW),
+                );
+              }
+            } else if (isGreen) {
+              greenArms += tileArmD(m, cx, cy, half);
+              if (pop === 1) {
+                greenBulbs.push([cx, cy]);
+                greenHoles.push([cx, cy]);
+              }
+            } else {
+              whiteArms += tileArmD(m, cx, cy, half);
+              if (pop === 1) {
+                whiteDiscs.push([cx, cy]);
+                whiteHoles.push([cx, cy]);
+              }
+            }
+          }
+
+          var svg = document.createElementNS(SVGNS, 'svg');
+          svg.setAttribute('width', C * SIZE);
+          svg.setAttribute('height', R * SIZE);
+
+          function addPath(d, color, w, linecap) {
+            if (!d) return;
+            var p = document.createElementNS(SVGNS, 'path');
+            p.setAttribute('d', d);
+            p.setAttribute('fill', 'none');
+            p.setAttribute('stroke', color);
+            p.setAttribute('stroke-width', w);
+            p.setAttribute('stroke-linecap', linecap || 'butt');
+            p.setAttribute('stroke-linejoin', 'round');
+            svg.appendChild(p);
+          }
+          function addFilledPath(d, fill, stroke, strokeW) {
+            if (!d) return;
+            var p = document.createElementNS(SVGNS, 'path');
+            p.setAttribute('d', d);
+            p.setAttribute('fill', fill);
+            if (stroke) {
+              p.setAttribute('stroke', stroke);
+              p.setAttribute('stroke-width', strokeW);
+            }
+            svg.appendChild(p);
+          }
+          function addRects(list, fill, stroke, strokeW) {
+            list.forEach(function (r) {
+              if (!r) return;
+              var rect = document.createElementNS(SVGNS, 'rect');
+              rect.setAttribute('x', r.x);
+              rect.setAttribute('y', r.y);
+              rect.setAttribute('width', r.w);
+              rect.setAttribute('height', r.h);
+              rect.setAttribute('fill', fill);
+              if (stroke) {
+                rect.setAttribute('stroke', stroke);
+                rect.setAttribute('stroke-width', strokeW);
+              }
+              svg.appendChild(rect);
+            });
+          }
+          function addCircles(list, color, r) {
+            list.forEach(function (pt) {
+              var c = document.createElementNS(SVGNS, 'circle');
+              c.setAttribute('cx', pt[0]);
+              c.setAttribute('cy', pt[1]);
+              c.setAttribute('r', r);
+              c.setAttribute('fill', color);
+              svg.appendChild(c);
+            });
+          }
+          function addCircle(cx, cy, r, fill, stroke, strokeW) {
+            var c = document.createElementNS(SVGNS, 'circle');
+            c.setAttribute('cx', cx);
+            c.setAttribute('cy', cy);
+            c.setAttribute('r', r);
+            c.setAttribute('fill', fill);
+            if (stroke) {
+              c.setAttribute('stroke', stroke);
+              c.setAttribute('stroke-width', strokeW);
+            }
+            svg.appendChild(c);
+          }
+
+          // 1) outer silhouettes
+          addRects(straightWhiteOuter, COL.wall);
+          addRects(straightGreenOuter, COL.fill, COL.fillBorder, WALL * 2);
+          addPath(whiteArms, COL.wall, outerW, 'butt');
+          addPath(srcWhiteArms, COL.wall, outerW, 'butt');
+          addPath(srcGreenArms, COL.fill, outerW, 'butt');
+          addPath(greenArms, COL.fillBorder, outerW, 'butt');
+          addCircles(whiteDiscs, COL.wall, bulbR);
+          addCircles(greenBulbs, COL.fillBorder, bulbR);
+          if (donut) {
+            addCircles(
+              [[donut.cx, donut.cy]],
+              donut.green ? COL.fill : COL.wall,
+              srcR,
+            );
+          }
+
+          // 2) carve channels
+          addRects(straightWhiteInner, COL.page);
+          addPath(whiteArms, COL.page, innerW, 'butt');
+          addCircles(whiteHoles, COL.page, holeR);
+          addCircles(greenHoles, COL.fill, holeR);
+
+          // 3) green fill flows through connected pipes (BFS order from the
+          // source so it can sweep outward — see renderPipes' dash animation).
+          // Group every tile's arms into ONE joined centreline (tileArmD) — separate
+          // butt-capped stubs leave the dark fillBorder join showing through at L-corners.
+          // Split into already-green (static) vs newly-green (swept in) so prior tiles
+          // don't blink dark when a new connection arrives.
+          var staticFillD = '';
+          var newFillD = '';
+          var fi = 0;
+          while (fi + 1 < g.flood.length) {
+            var gi = g.flood[fi];
+            var armMask = 0;
+            while (fi + 1 < g.flood.length && g.flood[fi] === gi) {
+              armMask |= 1 << g.flood[fi + 1];
+              fi += 2;
+            }
+            var gcx = (gi % C) * SIZE + half;
+            var gcy = Math.floor(gi / C) * SIZE + half;
+            var seg = tileArmD(armMask, gcx, gcy, half, WALL);
+            if (prevGreen && prevGreen[gi]) staticFillD += seg;
+            else newFillD += seg;
+          }
+          function makeFillPath(d) {
+            if (!d) return null;
+            var fp = document.createElementNS(SVGNS, 'path');
+            fp.setAttribute('d', d);
+            fp.setAttribute('fill', 'none');
+            fp.setAttribute('stroke', COL.fill);
+            fp.setAttribute('stroke-width', innerW);
+            fp.setAttribute('stroke-linecap', 'butt');
+            fp.setAttribute('stroke-linejoin', 'round');
+            svg.appendChild(fp);
+            return fp;
+          }
+          makeFillPath(staticFillD); // solid, never animated
+          var fillPathNew = makeFillPath(newFillD);
+
+          // Source hub hole stays visible once connected (green fill draws on top earlier).
+          if (donut) addCircles([[donut.cx, donut.cy]], COL.page, srcHole);
+
+          return {
+            svg: svg,
+            fillPathNew: fillPathNew,
+            greenSet: green,
+            count: g.count,
+          };
+        }
+
+        // ---- Pipes step ----------------------------------------------------
+        function renderPipes(step) {
+          interactiveDone = false;
+          var R = step.R;
+          var C = step.C;
+          var SIZE = step.size;
+          var source = step.source;
+          var networks = step.networks || 1;
+          var masks = step.tiles.slice();
+
+          var wrap = document.createElement('div');
+          wrap.className = 'pipes-wrap';
+          wrap.style.width = C * SIZE + 'px';
+          wrap.style.height = R * SIZE + 'px';
+
+          // Tap hint: a finger bobbing under the first tile in `hintTiles` that has not reached the
+          // source yet. It stays put however many turns that tile needs, slides to the next one as
+          // each connects, and leaves once they all have.
+          var half = SIZE / 2;
+          var hintTiles = step.hintTiles || [];
+          var hand = null;
+          if (hintTiles.length) {
+            hand = els.handTemplate.content.firstElementChild.cloneNode(true);
+            hand.style.width = SIZE * HAND.widthRatio + 'px';
+            hand.style.setProperty('--hand-bob', SIZE * HAND.bobRatio + 'px');
+            pointHandAt(hintTiles[0]);
+            wrap.appendChild(hand);
+          }
+          function pointHandAt(tile) {
+            var cx = (tile % C) * SIZE + half;
+            var cy = Math.floor(tile / C) * SIZE + half;
+            hand.style.left = cx - SIZE * HAND.leftRatio + 'px';
+            hand.style.top = cy + SIZE * HAND.topRatio + 'px';
+          }
+          function updateHint(greenSet) {
+            if (!hand) return;
+            for (var i = 0; i < hintTiles.length; i++) {
+              if (!greenSet[hintTiles[i]]) {
+                pointHandAt(hintTiles[i]);
+                return;
+              }
+            }
+            wrap.removeChild(hand);
+            hand = null;
+          }
+
+          var prevCount = -1;
+          var prevGreenSet = null;
+          var currentSvg = null;
+          function rebuild() {
+            var built = buildPipes(masks, R, C, SIZE, source, prevGreenSet);
+            // Swap just the board, so the hand keeps its place in the DOM and can transition
+            // between tiles instead of jumping.
+            if (currentSvg) wrap.removeChild(currentSvg);
+            currentSvg = built.svg;
+            wrap.appendChild(currentSvg);
+            updateHint(built.greenSet);
+            // Only the newly-connected arms sweep in; the already-green fill is drawn solid, so
+            // connected pipes never blink out on a new connection.
+            var fp = built.fillPathNew;
+            if (fp) {
+              var L = 0;
+              try {
+                L = fp.getTotalLength();
+              } catch (e) {}
+              if (L > 0) {
+                // Sweep the green fill outward from the source when the
+                // connected region grows (snap instantly otherwise).
+                var grew = prevCount >= 0 && built.count > prevCount;
+                fp.style.strokeDasharray = L;
+                fp.style.transition = 'none';
+                fp.style.strokeDashoffset = grew ? L : '0';
+                if (grew) {
+                  fp.getBoundingClientRect(); // force reflow
+                  fp.style.transition = 'stroke-dashoffset 240ms ease';
+                  fp.style.strokeDashoffset = '0';
+                }
+              }
+            }
+            prevCount = built.count;
+            prevGreenSet = built.greenSet;
+          }
+          rebuild();
+
+          function cellFromEvent(clientX, clientY) {
+            var rect = wrap.getBoundingClientRect();
+            var x = clientX - rect.left;
+            var y = clientY - rect.top;
+            if (x < 0 || y < 0 || x >= C * SIZE || y >= R * SIZE) return -1;
+            return Math.floor(y / SIZE) * C + Math.floor(x / SIZE);
+          }
+          wrap.addEventListener('click', function (e) {
+            if (interactiveDone) return;
+            e.stopPropagation();
+            var idx = cellFromEvent(e.clientX, e.clientY);
+            if (idx < 0 || masks[idx] === 0) return;
+            masks[idx] = rotateCW(masks[idx]);
+            rebuild();
+            if (step.advanceOnTap) {
+              interactiveDone = true;
+              advance();
+              return;
+            }
+            if (isSolved(masks, R, C, networks)) {
+              interactiveDone = true;
+              advance();
+            }
+          });
+
+          return wrap;
+        }
+
+        // ---- Step machine ---------------------------------------------------
+        function applyStepLayout(step) {
+          var top =
+            typeof step.stagePaddingTop === 'number'
+              ? step.stagePaddingTop + 'px'
+              : '140px';
+          els.stage.style.setProperty('--stage-padding-top', top);
+        }
+
+        function applyStep() {
+          var step = STEPS[stepIndex];
+          if (!step) return;
+
+          clearTyping();
+          clearAdvanceTimer();
+          coachState = 'idle';
+          interactiveDone = false;
+          applyStepLayout(step);
+
+          els.reference.classList.toggle('is-on', !!step.reference);
+          els.coach.classList.remove('is-on');
+          els.coach.style.minWidth = '';
+          els.coach.style.minHeight = '';
+          els.coachText.textContent = '';
+          els.boardHost.innerHTML = '';
+
+          els.coachStack.style.display = '';
+          showCoachCaption(step);
+
+          els.boardHost.appendChild(renderPipes(step));
+
+          postToHost({ type: 'step', step: step.id, index: stepIndex });
+        }
+
+        function advance() {
+          clearAdvanceTimer();
+          // The host already pauses before its completion modal, so only step→step swaps need to
+          // hold here — long enough for the tap's rotation to read before the board changes.
+          if (stepIndex >= STEPS.length - 1) {
+            finish();
+            return;
+          }
+          advanceTimer = setTimeout(function () {
+            advanceTimer = null;
+            stepIndex += 1;
+            applyStep();
+          }, STEP_ADVANCE_DELAY_MS);
+        }
+
+        function finish() {
+          postToHost({ type: 'completed' });
+        }
+
+        var lastTapAt = 0;
+        function onScreenTap() {
+          var now = Date.now();
+          if (now - lastTapAt < 500) return;
+          lastTapAt = now;
+          handleScreenTap();
+        }
+        document.addEventListener('touchstart', onScreenTap, { passive: true });
+        document.addEventListener('click', onScreenTap);
+
+        window.addEventListener('message', function (e) {
+          var data = e.data;
+          try {
+            data = typeof data === 'string' ? JSON.parse(data) : data;
+          } catch (err) {
+            return;
+          }
+          if (!data || !data.type) return;
+          if (data.type === 'reset') {
+            stepIndex = 0;
+            applyStep();
+          }
+        });
+
+        setTimeout(function () {
+          lockCoachStackSize();
+          applyStep();
+          postToHost({ type: 'ready' });
+        }, 50);
+      })();
+    </script>
+  </body>
+</html>

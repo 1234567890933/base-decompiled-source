@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/root_view_emi_info"
+    android:background="@drawable/cf_bg_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    <RelativeLayout
+        android:gravity="center"
+        android:id="@+id/rl_toolbar"
+        android:background="@color/color_cta"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="@dimen/cf_dimen_54">
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/cf_white"
+            android:layout_gravity="center"
+            android:id="@+id/tv_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cf_title_emi_screen_title"/>
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/emi_supported_bank_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

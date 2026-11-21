@@ -1,0 +1,37 @@
+package p056c1;
+
+import U2.b;
+import java.util.List;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
+import p550v2.AbstractC8442q0;
+import p550v2.Q;
+import p550v2.S;
+import p550v2.T;
+
+/* JADX INFO: renamed from: c1.f1, reason: case insensitive filesystem */
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes.dex */
+public final class C5576f1 implements Q {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public static final C5576f1 f55633a = new C5576f1();
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public static final Function1 f55634b = new Function1() { // from class: c1.e1
+        @Override // kotlin.jvm.functions.Function1
+        public final Object invoke(Object obj) {
+            return C5576f1.b((AbstractC8442q0.a) obj);
+        }
+    };
+
+    public static final Unit b(AbstractC8442q0.a aVar) {
+        return Unit.f85088a;
+    }
+
+    @Override // p550v2.Q
+    /* JADX INFO: renamed from: measure-3p2s80s */
+    public S mo2measure3p2s80s(T t10, List list, long j10) {
+        return T.o2(t10, b.l(j10), b.k(j10), null, f55634b, 4, null);
+    }
+}

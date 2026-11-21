@@ -1,0 +1,60 @@
+.class public Lcom/facebook/react/uimanager/UIManagerModule$c;
+.super Ljava/lang/Object;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements Landroid/content/ComponentCallbacks2;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcom/facebook/react/uimanager/UIManagerModule;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x9
+    name = "c"
+.end annotation
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    .line 2
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+.method public synthetic constructor <init>(Lcom/facebook/react/uimanager/b0;)V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Lcom/facebook/react/uimanager/UIManagerModule$c;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public onConfigurationChanged(Landroid/content/res/Configuration;)V
+    .locals 0
+
+    .line 1
+    return-void
+.end method
+
+.method public onLowMemory()V
+    .locals 0
+
+    .line 1
+    return-void
+.end method
+
+.method public onTrimMemory(I)V
+    .locals 0
+
+    .line 1
+    return-void
+.end method

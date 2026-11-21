@@ -1,0 +1,22 @@
+package O9;
+
+import android.graphics.Bitmap;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes3.dex */
+public class e implements a.InterfaceC0247a {
+    @Override // O9.a.InterfaceC0247a
+    public byte[] a(int i10) {
+        return new byte[i10];
+    }
+
+    @Override // O9.a.InterfaceC0247a
+    public Bitmap b(int i10, int i11, Bitmap.Config config) {
+        return Bitmap.createBitmap(i10, i11, config);
+    }
+
+    @Override // O9.a.InterfaceC0247a
+    public int[] c(int i10) {
+        return new int[i10];
+    }
+}

@@ -1,0 +1,1387 @@
+<!-- design-tokens: snapshot-sha256=855ba5ab1f9418e52cd19cef2258e6bafd08b5f29ce85f8ffaafa17159f09dd8 generator=task13-v2 -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover"
+    />
+    <title>Tango — How to Play</title>
+    <script>
+      (function () {
+        if (/Android/i.test(navigator.userAgent || '')) {
+          document.documentElement.classList.add('is-android-webview');
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #171717;
+        --text: #FFFFFF;
+        --muted: rgba(255, 255, 255, 0.42);
+        --green: #0AB963;
+        --green-text: #171717;
+        --coach-text: #0AB963;
+        --coach-bg: #16271f;
+        --radius: 12px;
+        --font-body: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          Roboto, Inter, sans-serif;
+        --font-title: 'Montserrat', 'Nunito Sans', sans-serif;
+
+        /* Tango palette — mirrors TANGO_COLORS in tangoPuzzleConstants.ts */
+        --t-tile: #3a3d42;
+        --t-empty: #222428;
+        --t-sun: #2ba86a;
+        --t-moon: #d24e88;
+        --t-given-sun: #b7e3c9;
+        --t-given-moon: #f0c3d7;
+        --t-hatch: rgba(255, 255, 255, 0.5);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        min-height: 100dvh;
+        min-height: -webkit-fill-available;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        overflow: hidden;
+        font-weight: 700;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .stage {
+        position: relative;
+        height: 100%;
+        min-height: 100dvh;
+        min-height: -webkit-fill-available;
+        display: flex;
+        flex-direction: column;
+        /* Default top inset; step 3 (ruleAdjacent) overrides via --stage-padding-top. */
+        --stage-padding-top: 140px;
+        padding: var(--stage-padding-top) 18px 32px;
+      }
+
+      /* Top-aligned so the stage padding is consistent across steps. */
+      .content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 26px;
+        min-height: 0;
+      }
+
+      /* Coach caption */
+      .coach-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        max-width: 260px;
+        width: 100%;
+        flex-shrink: 0;
+      }
+      .coach {
+        width: 100%;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.35;
+        color: var(--coach-text);
+        background: var(--coach-bg);
+        border-radius: 10px;
+        padding: 12px 16px;
+        opacity: 0;
+        transform: translateY(4px);
+        transition:
+          opacity 200ms ease,
+          transform 200ms ease;
+      }
+      .coach.is-on {
+        opacity: 1;
+        transform: none;
+      }
+      .coach-text {
+        min-height: 20px;
+      }
+      .coach-text .word {
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .coach-text .char {
+        display: inline-block;
+        opacity: 0;
+        animation: coachCharIn 90ms ease-out forwards;
+      }
+      @keyframes coachCharIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      /* Emphasised keyword inside the green caption (e.g. "circle", "square", "=", "x"). */
+      .coach-text .hl {
+        color: var(--text);
+        font-weight: 800;
+      }
+
+      /* Secondary instruction line under the caption (e.g. "• Tap to fill this cell"). */
+      .subhint {
+        display: none;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .subhint.is-on {
+        display: block;
+      }
+
+      /* Slot above the caption for step-specific art (the adjacency legend). */
+      .top-host {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .top-host:empty {
+        display: none;
+      }
+
+      /* Highlighted empty cell(s) the user is prompted to fill. */
+      .tcell.spot .ttile.empty {
+        border-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 1);
+      }
+      /* Non-interactive empties on guided solve steps — greyer than playable empties. */
+      .tcell.disabled .ttile.empty {
+        background: rgba(134, 134, 134, 0.2);
+      }
+
+      /* ---- Tango board ------------------------------------------------- */
+      .tboard {
+        position: relative;
+        display: grid;
+      }
+      .tcell {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ttile {
+        position: absolute;
+        inset: 3px;
+        border-radius: 26%;
+        background: var(--t-tile);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 140ms ease;
+      }
+      .ttile.empty {
+        background: var(--t-empty);
+        border: 1.5px solid rgba(255, 255, 255, 0.16);
+      }
+      .ttile.given-sun {
+        background: var(--t-given-sun);
+      }
+      .ttile.given-moon {
+        background: var(--t-given-moon);
+      }
+      .tsun {
+        width: 60%;
+        height: 60%;
+        border-radius: 50%;
+        background: var(--t-sun);
+      }
+      .tmoon {
+        width: 54%;
+        height: 54%;
+        border-radius: 30%;
+        background: var(--t-moon);
+      }
+      /* Conflict hatch — diagonal white stripes, clipped to the rounded tile. */
+      .thatch {
+        position: absolute;
+        inset: 0;
+        display: none;
+        background: repeating-linear-gradient(
+          45deg,
+          var(--t-hatch) 0 9px,
+          transparent 9px 22px
+        );
+      }
+      .ttile.conflict .thatch {
+        display: block;
+      }
+
+      /* Edge sign badges ("=" / "×") */
+      .tsign-inline {
+        width: 26px;
+        height: 26px;
+        flex: 0 0 auto;
+      }
+      .tsign-inline svg,
+      .tsign-abs svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .tsign-abs {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        transform: translate(-50%, -50%);
+        z-index: 4;
+        pointer-events: none;
+      }
+
+      /* Validity indicator (✓ / ×) shown beside a sign pair */
+      .indicator {
+        width: 26px;
+        height: 26px;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .indicator svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      /* Sign-pair layout (screens for "=" and "×") */
+      .pair-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      /* Keep the cells centred on screen; the indicator hangs to the right
+         (absolute) so it doesn't push the pair off-centre. */
+      .pair-wrap .indicator {
+        position: absolute;
+        left: 100%;
+        margin-left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      /* Adjacency-rule legend */
+      .rule-wrap {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .legend {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .lrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .ldots {
+        display: flex;
+        gap: 4px;
+      }
+      .ldot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--t-sun);
+      }
+      .lind {
+        width: 16px;
+        height: 16px;
+      }
+      .lind svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="content">
+        <div id="top-host" class="top-host"></div>
+        <div class="coach-stack" id="coach-stack">
+          <div class="coach" id="coach">
+            <div class="coach-text" id="coach-text"></div>
+          </div>
+          <div class="subhint" id="subhint"></div>
+        </div>
+        <div id="board-host"></div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        // ---- Sign + indicator glyphs ---------------------------------------
+        // "=" / "×" edge markers mirror TangoEqualSVG / TangoCrossSVG.
+        var EQUAL_SVG =
+          '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">' +
+          '<circle cx="8" cy="8" r="7.3" fill="white" stroke="black"/>' +
+          '<path d="M4 10.5V9H12V10.5H4ZM4 7V5.5H12V7H4Z" fill="#3D3D3D"/></svg>';
+        var CROSS_SVG =
+          '<svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">' +
+          '<circle cx="8.6667" cy="8.6667" r="7.9" fill="white" stroke="black"/>' +
+          '<path d="M4.93333 13.3333L4 12.4L7.73333 8.66667L4 4.93333L4.93333 4L8.66667 7.73333L12.4 4L13.3333 4.93333L9.6 8.66667L13.3333 12.4L12.4 13.3333L8.66667 9.6L4.93333 13.3333Z" fill="#171717"/></svg>';
+        var CHECK_SVG =
+          '<svg viewBox="0 0 24 24" fill="none" stroke="#e8e8e8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+        var CROSS_IND_SVG =
+          '<svg viewBox="0 0 24 24" fill="none" stroke="#ff7070" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+        var SUN = 1;
+        var MOON = 2;
+        var EMPTY = 0;
+
+        // Shared board for the guided final solve. Givens stay fixed; the user fills c1 (square via
+        // "="), c15 (square via "×"), then c5 + c14 (circles via balance). Complete solution:
+        //   M M S S
+        //   S S M M
+        //   M S M S
+        //   S M S M
+        var SOLVE_GIVENS = {
+          0: MOON,
+          2: SUN,
+          3: SUN,
+          4: SUN,
+          6: MOON,
+          7: MOON,
+          8: MOON,
+          9: SUN,
+          10: MOON,
+          11: SUN,
+          12: SUN,
+          13: MOON,
+        };
+        var SOLVE_HMARKERS = [
+          { r: 0, c: 0, type: 'equal' }, // c0 = c1
+          { r: 1, c: 2, type: 'equal' }, // c6 = c7
+          { r: 3, c: 0, type: 'cross' }, // c12 × c13
+        ];
+        var SOLVE_VMARKERS = [{ r: 2, c: 3, type: 'cross' }]; // c11 × c15
+
+        // ---- Steps ----------------------------------------------------------
+        // No Continue button: teaching screens advance on tap-anywhere,
+        // interactive screens advance when the correct move is made.
+        var STEPS = [
+          // 1: tap an empty cell to fill a circle (sun).
+          {
+            id: 'tapCircle',
+            mode: 'tapfill',
+            gesture: 'single',
+            start: EMPTY,
+            fill: SUN,
+            text: 'Tap to fill the empty cell with a *circle*',
+          },
+          // 2: double tap the filled circle to turn it into a square (moon).
+          {
+            id: 'tapSquare',
+            mode: 'tapfill',
+            gesture: 'double',
+            start: SUN,
+            fill: MOON,
+            text: 'Double tap to fill with a *square*',
+          },
+          // 3: rule — no three identical in a row. Interactive: the user double-taps the highlighted
+          // empty cell to place a square (a third circle would break the rule).
+          {
+            id: 'ruleAdjacent',
+            mode: 'adjacent',
+            // Tighter top inset for this step.
+            stagePaddingTop: 48,
+            text: 'No more than two elements next to each other so the empty state has to be a *square*.',
+            subHint: 'Double Tap to fill this cell.',
+          },
+          // 4: "=" sign — fill the empty cell to match.
+          {
+            id: 'equalSign',
+            mode: 'sign',
+            sign: 'equal',
+            left: MOON,
+            text: 'Sign *=* means identical elements so place a *square* in the empty cell',
+          },
+          // 5: "×" sign — fill the empty cell with the opposite.
+          {
+            id: 'crossSign',
+            mode: 'sign',
+            sign: 'cross',
+            left: MOON,
+            text: 'Sign *x* means opposite elements so place a *circle* in the empty cell',
+          },
+          // 6: rule — balance (interactive 1×4: fill the two empty cells so the
+          // row holds the same number of each element).
+          {
+            id: 'ruleBalance',
+            mode: 'question',
+            R: 1,
+            C: 4,
+            size: 60,
+            givens: { 0: MOON, 1: MOON },
+            hMarkers: [],
+            vMarkers: [],
+            spot: true,
+            subHint: 'Tap to fill these cells.',
+            text: 'Each row or column will have equal number of square and circles.',
+          },
+          // 7-9: guided full-board solve. Each step applies one rule to fill the highlighted cell(s)
+          // while the other empty cells are disabled; the board accumulates across the three steps.
+          // 7: "=" → c1 must match c0 (square).
+          {
+            id: 'solveEqual',
+            mode: 'guided',
+            size: 56,
+            givens: SOLVE_GIVENS,
+            prefilled: {},
+            targets: [{ idx: 1, expect: MOON }],
+            hMarkers: SOLVE_HMARKERS,
+            vMarkers: SOLVE_VMARKERS,
+            text: 'The *=* tells you these two cells must have the same shape.',
+            subHint: 'Double Tap to fill the highlighted cell.',
+          },
+          // 8: "×" → c15 must differ from c11 (square).
+          {
+            id: 'solveCross',
+            mode: 'guided',
+            size: 56,
+            givens: SOLVE_GIVENS,
+            prefilled: { 1: MOON },
+            targets: [{ idx: 15, expect: MOON }],
+            hMarkers: SOLVE_HMARKERS,
+            vMarkers: SOLVE_VMARKERS,
+            text: 'The *×* means these two cells must have different shapes.',
+            subHint: 'Double Tap to fill this cell.',
+          },
+          // 9 (final): balance → c5, c14 must be circles. Completing both plays the victory ripple.
+          {
+            id: 'solveBalance',
+            mode: 'guided',
+            size: 56,
+            givens: SOLVE_GIVENS,
+            prefilled: { 1: MOON, 15: MOON },
+            targets: [
+              { idx: 5, expect: SUN },
+              { idx: 14, expect: SUN },
+            ],
+            hMarkers: SOLVE_HMARKERS,
+            vMarkers: SOLVE_VMARKERS,
+            text: 'Since each row and column needs equal shapes, these cells must be circles.',
+          },
+        ];
+
+        var els = {
+          stage: document.querySelector('.stage'),
+          coachStack: document.getElementById('coach-stack'),
+          coach: document.getElementById('coach'),
+          coachText: document.getElementById('coach-text'),
+          boardHost: document.getElementById('board-host'),
+          topHost: document.getElementById('top-host'),
+          subhint: document.getElementById('subhint'),
+        };
+
+        var stepIndex = 0;
+        var TYPE_SPEED = 15;
+        var typingTimer = null;
+        var coachState = 'idle'; // idle | typing | done
+        var tapAnywhereActive = false; // rule screens: any tap advances
+        var interactiveDone = false; // guards input once a state is solved
+        var rippleTimers = []; // pending timers for the victory ripple
+        var ADVANCE_DELAY = 600; // pause after a correct fill so the result is visible before advancing
+        var RIPPLE_DELAY = 700; // pause on the solved board before the victory ripple plays
+        var advanceTimer = null;
+
+        function clearRippleTimers() {
+          rippleTimers.forEach(function (t) {
+            clearTimeout(t);
+          });
+          rippleTimers = [];
+        }
+
+        function clearAdvanceTimer() {
+          if (advanceTimer) {
+            clearTimeout(advanceTimer);
+            advanceTimer = null;
+          }
+        }
+
+        // Advance after a short pause so the user sees their correct move register.
+        function scheduleAdvance() {
+          clearAdvanceTimer();
+          advanceTimer = setTimeout(function () {
+            advanceTimer = null;
+            advance();
+          }, ADVANCE_DELAY);
+        }
+
+        function postToHost(msg) {
+          try {
+            var payload = JSON.stringify(msg);
+            if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+              window.ReactNativeWebView.postMessage(payload);
+            } else if (window.parent && window.parent !== window) {
+              window.parent.postMessage(payload, '*');
+            }
+          } catch (e) {}
+        }
+
+        // ---- Coach typewriter ----------------------------------------------
+        function clearTyping() {
+          if (typingTimer) {
+            clearTimeout(typingTimer);
+            typingTimer = null;
+          }
+        }
+
+        // Split caption text on '*' markers into segments; odd segments are emphasised (white).
+        function parseSegments(text) {
+          var out = [];
+          var parts = (text || '').split('*');
+          for (var i = 0; i < parts.length; i++) {
+            if (!parts[i]) continue;
+            out.push({ t: parts[i], hl: i % 2 === 1 });
+          }
+          return out;
+        }
+
+        // Build the caption into `el`. animate=true → per-char fade-in (typewriter); false → instant.
+        // Emphasised segments get the .hl (white) class either way. Returns char count for timing.
+        function buildCoachInto(el, text, animate) {
+          el.textContent = '';
+          var segs = parseSegments(text);
+          var frag = document.createDocumentFragment();
+          var total = 0;
+          var word = null;
+          function flush() {
+            if (word) {
+              frag.appendChild(word);
+              word = null;
+            }
+          }
+          segs.forEach(function (seg) {
+            for (var i = 0; i < seg.t.length; i++) {
+              var ch = seg.t.charAt(i);
+              if (ch === ' ') {
+                flush();
+                frag.appendChild(document.createTextNode(' '));
+                total += 1;
+                continue;
+              }
+              if (!word) {
+                word = document.createElement('span');
+                word.className = 'word';
+              }
+              var span = document.createElement('span');
+              span.className = (animate ? 'char' : '') + (seg.hl ? ' hl' : '');
+              if (animate) span.style.animationDelay = total * TYPE_SPEED + 'ms';
+              span.textContent = ch;
+              word.appendChild(span);
+              total += 1;
+            }
+          });
+          flush();
+          el.appendChild(frag);
+          return total;
+        }
+
+        function typewrite(el, text, onDone) {
+          clearTyping();
+          coachState = 'typing';
+          var totalChars = buildCoachInto(el, text, true);
+          var done = function () {
+            typingTimer = null;
+            if (onDone) onDone();
+          };
+          if (totalChars === 0) {
+            done();
+            return;
+          }
+          typingTimer = setTimeout(done, totalChars * TYPE_SPEED + 90);
+        }
+
+        function completeTyping() {
+          clearTyping();
+          var step = STEPS[stepIndex];
+          if (step && !step.noCoach) buildCoachInto(els.coachText, step.text, false);
+          coachState = 'done';
+        }
+
+        function handleScreenTap() {
+          if (coachState === 'typing') completeTyping();
+        }
+
+        function lockCoachSize(text) {
+          els.coach.style.minWidth = '';
+          els.coach.style.minHeight = '';
+          buildCoachInto(els.coachText, text, false);
+          void els.coach.offsetWidth;
+          var capH = els.coach.offsetHeight || 60;
+          var capW = els.coach.offsetWidth || 200;
+          els.coach.style.minWidth = capW + 'px';
+          els.coach.style.minHeight = capH + 'px';
+          els.coachText.textContent = '';
+        }
+
+        function measureCoachStackHeight(text) {
+          els.coach.style.minWidth = '';
+          els.coach.style.minHeight = '';
+          buildCoachInto(els.coachText, text, false);
+          void els.coachStack.offsetWidth;
+          var h = els.coachStack.offsetHeight || 0;
+          els.coachText.textContent = '';
+          return h;
+        }
+
+        function lockCoachStackSize() {
+          var maxH = 0;
+          STEPS.forEach(function (step) {
+            if (!step.text || step.noCoach) return;
+            var h = measureCoachStackHeight(step.text);
+            if (h > maxH) maxH = h;
+          });
+          els.coachStack.style.minHeight = (maxH || 64) + 'px';
+        }
+
+        function showCoachCaption(step) {
+          coachState = 'idle';
+          lockCoachSize(step.text);
+          requestAnimationFrame(function () {
+            els.coach.classList.add('is-on');
+            typewrite(els.coachText, step.text, function () {
+              coachState = 'done';
+            });
+          });
+        }
+
+        // ---- Tango cell ----------------------------------------------------
+        // given !== 0 => locked prefilled cell with a pale background.
+        function makeCell(size, state, given) {
+          var tcell = document.createElement('div');
+          tcell.className = 'tcell';
+          tcell.style.width = size + 'px';
+          tcell.style.height = size + 'px';
+          var tile = document.createElement('div');
+          tile.className = 'ttile';
+          var hatch = document.createElement('div');
+          hatch.className = 'thatch';
+          tcell.appendChild(tile);
+
+          function render(st) {
+            tile.innerHTML = '';
+            tile.classList.remove('empty', 'given-sun', 'given-moon');
+            if (given === SUN) tile.classList.add('given-sun');
+            else if (given === MOON) tile.classList.add('given-moon');
+            if (st === SUN) {
+              var s = document.createElement('div');
+              s.className = 'tsun';
+              tile.appendChild(s);
+            } else if (st === MOON) {
+              var m = document.createElement('div');
+              m.className = 'tmoon';
+              tile.appendChild(m);
+            } else if (given === EMPTY) {
+              tile.classList.add('empty');
+            }
+            tile.appendChild(hatch);
+          }
+          render(state);
+
+          return {
+            tcell: tcell,
+            setState: function (st) {
+              render(st);
+            },
+            setHatch: function (on) {
+              if (on) tile.classList.add('conflict');
+              else tile.classList.remove('conflict');
+            },
+          };
+        }
+
+        // Distinguish single vs double tap on a cell.
+        function attachTapDouble(el, onSingle, onDouble) {
+          var t = null;
+          el.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (t) {
+              clearTimeout(t);
+              t = null;
+              if (onDouble) onDouble();
+              return;
+            }
+            t = setTimeout(function () {
+              t = null;
+              if (onSingle) onSingle();
+            }, 280);
+          });
+        }
+
+        // ---- Tango validation (mirrors computeTangoDynamic) ----------------
+        function tangoConflicts(R, C, cells, hMarkers, vMarkers, rules) {
+          var hatched = {};
+          var conflict = false;
+          function add(i) {
+            hatched[i] = true;
+          }
+          var r, c, v, s, m;
+          if (rules.balance) {
+            var halfRow = C / 2;
+            var halfCol = R / 2;
+            // Balance only applies to even-length lines (a single cell can
+            // never be "balanced", so skip those dimensions).
+            if (C % 2 === 0) {
+              for (r = 0; r < R; r++) {
+                s = 0;
+                m = 0;
+                for (c = 0; c < C; c++) {
+                  v = cells[r * C + c];
+                  if (v === SUN) s++;
+                  else if (v === MOON) m++;
+                }
+                if (s > halfRow || m > halfRow) {
+                  conflict = true;
+                  for (c = 0; c < C; c++) add(r * C + c);
+                }
+              }
+            }
+            if (R % 2 === 0) {
+              for (c = 0; c < C; c++) {
+                s = 0;
+                m = 0;
+                for (r = 0; r < R; r++) {
+                  v = cells[r * C + c];
+                  if (v === SUN) s++;
+                  else if (v === MOON) m++;
+                }
+                if (s > halfCol || m > halfCol) {
+                  conflict = true;
+                  for (r = 0; r < R; r++) add(r * C + c);
+                }
+              }
+            }
+          }
+          if (rules.threeRun) {
+            for (r = 0; r < R; r++) {
+              for (c = 0; c <= C - 3; c++) {
+                var a = cells[r * C + c];
+                if (a !== EMPTY && a === cells[r * C + c + 1] && a === cells[r * C + c + 2]) {
+                  conflict = true;
+                  add(r * C + c);
+                  add(r * C + c + 1);
+                  add(r * C + c + 2);
+                }
+              }
+            }
+            for (c = 0; c < C; c++) {
+              for (r = 0; r <= R - 3; r++) {
+                var b = cells[r * C + c];
+                if (b !== EMPTY && b === cells[(r + 1) * C + c] && b === cells[(r + 2) * C + c]) {
+                  conflict = true;
+                  add(r * C + c);
+                  add((r + 1) * C + c);
+                  add((r + 2) * C + c);
+                }
+              }
+            }
+          }
+          if (rules.markers) {
+            var check = function (i, j, type) {
+              var a = cells[i];
+              var b = cells[j];
+              if (a === EMPTY || b === EMPTY) return;
+              var bad = type === 'equal' ? a !== b : a === b;
+              if (bad) {
+                conflict = true;
+                add(i);
+                add(j);
+              }
+            };
+            (hMarkers || []).forEach(function (mk) {
+              check(mk.r * C + mk.c, mk.r * C + mk.c + 1, mk.type);
+            });
+            (vMarkers || []).forEach(function (mk) {
+              check(mk.r * C + mk.c, (mk.r + 1) * C + mk.c, mk.type);
+            });
+          }
+          return { hatched: hatched, conflict: conflict };
+        }
+
+        // ---- Renderers -----------------------------------------------------
+        function renderTapFill(step) {
+          interactiveDone = false;
+          var SIZE = 66;
+          // Reuse .pair-wrap so the cell stays centred and the ✓ hangs to the
+          // right without pushing it off-centre.
+          var wrap = document.createElement('div');
+          wrap.className = 'pair-wrap';
+          var cell = makeCell(SIZE, step.start, EMPTY);
+          var ind = document.createElement('div');
+          ind.className = 'indicator';
+          wrap.appendChild(cell.tcell);
+          wrap.appendChild(ind);
+
+          function done() {
+            interactiveDone = true;
+            ind.innerHTML = CHECK_SVG;
+            scheduleAdvance();
+          }
+          var onFill = function () {
+            if (interactiveDone) return;
+            cell.setState(step.fill);
+            done();
+          };
+          if (step.gesture === 'single') {
+            attachTapDouble(cell.tcell, onFill, null);
+          } else {
+            attachTapDouble(cell.tcell, null, onFill);
+          }
+          return wrap;
+        }
+
+        function legendRow(dotCount, indSvg) {
+          var lrow = document.createElement('div');
+          lrow.className = 'lrow';
+          var dots = document.createElement('div');
+          dots.className = 'ldots';
+          for (var i = 0; i < dotCount; i++) {
+            var d = document.createElement('div');
+            d.className = 'ldot';
+            dots.appendChild(d);
+          }
+          var ind = document.createElement('div');
+          ind.className = 'lind';
+          ind.innerHTML = indSvg;
+          lrow.appendChild(dots);
+          lrow.appendChild(ind);
+          return lrow;
+        }
+
+        function makeRow(size, states) {
+          var board = document.createElement('div');
+          board.className = 'tboard';
+          board.style.width = states.length * size + 'px';
+          board.style.height = size + 'px';
+          board.style.gridTemplateColumns = 'repeat(' + states.length + ',' + size + 'px)';
+          states.forEach(function (st) {
+            board.appendChild(makeCell(size, st, EMPTY).tcell);
+          });
+          return board;
+        }
+
+        function renderRule(step) {
+          if (step.kind === 'adjacent') {
+            var wrap = document.createElement('div');
+            wrap.className = 'rule-wrap';
+            var legend = document.createElement('div');
+            legend.className = 'legend';
+            legend.appendChild(legendRow(2, CHECK_SVG));
+            legend.appendChild(legendRow(3, CROSS_IND_SVG));
+            wrap.appendChild(legend);
+            wrap.appendChild(makeRow(56, [MOON, MOON, EMPTY]));
+            return wrap;
+          }
+          // balance illustration: two filled + two empty in a row.
+          return makeRow(56, [MOON, MOON, EMPTY, EMPTY]);
+        }
+
+        function renderSignPair(step) {
+          interactiveDone = false;
+          var SIZE = 64;
+          var wrap = document.createElement('div');
+          wrap.className = 'pair-wrap';
+          var leftState = step.left;
+          var left = makeCell(SIZE, leftState, EMPTY);
+          var sign = document.createElement('div');
+          sign.className = 'tsign-inline';
+          sign.innerHTML = step.sign === 'equal' ? EQUAL_SVG : CROSS_SVG;
+          var rightState = EMPTY;
+          var right = makeCell(SIZE, EMPTY, EMPTY);
+          var ind = document.createElement('div');
+          ind.className = 'indicator';
+          wrap.appendChild(left.tcell);
+          wrap.appendChild(sign);
+          wrap.appendChild(right.tcell);
+          wrap.appendChild(ind);
+
+          function evaluate() {
+            var res = tangoConflicts(
+              1,
+              2,
+              [leftState, rightState],
+              [{ r: 0, c: 0, type: step.sign }],
+              [],
+              { markers: true },
+            );
+            left.setHatch(!!res.hatched[0]);
+            right.setHatch(!!res.hatched[1]);
+            if (rightState === EMPTY) {
+              ind.innerHTML = '';
+              return;
+            }
+            if (!res.conflict) {
+              ind.innerHTML = CHECK_SVG;
+              interactiveDone = true;
+              scheduleAdvance();
+            } else {
+              ind.innerHTML = CROSS_IND_SVG;
+            }
+          }
+
+          attachTapDouble(
+            right.tcell,
+            function () {
+              if (interactiveDone) return;
+              rightState = rightState === SUN ? EMPTY : SUN;
+              right.setState(rightState);
+              evaluate();
+            },
+            function () {
+              if (interactiveDone) return;
+              rightState = rightState === MOON ? EMPTY : MOON;
+              right.setState(rightState);
+              evaluate();
+            },
+          );
+          return wrap;
+        }
+
+        // ---- Victory ripple ------------------------------------------------
+        // Diagonal pop-wave across the solved board: each tile flashes its
+        // background toward white and springs up as the wavefront — staggered
+        // by (row + col) — sweeps from the top-left to the bottom-right corner.
+        // Runs a couple of passes, then resolves via onDone.
+        function playWinRipple(apis, R, C, onDone) {
+          var STAGGER = 90; // ms between successive diagonals
+          var POP = 460; // ms for a single tile's pop
+          var PASSES = 2;
+          var maxDiag = R - 1 + (C - 1);
+          var passDur = maxDiag * STAGGER + POP;
+          var total = passDur * PASSES;
+
+          for (var i = 0; i < apis.length; i++) {
+            var tile = apis[i].tcell.querySelector('.ttile');
+            if (!tile) continue;
+            var tcell = apis[i].tcell;
+            var diag = Math.floor(i / C) + (i % C);
+            var rest = window.getComputedStyle(tile).backgroundColor || '#3a3d42';
+            for (var p = 0; p < PASSES; p++) {
+              var delay = p * passDur + diag * STAGGER;
+              if (tile.animate) {
+                tile.animate(
+                  [
+                    { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(255,255,255,0)' },
+                    {
+                      transform: 'scale(1.14)',
+                      boxShadow: '0 6px 20px 2px rgba(255,255,255,0.5)',
+                      offset: 0.4,
+                    },
+                    { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(255,255,255,0)' },
+                  ],
+                  { duration: POP, delay: delay, easing: 'cubic-bezier(.34,1.4,.5,1)', fill: 'none' },
+                );
+                tile.animate(
+                  [
+                    { backgroundColor: rest },
+                    { backgroundColor: '#FFFFFF', offset: 0.4 },
+                    { backgroundColor: rest },
+                  ],
+                  { duration: POP, delay: delay, easing: 'ease-in-out', fill: 'none' },
+                );
+              }
+              // Lift the cell so its glow paints over neighbours during the pop.
+              (function (cell, d) {
+                rippleTimers.push(
+                  setTimeout(function () {
+                    cell.style.zIndex = '3';
+                  }, d),
+                );
+                rippleTimers.push(
+                  setTimeout(function () {
+                    cell.style.zIndex = '';
+                  }, d + POP),
+                );
+              })(tcell, delay);
+            }
+          }
+          rippleTimers.push(
+            setTimeout(function () {
+              if (onDone) onDone();
+            }, total + 60),
+          );
+        }
+
+        // Interactive "no three in a row" rule: two circles are placed; the user double-taps the
+        // highlighted empty cell to fill a square (a third circle would break the rule → conflict).
+        function renderAdjacent(step) {
+          interactiveDone = false;
+          // Legend above the caption: two-in-a-row is fine (✓), three is not (×).
+          var legend = document.createElement('div');
+          legend.className = 'legend';
+          legend.appendChild(legendRow(2, CHECK_SVG));
+          legend.appendChild(legendRow(3, CROSS_IND_SVG));
+          els.topHost.appendChild(legend);
+
+          var SIZE = 60;
+          var cells = [SUN, SUN, EMPTY];
+          var IDX = 2;
+          var board = document.createElement('div');
+          board.className = 'tboard';
+          board.style.width = cells.length * SIZE + 'px';
+          board.style.height = SIZE + 'px';
+          board.style.gridTemplateColumns =
+            'repeat(' + cells.length + ',' + SIZE + 'px)';
+          var apis = [];
+          cells.forEach(function (st, i) {
+            var api = makeCell(SIZE, st, EMPTY);
+            apis[i] = api;
+            if (st === EMPTY) api.tcell.classList.add('spot');
+            board.appendChild(api.tcell);
+          });
+
+          function recompute() {
+            var res = tangoConflicts(1, 3, cells, [], [], { threeRun: true });
+            for (var i = 0; i < 3; i++) apis[i].setHatch(!!res.hatched[i]);
+            if (cells.indexOf(EMPTY) === -1 && !res.conflict) {
+              interactiveDone = true;
+              apis[IDX].tcell.classList.remove('spot');
+              scheduleAdvance();
+            }
+          }
+
+          attachTapDouble(
+            apis[IDX].tcell,
+            function () {
+              if (interactiveDone) return;
+              cells[IDX] = cells[IDX] === SUN ? EMPTY : SUN;
+              apis[IDX].setState(cells[IDX]);
+              recompute();
+            },
+            function () {
+              if (interactiveDone) return;
+              cells[IDX] = cells[IDX] === MOON ? EMPTY : MOON;
+              apis[IDX].setState(cells[IDX]);
+              recompute();
+            },
+          );
+          return board;
+        }
+
+        // Guided full-board step: givens are pale + locked, prefilled cells (from earlier steps) are
+        // dark + locked, the target cell(s) are highlighted and interactive, and every other empty
+        // cell is a disabled dark tile. A target commits when it holds its expected shape; once all
+        // targets are placed the step advances (or plays the ripple on the final step).
+        function renderGuided(step) {
+          interactiveDone = false;
+          var isFinal = stepIndex === STEPS.length - 1;
+          var R = 4;
+          var C = 4;
+          var SIZE = step.size || 56;
+          var board = document.createElement('div');
+          board.className = 'tboard';
+          board.style.width = C * SIZE + 'px';
+          board.style.height = R * SIZE + 'px';
+          board.style.gridTemplateColumns = 'repeat(' + C + ',' + SIZE + 'px)';
+
+          var targets = step.targets || [];
+          var byIdx = {};
+          targets.forEach(function (t) {
+            byIdx[t.idx] = t;
+          });
+          var remaining = targets.length;
+          var cells = new Array(R * C);
+          var apis = [];
+
+          for (var i = 0; i < R * C; i++) {
+            var g = step.givens[i];
+            var pre = step.prefilled ? step.prefilled[i] : undefined;
+            var givenArg = g === undefined ? EMPTY : g;
+            var initState =
+              g !== undefined ? g : pre !== undefined ? pre : EMPTY;
+            cells[i] = initState;
+            var api = makeCell(SIZE, initState, givenArg);
+            apis[i] = api;
+            if (byIdx[i]) {
+              api.tcell.classList.add('spot');
+            } else if (initState === EMPTY && givenArg === EMPTY) {
+              api.tcell.classList.add('disabled');
+            }
+            board.appendChild(api.tcell);
+          }
+
+          function addSign(type, left, top) {
+            var el = document.createElement('div');
+            el.className = 'tsign-abs';
+            el.innerHTML = type === 'equal' ? EQUAL_SVG : CROSS_SVG;
+            el.style.left = left + 'px';
+            el.style.top = top + 'px';
+            board.appendChild(el);
+          }
+          (step.hMarkers || []).forEach(function (mk) {
+            addSign(mk.type, (mk.c + 1) * SIZE, (mk.r + 0.5) * SIZE);
+          });
+          (step.vMarkers || []).forEach(function (mk) {
+            addSign(mk.type, (mk.c + 0.5) * SIZE, (mk.r + 1) * SIZE);
+          });
+
+          function commit(idx, shape) {
+            var t = byIdx[idx];
+            if (!t || t.done || interactiveDone) return;
+            cells[idx] = cells[idx] === shape ? EMPTY : shape;
+            apis[idx].setState(cells[idx]);
+            // Show conflict hatches. Include balance on the final guided step so an
+            // unbalanced board can't look "solved"; earlier guided steps omit it because
+            // mid-solve empties would false-hatch legal target fills.
+            var res = tangoConflicts(R, C, cells, step.hMarkers, step.vMarkers, {
+              threeRun: true,
+              markers: true,
+              balance: isFinal,
+            });
+            for (var k = 0; k < R * C; k++) apis[k].setHatch(!!res.hatched[k]);
+            if (cells[idx] !== t.expect) return;
+            if (isFinal && res.conflict) return;
+            t.done = true;
+            apis[idx].tcell.classList.remove('spot');
+            remaining -= 1;
+            if (remaining > 0) return;
+            interactiveDone = true;
+            if (isFinal) {
+              // Hold on the fully-solved board briefly before the victory ripple kicks off.
+              clearAdvanceTimer();
+              advanceTimer = setTimeout(function () {
+                advanceTimer = null;
+                playWinRipple(apis, R, C, advance);
+              }, RIPPLE_DELAY);
+            } else {
+              scheduleAdvance();
+            }
+          }
+
+          targets.forEach(function (t) {
+            attachTapDouble(
+              apis[t.idx].tcell,
+              function () {
+                commit(t.idx, SUN);
+              },
+              function () {
+                commit(t.idx, MOON);
+              },
+            );
+          });
+
+          return board;
+        }
+
+        function renderQuestion(step) {
+          interactiveDone = false;
+          var isFinal = stepIndex === STEPS.length - 1;
+          var R = step.R;
+          var C = step.C;
+          var SIZE = step.size;
+          var board = document.createElement('div');
+          board.className = 'tboard';
+          board.style.width = C * SIZE + 'px';
+          board.style.height = R * SIZE + 'px';
+          board.style.gridTemplateColumns = 'repeat(' + C + ',' + SIZE + 'px)';
+
+          var cells = new Array(R * C);
+          var apis = [];
+          for (var i = 0; i < R * C; i++) {
+            var g = step.givens[i] || EMPTY;
+            cells[i] = g;
+            var api = makeCell(SIZE, g, EMPTY);
+            apis[i] = api;
+            if (step.spot && g === EMPTY) api.tcell.classList.add('spot');
+            board.appendChild(api.tcell);
+          }
+
+          function addSign(type, left, top) {
+            var el = document.createElement('div');
+            el.className = 'tsign-abs';
+            el.innerHTML = type === 'equal' ? EQUAL_SVG : CROSS_SVG;
+            el.style.left = left + 'px';
+            el.style.top = top + 'px';
+            board.appendChild(el);
+          }
+          (step.hMarkers || []).forEach(function (mk) {
+            addSign(mk.type, (mk.c + 1) * SIZE, (mk.r + 0.5) * SIZE);
+          });
+          (step.vMarkers || []).forEach(function (mk) {
+            addSign(mk.type, (mk.c + 0.5) * SIZE, (mk.r + 1) * SIZE);
+          });
+
+          function recompute() {
+            var res = tangoConflicts(R, C, cells, step.hMarkers, step.vMarkers, {
+              balance: true,
+              threeRun: true,
+              markers: true,
+            });
+            var filled = true;
+            for (var i = 0; i < R * C; i++) {
+              apis[i].setHatch(!!res.hatched[i]);
+              if (cells[i] === EMPTY) filled = false;
+            }
+            if (filled && !res.conflict) {
+              interactiveDone = true;
+              if (isFinal) {
+                playWinRipple(apis, R, C, advance);
+              } else {
+                scheduleAdvance();
+              }
+            }
+          }
+
+          for (var j = 0; j < R * C; j++) {
+            if (step.givens[j]) continue;
+            (function (idx) {
+              apis[idx].tcell.style.cursor = 'pointer';
+              attachTapDouble(
+                apis[idx].tcell,
+                function () {
+                  if (interactiveDone) return;
+                  cells[idx] = cells[idx] === SUN ? EMPTY : SUN;
+                  apis[idx].setState(cells[idx]);
+                  recompute();
+                },
+                function () {
+                  if (interactiveDone) return;
+                  cells[idx] = cells[idx] === MOON ? EMPTY : MOON;
+                  apis[idx].setState(cells[idx]);
+                  recompute();
+                },
+              );
+            })(j);
+          }
+          return board;
+        }
+
+        // ---- Step machine ---------------------------------------------------
+        function applyStepLayout(step) {
+          var top =
+            typeof step.stagePaddingTop === 'number'
+              ? step.stagePaddingTop + 'px'
+              : '140px';
+          els.stage.style.setProperty('--stage-padding-top', top);
+        }
+
+        function applyStep() {
+          var step = STEPS[stepIndex];
+          if (!step) return;
+
+          clearTyping();
+          clearRippleTimers();
+          clearAdvanceTimer();
+          coachState = 'idle';
+          tapAnywhereActive = false;
+          interactiveDone = false;
+          applyStepLayout(step);
+
+          els.coach.classList.remove('is-on');
+          els.coach.style.minWidth = '';
+          els.coach.style.minHeight = '';
+          els.coachText.textContent = '';
+          els.boardHost.innerHTML = '';
+          els.topHost.innerHTML = '';
+          els.subhint.classList.remove('is-on');
+          els.subhint.textContent = '';
+
+          if (step.noCoach) {
+            els.coachStack.style.display = 'none';
+          } else {
+            els.coachStack.style.display = '';
+            showCoachCaption(step);
+          }
+
+          var node = null;
+          if (step.mode === 'tapfill') node = renderTapFill(step);
+          else if (step.mode === 'rule') node = renderRule(step);
+          else if (step.mode === 'adjacent') node = renderAdjacent(step);
+          else if (step.mode === 'sign') node = renderSignPair(step);
+          else if (step.mode === 'question') node = renderQuestion(step);
+          else if (step.mode === 'guided') node = renderGuided(step);
+          if (node) els.boardHost.appendChild(node);
+
+          if (step.subHint) {
+            els.subhint.textContent = '•  ' + step.subHint;
+            els.subhint.classList.add('is-on');
+          }
+
+          if (step.mode === 'rule') tapAnywhereActive = true;
+
+          postToHost({ type: 'step', step: step.id, index: stepIndex });
+        }
+
+        function advance() {
+          stepIndex += 1;
+          if (stepIndex >= STEPS.length) {
+            finish();
+            return;
+          }
+          applyStep();
+        }
+
+        function finish() {
+          postToHost({ type: 'completed' });
+        }
+
+        var lastTapAt = 0;
+        function onScreenTap() {
+          var now = Date.now();
+          if (now - lastTapAt < 500) return;
+          lastTapAt = now;
+          if (tapAnywhereActive) {
+            tapAnywhereActive = false;
+            advance();
+            return;
+          }
+          handleScreenTap();
+        }
+        document.addEventListener('touchstart', onScreenTap, { passive: true });
+        document.addEventListener('click', onScreenTap);
+
+        window.addEventListener('message', function (e) {
+          var data = e.data;
+          try {
+            data = typeof data === 'string' ? JSON.parse(data) : data;
+          } catch (err) {
+            return;
+          }
+          if (!data || !data.type) return;
+          if (data.type === 'reset') {
+            stepIndex = 0;
+            applyStep();
+          }
+        });
+
+        setTimeout(function () {
+          lockCoachStackSize();
+          applyStep();
+          postToHost({ type: 'ready' });
+        }, 50);
+      })();
+    </script>
+  </body>
+</html>

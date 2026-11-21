@@ -1,0 +1,1288 @@
+<!-- design-tokens: snapshot-sha256=855ba5ab1f9418e52cd19cef2258e6bafd08b5f29ce85f8ffaafa17159f09dd8 generator=task13-v2 -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover"
+    />
+    <title>Patches — How to Play</title>
+    <script>
+      (function () {
+        if (/Android/i.test(navigator.userAgent || '')) {
+          document.documentElement.classList.add('is-android-webview');
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #171717;
+        --text: #FFFFFF;
+        --muted: rgba(255, 255, 255, 0.42);
+        --coach-text: #0AB963;
+        --coach-hl: #FFFFFF;
+        --coach-bg: #16271f;
+        --coach-warn: #ee362a;
+        --hand: #8e7ee0;
+        --font-body: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          Roboto, Inter, sans-serif;
+
+        /* Patches palette — mirrors PATCHES_COLORS in patchesPuzzleConstants.ts */
+        --p-board: #1c1c1e;
+        --p-grid: #3a3a3e;
+        --p-border: #6e6e73;
+        --p-invalid: rgba(224, 92, 92, 0.45);
+        --p-win: #5bd08c;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        min-height: 100dvh;
+        min-height: -webkit-fill-available;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        overflow: hidden;
+        font-weight: 700;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .stage {
+        position: relative;
+        height: 100%;
+        min-height: 100dvh;
+        min-height: -webkit-fill-available;
+        display: flex;
+        flex-direction: column;
+        /* Default top inset; step 5 (final) overrides via --stage-padding-top. */
+        --stage-padding-top: 140px;
+        padding: var(--stage-padding-top) 18px 32px;
+      }
+
+      /* Top-aligned so the stage padding is consistent across steps (same as zip/tango). */
+      .content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 26px;
+        min-height: 0;
+      }
+
+      /* Solution preview slot is always reserved (invisible when off) so the
+         final step doesn't push the board when the graphic appears. */
+      /* Solution outline above the caption on the final step only.
+         Must not reserve space when off (same as zip/tango / pipes). */
+      .reference {
+        flex-shrink: 0;
+        width: 96px;
+        height: 96px;
+        display: none;
+        pointer-events: none;
+      }
+      .reference.is-on {
+        display: block;
+        margin-bottom: 28px;
+      }
+      .reference svg {
+        display: block;
+      }
+
+      /* Coach caption */
+      .coach-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        max-width: 300px;
+        width: 100%;
+        flex-shrink: 0;
+      }
+      .coach {
+        width: 100%;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.35;
+        color: var(--coach-text);
+        background: var(--coach-bg);
+        border-radius: 10px;
+        padding: 12px 16px;
+        opacity: 0;
+        transform: translateY(4px);
+        transition:
+          opacity 200ms ease,
+          transform 200ms ease;
+      }
+      .coach.is-on {
+        opacity: 1;
+        transform: none;
+      }
+      .coach-text {
+        min-height: 20px;
+      }
+      .coach-text .hl {
+        color: var(--coach-hl);
+      }
+      .coach-text .shape-icon {
+        display: inline-block;
+        vertical-align: -0.15em;
+        margin: 0 2px;
+      }
+      .coach-text .shape-icon svg {
+        display: block;
+      }
+      .coach-text .word {
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .coach-text .char {
+        display: inline-block;
+        opacity: 0;
+        animation: coachCharIn 90ms ease-out forwards;
+      }
+      .coach-text .shape-icon.char {
+        display: inline-block;
+      }
+      @keyframes coachCharIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Error line under the coach. Always reserved so flashing a warn (or
+         switching to a step without errors) never shifts the board. */
+      .coach-sub {
+        display: flex;
+        width: 100%;
+        min-height: 18px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.35;
+        color: var(--coach-warn);
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        visibility: hidden;
+      }
+      .coach-sub.is-on {
+        visibility: visible;
+      }
+      .coach-sub.warn {
+        visibility: visible;
+        animation: coachWarnIn 220ms ease-out;
+      }
+      .coach-sub.warn::before {
+        content: '!';
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--coach-warn);
+        color: #171717;
+        font-size: 10px;
+        font-weight: 800;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      @keyframes coachWarnIn {
+        from {
+          opacity: 0.25;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* ---- Patches board ----------------------------------------------- */
+      .patch-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        overflow: visible;
+        /* Constant outer margin so drag-hand overflow never changes layout size. */
+        margin: 0 44px 52px;
+      }
+      .board-slot {
+        position: relative;
+        display: inline-block;
+        overflow: visible;
+      }
+
+      /* Drag hint: purple hand that slides to show the drag (steps 1–2). */
+      .drag-hint {
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        pointer-events: none;
+        opacity: 1;
+        transition: opacity 180ms ease;
+      }
+      .drag-hint.is-off {
+        opacity: 0;
+      }
+      .drag-hand {
+        position: absolute;
+        z-index: 1;
+      }
+      .drag-hand-inner {
+        transform-origin: 30% 20%;
+      }
+      .drag-hand.is-h .drag-hand-inner {
+        animation: handDragH 2.4s ease-in-out infinite;
+      }
+      .drag-hand.is-v .drag-hand-inner {
+        /* Finger points right at the column; slides top → bottom via local X. */
+        transform: rotate(90deg);
+        animation: handDragV 2.4s ease-in-out infinite;
+      }
+      .drag-hand svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      @keyframes handDragH {
+        0%,
+        8% {
+          transform: translateX(0);
+        }
+        48%,
+        58% {
+          transform: translateX(var(--hand-travel, 80px));
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      @keyframes handDragV {
+        0%,
+        8% {
+          transform: rotate(90deg) translateX(0);
+        }
+        48%,
+        58% {
+          transform: rotate(90deg) translateX(var(--hand-travel, 80px));
+        }
+        100% {
+          transform: rotate(90deg) translateX(0);
+        }
+      }
+      .patch-divider {
+        width: 190px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.14);
+      }
+      .pframe {
+        display: inline-block;
+        background: var(--p-board);
+        border: 2px solid var(--p-border);
+        line-height: 0;
+        transition: transform 200ms ease;
+      }
+      .pframe.psolved {
+        border-color: var(--p-win);
+      }
+      .pgrid {
+        position: relative;
+        display: grid;
+        touch-action: none;
+      }
+      .pcell {
+        position: relative;
+        border: 0 solid var(--p-grid);
+      }
+      .pcell.br {
+        border-right-width: 1px;
+      }
+      .pcell.bb {
+        border-bottom-width: 1px;
+      }
+      /* committed + preview rectangle fills */
+      .prect {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        border-radius: 10px;
+      }
+      .ppreview {
+        position: absolute;
+        z-index: 2;
+        pointer-events: none;
+        display: none;
+        border-radius: 10px;
+      }
+      /* clue markers */
+      .pclue {
+        position: absolute;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFFFFF;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        line-height: 1;
+        pointer-events: none;
+      }
+      .pclue.chip {
+        border-radius: 22%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div class="content">
+        <div class="reference" id="reference" aria-hidden="true">
+          <!-- Solution outline for the final 3×3: top-wide 3, left-tall 2, bottom-right 4. -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="96"
+            height="96"
+            viewBox="0 0 96 96"
+            fill="none"
+          >
+            <!-- top row: wide 3 -->
+            <rect
+              x="1.5"
+              y="1.5"
+              width="93"
+              height="29"
+              rx="5"
+              stroke="white"
+              stroke-width="1.5"
+            />
+            <text
+              x="48"
+              y="16"
+              text-anchor="middle"
+              dominant-baseline="central"
+              fill="white"
+              font-family="Montserrat, sans-serif"
+              font-weight="700"
+              font-size="13"
+            >
+              3
+            </text>
+            <!-- left column bottom: tall 2 -->
+            <rect
+              x="1.5"
+              y="33.5"
+              width="29"
+              height="61"
+              rx="5"
+              stroke="white"
+              stroke-width="1.5"
+            />
+            <text
+              x="16"
+              y="64"
+              text-anchor="middle"
+              dominant-baseline="central"
+              fill="white"
+              font-family="Montserrat, sans-serif"
+              font-weight="700"
+              font-size="13"
+            >
+              2
+            </text>
+            <!-- bottom-right: square 4 -->
+            <rect
+              x="33.5"
+              y="33.5"
+              width="61"
+              height="61"
+              rx="5"
+              stroke="white"
+              stroke-width="1.5"
+            />
+            <text
+              x="64"
+              y="64"
+              text-anchor="middle"
+              dominant-baseline="central"
+              fill="white"
+              font-family="Montserrat, sans-serif"
+              font-weight="700"
+              font-size="13"
+            >
+              4
+            </text>
+          </svg>
+        </div>
+        <div class="coach-stack" id="coach-stack">
+          <div class="coach" id="coach">
+            <div class="coach-text" id="coach-text"></div>
+          </div>
+          <div class="coach-sub" id="coach-sub" aria-live="polite"></div>
+        </div>
+        <div id="board-host"></div>
+      </div>
+    </div>
+
+    <template id="drag-hand-template">
+      <div class="drag-hand">
+        <div class="drag-hand-inner">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="51"
+            height="90"
+            viewBox="0 0 51 90"
+            fill="none"
+          >
+            <mask id="dragHandOutline" fill="white">
+              <path
+                d="M8.9248 0C13.8538 0 17.8496 3.99577 17.8496 8.9248V20.9414C20.209 20.2144 22.7156 19.8232 25.3135 19.8232C39.2937 19.8233 50.627 31.1565 50.627 45.1367C50.6269 54.4725 45.572 62.6264 38.0508 67.0146C38.065 67.2682 38.0732 67.5241 38.0732 67.7812V76.2959C38.0732 83.7168 32.0575 89.7322 24.6367 89.7324C17.2157 89.7324 11.1992 83.7169 11.1992 76.2959V67.7812C11.1992 67.2508 11.2312 66.7273 11.291 66.2129C4.48478 61.6755 1.03749e-05 53.9304 0 45.1367C0 44.5332 0.0229127 43.9347 0.0644531 43.3418C0.0233643 42.9944 0 42.6407 0 42.2822L0 8.9248C0 3.99577 3.99577 0 8.9248 0Z"
+              />
+            </mask>
+            <path
+              d="M8.9248 0C13.8538 0 17.8496 3.99577 17.8496 8.9248V20.9414C20.209 20.2144 22.7156 19.8232 25.3135 19.8232C39.2937 19.8233 50.627 31.1565 50.627 45.1367C50.6269 54.4725 45.572 62.6264 38.0508 67.0146C38.065 67.2682 38.0732 67.5241 38.0732 67.7812V76.2959C38.0732 83.7168 32.0575 89.7322 24.6367 89.7324C17.2157 89.7324 11.1992 83.7169 11.1992 76.2959V67.7812C11.1992 67.2508 11.2312 66.7273 11.291 66.2129C4.48478 61.6755 1.03749e-05 53.9304 0 45.1367C0 44.5332 0.0229127 43.9347 0.0644531 43.3418C0.0233643 42.9944 0 42.6407 0 42.2822L0 8.9248C0 3.99577 3.99577 0 8.9248 0Z"
+              fill="#8e7ee0"
+            />
+            <path
+              d="M17.8496 20.9414H15.8496V23.6504L18.4385 22.8527L17.8496 20.9414ZM25.3135 19.8232L25.3135 17.8232H25.3135V19.8232ZM50.627 45.1367L52.627 45.1367V45.1367H50.627ZM38.0508 67.0146L37.0429 65.2872L35.9852 65.9043L36.0539 67.1269L38.0508 67.0146ZM38.0732 76.2959H40.0732V76.2959H38.0732ZM24.6367 89.7324V91.7324H24.6368L24.6367 89.7324ZM11.1992 76.2959H9.19922V76.2959H11.1992ZM11.291 66.2129L13.2776 66.4438L13.419 65.2278L12.4004 64.5488L11.291 66.2129ZM0 45.1367H-2V45.1367L0 45.1367ZM0.0644531 43.3418L2.05956 43.4816L2.07272 43.2938L2.05061 43.1069L0.0644531 43.3418ZM8.9248 0V2C12.7493 2 15.8496 5.10034 15.8496 8.9248H17.8496H19.8496C19.8496 2.8912 14.9584 -2 8.9248 -2V0ZM17.8496 8.9248H15.8496V20.9414H17.8496H19.8496V8.9248H17.8496ZM17.8496 20.9414L18.4385 22.8527C20.6092 22.1839 22.9173 21.8232 25.3135 21.8232V19.8232V17.8232C22.5138 17.8232 19.8088 18.245 17.2607 19.0301L17.8496 20.9414ZM25.3135 19.8232L25.3135 21.8232C38.1891 21.8233 48.627 32.2611 48.627 45.1367H50.627H52.627C52.627 30.0519 40.3983 17.8233 25.3135 17.8232L25.3135 19.8232ZM50.627 45.1367L48.627 45.1367C48.6269 53.7322 43.9753 61.2424 37.0429 65.2872L38.0508 67.0146L39.0587 68.7421C47.1686 64.0103 52.6269 55.213 52.627 45.1367L50.627 45.1367ZM38.0508 67.0146L36.0539 67.1269C36.0664 67.3484 36.0732 67.5664 36.0732 67.7812H38.0732H40.0732C40.0732 67.4817 40.0637 67.1881 40.0476 66.9024L38.0508 67.0146ZM38.0732 67.7812H36.0732V76.2959H38.0732H40.0732V67.7812H38.0732ZM38.0732 76.2959H36.0732C36.0732 82.6121 30.953 87.7322 24.6367 87.7324L24.6367 89.7324L24.6368 91.7324C33.1621 91.7322 40.0732 84.8214 40.0732 76.2959H38.0732ZM24.6367 89.7324V87.7324C18.3201 87.7324 13.1992 82.6122 13.1992 76.2959H11.1992H9.19922C9.19922 84.8217 16.1113 91.7324 24.6367 91.7324V89.7324ZM11.1992 76.2959H13.1992V67.7812H11.1992H9.19922V76.2959H11.1992ZM11.1992 67.7812H13.1992C13.1992 67.3313 13.2264 66.8849 13.2776 66.4438L11.291 66.2129L9.30439 65.982C9.23609 66.5696 9.19922 67.1703 9.19922 67.7812H11.1992ZM11.291 66.2129L12.4004 64.5488C6.12666 60.3664 2.00001 53.2334 2 45.1367L0 45.1367L-2 45.1367C-1.99999 54.6273 2.84289 62.9846 10.1816 67.877L11.291 66.2129ZM0 45.1367H2C2 44.5838 2.02099 44.0321 2.05956 43.4816L0.0644531 43.3418L-1.93066 43.202C-1.97517 43.8374 -2 44.4826 -2 45.1367H0ZM0.0644531 43.3418L2.05061 43.1069C2.01771 42.8287 2 42.5539 2 42.2822H0H-2C-2 42.7275 -1.97098 43.16 -1.9217 43.5767L0.0644531 43.3418ZM0 42.2822H2L2 8.9248H0H-2L-2 42.2822H0ZM0 8.9248H2C2 5.10034 5.10034 2 8.9248 2V0V-2C2.8912 -2 -2 2.8912 -2 8.9248H0Z"
+              fill="white"
+              mask="url(#dragHandOutline)"
+            />
+          </svg>
+        </div>
+      </div>
+    </template>
+
+    <script>
+      (function () {
+        var SVGNS = 'http://www.w3.org/2000/svg';
+        // Region/chip colours — mirror PATCHES_PALETTE in patchesPuzzleConstants.ts.
+        var PCOL = {
+          orange: { region: 'rgba(255,118,26,0.92)', chip: '#FF761A' },
+          green: { region: 'rgba(10,185,99,0.92)', chip: '#0AB963' },
+          pink: { region: 'rgba(226,75,139,0.92)', chip: '#E24B8B' },
+        };
+
+        // Inline coach glyphs next to the highlighted shape words.
+        var SHAPE_ICONS = {
+          hrect:
+            '<svg width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1.5" width="16" height="7" rx="2" stroke="#FFFFFF" stroke-width="1.6"/></svg>',
+          vrect:
+            '<svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.5" y="1" width="7" height="16" rx="2" stroke="#FFFFFF" stroke-width="1.6"/></svg>',
+          square:
+            '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="10" height="10" rx="2" stroke="#FFFFFF" stroke-width="1.6"/></svg>',
+        };
+
+        // Drag-hint geometry as fractions of the cell edge (measured off design frames).
+        var HAND = {
+          widthRatio: 0.52,
+        };
+
+        // ---- Steps ----------------------------------------------------------
+        // Teaching steps 1–2 use wide/tall shape chips + drag guides.
+        // Step 3 is a square; step 4 teaches any-orientation on a 4×4.
+        // The final puzzle uses silhouettes with a solution preview.
+        // Coach copy may use *highlight* and {{hrect|vrect|square}} markers.
+        var STEPS = [
+          {
+            id: 'horizontal',
+            text: 'Draw a *horizontal rectangle* {{hrect}} that covers 3 cells. (You can start dragging from any cell.)',
+            boards: [
+              {
+                R: 1,
+                C: 3,
+                size: 64,
+                teaching: true,
+                shapeChip: true,
+                clues: [{ value: 3, r: 0, c: 0, color: 'orange', shape: 2 }],
+                dragHint: { dir: 'h', handCell: { r: 0, c: 0 } },
+              },
+            ],
+          },
+          {
+            id: 'vertical',
+            text: 'Draw a *vertical rectangle* {{vrect}} that covers 3 cells.',
+            boards: [
+              {
+                R: 3,
+                C: 1,
+                size: 64,
+                teaching: true,
+                shapeChip: true,
+                clues: [{ value: 3, r: 1, c: 0, color: 'orange', shape: 3 }],
+                dragHint: { dir: 'v', handCell: { r: 0, c: 0 } },
+              },
+            ],
+          },
+          {
+            id: 'area4',
+            text: 'Draw a *square* {{square}} that covers the area',
+            boards: [
+              {
+                R: 2,
+                C: 2,
+                size: 68,
+                teaching: true,
+                clues: [{ value: 4, r: 0, c: 1, color: 'green', shape: 1 }],
+              },
+            ],
+          },
+          {
+            id: 'anyFour',
+            text: 'Draw *any rectangle* {{square}} *covering 4* cells. Not just tall or wide — any shape works.',
+            // Partial: a valid 4-cell patch advances — the rest of the board stays empty.
+            // shape 1 = wide+tall silhouette (any orientation).
+            reserveSub: true,
+            errors: {
+              size: 'Your patch size must match the number.',
+              missing: 'The numbered cell must be inside your patch.',
+            },
+            boards: [
+              {
+                R: 4,
+                C: 4,
+                size: 52,
+                teaching: true,
+                partial: true,
+                shapeChip: true,
+                clues: [{ value: 4, r: 1, c: 1, color: 'pink', shape: 1 }],
+              },
+            ],
+          },
+          {
+            id: 'final',
+            text: 'Now draw a patch for each numbered cell to complete the puzzle.',
+            reference: true,
+            // Tighter top inset (reference preview needs the vertical room).
+            stagePaddingTop: 48,
+            boards: [
+              {
+                R: 3,
+                C: 3,
+                size: 64,
+                clues: [
+                  { value: 3, r: 0, c: 1, color: 'orange', shape: 2 },
+                  { value: 2, r: 1, c: 0, color: 'pink', shape: 3 },
+                  { value: 4, r: 2, c: 2, color: 'green', shape: 1 },
+                ],
+              },
+            ],
+          },
+        ];
+
+        var els = {
+          stage: document.querySelector('.stage'),
+          coachStack: document.getElementById('coach-stack'),
+          coach: document.getElementById('coach'),
+          coachText: document.getElementById('coach-text'),
+          coachSub: document.getElementById('coach-sub'),
+          boardHost: document.getElementById('board-host'),
+          reference: document.getElementById('reference'),
+          handTemplate: document.getElementById('drag-hand-template'),
+        };
+
+        var stepIndex = 0;
+        var TYPE_SPEED = 15;
+        var WARN_FLASH_MS = 2200;
+        var typingTimer = null;
+        var warnTimer = null;
+        var coachState = 'idle';
+        var interactiveDone = false;
+        var coachMax = { w: 0, h: 0 };
+
+        function postToHost(msg) {
+          try {
+            var payload = JSON.stringify(msg);
+            if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+              window.ReactNativeWebView.postMessage(payload);
+            } else if (window.parent && window.parent !== window) {
+              window.parent.postMessage(payload, '*');
+            }
+          } catch (e) {}
+        }
+
+        // ---- Coach typewriter ----------------------------------------------
+        // Markup: *highlight* and {{hrect|vrect|square}} shape icons.
+        function clearTyping() {
+          if (typingTimer) {
+            clearTimeout(typingTimer);
+            typingTimer = null;
+          }
+        }
+        function fillCoachMarkup(el, text) {
+          el.textContent = '';
+          if (!text) return;
+          // Split on *hl* or {{icon}} tokens (optional leading space before icon).
+          var parts = text.split(/(\*[^*]+\*| ?\{\{[a-z]+\}\})/g);
+          parts.forEach(function (part) {
+            if (!part) return;
+            var iconMatch = part.match(/^ ?\{\{([a-z]+)\}\}$/);
+            if (iconMatch) {
+              var iconHtml = SHAPE_ICONS[iconMatch[1]];
+              if (iconHtml) {
+                var icon = document.createElement('span');
+                icon.className = 'shape-icon';
+                icon.innerHTML = iconHtml;
+                el.appendChild(icon);
+              }
+              return;
+            }
+            if (part.charAt(0) === '*' && part.charAt(part.length - 1) === '*') {
+              var hl = document.createElement('span');
+              hl.className = 'hl';
+              hl.textContent = part.slice(1, -1);
+              el.appendChild(hl);
+              return;
+            }
+            el.appendChild(document.createTextNode(part));
+          });
+        }
+        function wrapChars(el) {
+          var totalChars = 0;
+          function walk(node) {
+            if (node.nodeType === 3) {
+              var parent = node.parentNode;
+              var frag = document.createDocumentFragment();
+              var words = node.nodeValue.split(' ');
+              words.forEach(function (word, wIdx) {
+                if (word.length > 0) {
+                  var wordSpan = document.createElement('span');
+                  wordSpan.className = 'word';
+                  for (var i = 0; i < word.length; i++) {
+                    var charSpan = document.createElement('span');
+                    charSpan.className = 'char';
+                    charSpan.style.animationDelay = totalChars * TYPE_SPEED + 'ms';
+                    charSpan.textContent = word.charAt(i);
+                    wordSpan.appendChild(charSpan);
+                    totalChars += 1;
+                  }
+                  frag.appendChild(wordSpan);
+                }
+                if (wIdx < words.length - 1) {
+                  frag.appendChild(document.createTextNode(' '));
+                  totalChars += 1;
+                }
+              });
+              parent.replaceChild(frag, node);
+              return;
+            }
+            if (node.nodeType !== 1) return;
+            if (node.classList && node.classList.contains('shape-icon')) {
+              node.classList.add('char');
+              node.style.animationDelay = totalChars * TYPE_SPEED + 'ms';
+              totalChars += 1;
+              return;
+            }
+            Array.prototype.slice.call(node.childNodes).forEach(walk);
+          }
+          Array.prototype.slice.call(el.childNodes).forEach(walk);
+          return totalChars;
+        }
+        function typewrite(el, text, onDone) {
+          clearTyping();
+          coachState = 'typing';
+          fillCoachMarkup(el, text);
+          var totalChars = wrapChars(el);
+          var done = function () {
+            typingTimer = null;
+            if (onDone) onDone();
+          };
+          if (totalChars === 0) {
+            done();
+            return;
+          }
+          typingTimer = setTimeout(done, totalChars * TYPE_SPEED + 90);
+        }
+        function completeTyping() {
+          clearTyping();
+          var step = STEPS[stepIndex];
+          if (step && !step.noCoach) fillCoachMarkup(els.coachText, step.text || '');
+          coachState = 'done';
+        }
+        function handleScreenTap() {
+          if (coachState === 'typing') completeTyping();
+        }
+        function lockCoachSize(text) {
+          // Keep the coach box at the precomputed max size so short captions
+          // don't leave empty stack space (that was swallowing content gap).
+          els.coach.style.minWidth = (coachMax.w || 200) + 'px';
+          els.coach.style.minHeight = (coachMax.h || 60) + 'px';
+        }
+        function measureCoachBox(text) {
+          els.coach.style.minWidth = '';
+          els.coach.style.minHeight = '';
+          fillCoachMarkup(els.coachText, text || '');
+          void els.coach.offsetWidth;
+          var size = {
+            w: els.coach.offsetWidth || 0,
+            h: els.coach.offsetHeight || 0,
+          };
+          els.coachText.textContent = '';
+          return size;
+        }
+        function lockCoachToMaxSize() {
+          coachMax.w = 0;
+          coachMax.h = 0;
+          STEPS.forEach(function (step) {
+            if (!step.text || step.noCoach) return;
+            var size = measureCoachBox(step.text);
+            if (size.w > coachMax.w) coachMax.w = size.w;
+            if (size.h > coachMax.h) coachMax.h = size.h;
+          });
+          els.coach.style.minWidth = (coachMax.w || 200) + 'px';
+          els.coach.style.minHeight = (coachMax.h || 60) + 'px';
+          // Stack height = coach box + gap + reserved warn line (no phantom padding).
+          els.coachStack.style.minHeight = '';
+        }
+        function showCoachCaption(step) {
+          coachState = 'idle';
+          lockCoachSize(step.text);
+          clearCoachWarn();
+          // Sub line stays in-flow on every step; only the warn contents toggle.
+          els.coachSub.classList.add('is-on');
+          els.coachSub.classList.remove('warn');
+          els.coachSub.textContent = '';
+          requestAnimationFrame(function () {
+            els.coach.classList.add('is-on');
+            typewrite(els.coachText, step.text, function () {
+              coachState = 'done';
+            });
+          });
+        }
+
+        function clearCoachWarn() {
+          if (warnTimer) {
+            clearTimeout(warnTimer);
+            warnTimer = null;
+          }
+          els.coachSub.classList.remove('warn');
+          els.coachSub.textContent = '';
+        }
+
+        function flashCoachWarn(msg) {
+          if (!msg) return;
+          if (warnTimer) {
+            clearTimeout(warnTimer);
+            warnTimer = null;
+          }
+          els.coachSub.classList.add('is-on', 'warn');
+          els.coachSub.textContent = msg;
+          warnTimer = setTimeout(function () {
+            warnTimer = null;
+            els.coachSub.classList.remove('warn');
+            els.coachSub.textContent = '';
+          }, WARN_FLASH_MS);
+        }
+
+        function errorMessageFor(res) {
+          var step = STEPS[stepIndex];
+          var errs = step && step.errors;
+          if (!errs) return null;
+          if (res.reason === 'missing') return errs.missing;
+          if (res.reason === 'shape') return errs.shape || errs.size;
+          if (res.reason === 'size') return errs.size;
+          return null;
+        }
+
+        // ---- Drag hint (sliding hand, no arrow) -----------------------------
+        // Absolute overlay — no padding on the slot, so board layout size stays
+        // identical across steps (hand space comes from .patch-wrap margin).
+        function makeDragHint(cfg) {
+          var hint = cfg.dragHint;
+          if (!hint) return null;
+          var SIZE = cfg.size;
+          var R = cfg.R;
+          var C = cfg.C;
+          var slot = document.createElement('div');
+          slot.className = 'board-slot';
+
+          var layer = document.createElement('div');
+          layer.className = 'drag-hint';
+          var uid = Math.random().toString(36).slice(2, 8);
+
+          var hand = els.handTemplate.content.firstElementChild.cloneNode(true);
+          hand.classList.add(hint.dir === 'h' ? 'is-h' : 'is-v');
+          var mask = hand.querySelector('mask');
+          if (mask) {
+            var mid = 'dragHandOutline-' + uid;
+            mask.setAttribute('id', mid);
+            var masked = hand.querySelector('path[mask]');
+            if (masked) masked.setAttribute('mask', 'url(#' + mid + ')');
+          }
+          var handW = SIZE * HAND.widthRatio;
+          hand.style.width = handW + 'px';
+          var hc = hint.handCell || { r: 0, c: 0 };
+          if (hint.dir === 'h') {
+            // Below the start cell; travels across the remaining columns.
+            hand.style.left = hc.c * SIZE + SIZE * 0.12 + 'px';
+            hand.style.top = (hc.r + 1) * SIZE + SIZE * 0.02 + 'px';
+            hand.style.setProperty(
+              '--hand-travel',
+              (C - 1) * SIZE * 0.92 + 'px'
+            );
+          } else {
+            // Left of the column, finger aimed right (90°); travels down the rows.
+            hand.style.left = -handW * 0.85 + 'px';
+            hand.style.top = hc.r * SIZE + SIZE * 0.15 + 'px';
+            hand.style.setProperty(
+              '--hand-travel',
+              (R - 1) * SIZE * 0.92 + 'px'
+            );
+          }
+          layer.appendChild(hand);
+          slot.appendChild(layer);
+
+          return {
+            slot: slot,
+            hide: function () {
+              layer.classList.add('is-off');
+            },
+          };
+        }
+
+        // ---- Patches board (drag a rectangle) ------------------------------
+        function makeBoard(cfg, onChange) {
+          var R = cfg.R;
+          var C = cfg.C;
+          var SIZE = cfg.size;
+          var half = SIZE / 2;
+          var cluesFlat = {};
+          var clueColor = {};
+          var clueShape = {}; // 1=square (any), 2=wide (w>h), 3=tall (h>w)
+          cfg.clues.forEach(function (cl) {
+            var f = cl.r * C + cl.c;
+            cluesFlat[f] = cl.value;
+            clueColor[f] = cl.color ? PCOL[cl.color].region : PCOL.green.region;
+            clueShape[f] = cl.shape || 1;
+          });
+
+          var frame = document.createElement('div');
+          frame.className = 'pframe';
+          frame.style.borderRadius = SIZE * 0.22 + 'px';
+
+          var grid = document.createElement('div');
+          grid.className = 'pgrid';
+          grid.style.width = C * SIZE + 'px';
+          grid.style.height = R * SIZE + 'px';
+          grid.style.gridTemplateColumns = 'repeat(' + C + ',' + SIZE + 'px)';
+          grid.style.gridTemplateRows = 'repeat(' + R + ',' + SIZE + 'px)';
+          for (var i = 0; i < R * C; i++) {
+            var cell = document.createElement('div');
+            var cr = Math.floor(i / C);
+            var cc = i % C;
+            cell.className =
+              'pcell' + (cc < C - 1 ? ' br' : '') + (cr < R - 1 ? ' bb' : '');
+            grid.appendChild(cell);
+          }
+
+          // Committed rectangles layer (rebuilt on each change).
+          var rectLayer = document.createElement('div');
+          rectLayer.style.position = 'absolute';
+          rectLayer.style.inset = '0';
+          rectLayer.style.pointerEvents = 'none';
+          grid.appendChild(rectLayer);
+
+          // Live drag preview.
+          var preview = document.createElement('div');
+          preview.className = 'ppreview';
+          grid.appendChild(preview);
+
+          // Clue markers.
+          // Steps 1–3: solid colour square chips.
+          // Steps 4–5 + final: shape silhouettes mirroring PatchesPuzzleClues
+          //   shape 1 = wide+tall overlay (both orientations)
+          //   shape 2 = wide, shape 3 = tall
+          cfg.clues.forEach(function (cl) {
+            var cx = cl.c * SIZE + half;
+            var cy = cl.r * SIZE + half;
+            var long = SIZE * 0.66;
+            var short = SIZE * 0.48;
+            var radius = short * 0.3;
+            var chipColor = cl.color ? PCOL[cl.color].chip : null;
+            var useShapeChip = !cfg.teaching || cfg.shapeChip;
+
+            if (cfg.teaching && chipColor && !useShapeChip) {
+              // Solid rounded square chip — design frames for steps 1–3.
+              var side = SIZE * 0.55;
+              var m = document.createElement('div');
+              m.className = 'pclue chip';
+              m.textContent = cl.value;
+              m.style.background = chipColor;
+              m.style.width = side + 'px';
+              m.style.height = side + 'px';
+              m.style.left = cx - side / 2 + 'px';
+              m.style.top = cy - side / 2 + 'px';
+              m.style.fontSize = SIZE * 0.32 + 'px';
+              m.style.borderRadius = side * 0.22 + 'px';
+              grid.appendChild(m);
+              return;
+            }
+            if (cfg.teaching && !chipColor) {
+              var plain = document.createElement('div');
+              plain.className = 'pclue';
+              plain.textContent = cl.value;
+              plain.style.fontSize = SIZE * 0.42 + 'px';
+              plain.style.width = SIZE + 'px';
+              plain.style.height = SIZE + 'px';
+              plain.style.left = cl.c * SIZE + 'px';
+              plain.style.top = cl.r * SIZE + 'px';
+              grid.appendChild(plain);
+              return;
+            }
+            var shape = cl.shape || 1;
+            function chipRect(w, h, op) {
+              var d = document.createElement('div');
+              d.style.position = 'absolute';
+              d.style.zIndex = '3';
+              d.style.width = w + 'px';
+              d.style.height = h + 'px';
+              d.style.left = cx - w / 2 + 'px';
+              d.style.top = cy - h / 2 + 'px';
+              d.style.background = chipColor;
+              d.style.borderRadius = radius + 'px';
+              d.style.opacity = op;
+              grid.appendChild(d);
+              return d;
+            }
+            if (shape === 1) {
+              // Wide + tall overlays (0.62) — the "both orientations" hint.
+              chipRect(long, short, '0.62');
+              chipRect(short, long, '0.62');
+              var t = document.createElement('div');
+              t.className = 'pclue';
+              t.textContent = cl.value;
+              t.style.zIndex = '4';
+              t.style.width = long + 'px';
+              t.style.height = long + 'px';
+              t.style.left = cx - long / 2 + 'px';
+              t.style.top = cy - long / 2 + 'px';
+              t.style.fontSize = SIZE * 0.32 + 'px';
+              grid.appendChild(t);
+            } else {
+              var w = shape === 2 ? long : short;
+              var h = shape === 2 ? short : long;
+              var d = chipRect(w, h, '1');
+              d.className = 'pclue';
+              d.textContent = cl.value;
+              d.style.fontSize = SIZE * 0.32 + 'px';
+            }
+          });
+
+          frame.appendChild(grid);
+
+          var drag = makeDragHint(cfg);
+          var root = frame;
+          if (drag) {
+            drag.slot.insertBefore(frame, drag.slot.firstChild);
+            root = drag.slot;
+          }
+
+          var committed = {}; // clueFlat -> [top,left,w,h]
+
+          function renderCommitted() {
+            rectLayer.innerHTML = '';
+            Object.keys(committed).forEach(function (k) {
+              var rc = committed[k];
+              var d = document.createElement('div');
+              d.className = 'prect';
+              d.style.left = rc[1] * SIZE + 'px';
+              d.style.top = rc[0] * SIZE + 'px';
+              d.style.width = rc[2] * SIZE + 'px';
+              d.style.height = rc[3] * SIZE + 'px';
+              d.style.background = clueColor[k];
+              rectLayer.appendChild(d);
+            });
+          }
+
+          function isSolved() {
+            var keys = Object.keys(committed);
+            if (keys.length !== cfg.clues.length) return false;
+            // Partial boards (step 4): every clue has a valid patch — the rest
+            // of the grid may stay empty.
+            if (cfg.partial) return true;
+            var owner = new Array(R * C).fill(-1);
+            for (var ki = 0; ki < keys.length; ki++) {
+              var rc = committed[keys[ki]];
+              for (var r = rc[0]; r < rc[0] + rc[3]; r++) {
+                for (var c = rc[1]; c < rc[1] + rc[2]; c++) {
+                  var f = r * C + c;
+                  if (owner[f] !== -1) return false; // overlap
+                  owner[f] = +keys[ki];
+                }
+              }
+            }
+            for (var i = 0; i < R * C; i++) if (owner[i] === -1) return false;
+            return true;
+          }
+
+          // Evaluate the bounding rectangle between two cells.
+          function evalRect(a, b) {
+            var ar = Math.floor(a / C), ac = a % C;
+            var br = Math.floor(b / C), bc = b % C;
+            var top = Math.min(ar, br);
+            var left = Math.min(ac, bc);
+            var h = Math.abs(ar - br) + 1;
+            var w = Math.abs(ac - bc) + 1;
+            var area = w * h;
+            var clueFlat = -1, count = 0;
+            for (var r = top; r < top + h; r++) {
+              for (var c = left; c < left + w; c++) {
+                if (cluesFlat[r * C + c]) {
+                  count += 1;
+                  clueFlat = r * C + c;
+                }
+              }
+            }
+            var reason = null;
+            if (count === 0) {
+              reason = 'missing';
+            } else if (count > 1) {
+              reason = 'size';
+            } else if (area !== cluesFlat[clueFlat]) {
+              reason = 'size';
+            } else {
+              var cs = clueShape[clueFlat] || 1;
+              var shapeOk = cs === 1 ? true : cs === 2 ? w > h : h > w;
+              if (!shapeOk) reason = 'shape';
+            }
+            var valid = reason === null;
+            return {
+              top: top,
+              left: left,
+              w: w,
+              h: h,
+              valid: valid,
+              clueFlat: clueFlat,
+              reason: reason,
+            };
+          }
+
+          function cellFromEvent(clientX, clientY) {
+            var rect = grid.getBoundingClientRect();
+            var x = clientX - rect.left;
+            var y = clientY - rect.top;
+            var c = Math.floor(x / SIZE);
+            var r = Math.floor(y / SIZE);
+            if (c < 0) c = 0;
+            else if (c > C - 1) c = C - 1;
+            if (r < 0) r = 0;
+            else if (r > R - 1) r = R - 1;
+            return r * C + c;
+          }
+
+          var startFlat = -1;
+          var startX = 0;
+          var startY = 0;
+          var moved = false;
+
+          function showPreview(ev) {
+            var res = evalRect(startFlat, cellFromEvent(ev.clientX, ev.clientY));
+            preview.style.display = 'block';
+            preview.style.left = res.left * SIZE + 'px';
+            preview.style.top = res.top * SIZE + 'px';
+            preview.style.width = res.w * SIZE + 'px';
+            preview.style.height = res.h * SIZE + 'px';
+            preview.style.background = res.valid
+              ? clueColor[res.clueFlat]
+              : 'var(--p-invalid)';
+            return res;
+          }
+
+          function hideHint() {
+            if (drag) drag.hide();
+          }
+
+          function onDown(e) {
+            if (interactiveDone) return;
+            hideHint();
+            startFlat = cellFromEvent(e.clientX, e.clientY);
+            startX = e.clientX;
+            startY = e.clientY;
+            moved = false;
+            try {
+              grid.setPointerCapture(e.pointerId);
+            } catch (err) {}
+            e.preventDefault();
+          }
+          function onMove(e) {
+            if (interactiveDone || startFlat < 0) return;
+            if (Math.abs(e.clientX - startX) + Math.abs(e.clientY - startY) > 6) {
+              moved = true;
+            }
+            if (moved) showPreview(e);
+            e.preventDefault();
+          }
+          function onUp(e) {
+            if (startFlat < 0) return;
+            e.stopPropagation();
+            var sf = startFlat;
+            startFlat = -1;
+            preview.style.display = 'none';
+            if (interactiveDone) return;
+            if (!moved) {
+              // Tap on a clue cell removes its committed rectangle.
+              var f = cellFromEvent(e.clientX, e.clientY);
+              if (cluesFlat[f] && committed[f]) {
+                delete committed[f];
+                renderCommitted();
+                onChange(isSolved());
+              }
+              return;
+            }
+            var res = evalRect(sf, cellFromEvent(e.clientX, e.clientY));
+            if (res.valid) {
+              clearCoachWarn();
+              committed[res.clueFlat] = [res.top, res.left, res.w, res.h];
+              renderCommitted();
+              onChange(isSolved());
+            } else {
+              var msg = errorMessageFor(res);
+              if (msg) flashCoachWarn(msg);
+            }
+          }
+          grid.addEventListener('pointerdown', onDown);
+          grid.addEventListener('pointermove', onMove);
+          grid.addEventListener('pointerup', onUp);
+          grid.addEventListener('pointercancel', onUp);
+
+          return {
+            el: root,
+            markSolved: function () {
+              frame.classList.add('psolved');
+              hideHint();
+            },
+          };
+        }
+
+        // ---- Step machine ---------------------------------------------------
+        function renderStep(step) {
+          interactiveDone = false;
+          var wrap = document.createElement('div');
+          wrap.className = 'patch-wrap';
+          var boards = step.boards;
+          var done = boards.map(function () {
+            return false;
+          });
+          var handles = [];
+          function checkAll() {
+            if (done.every(Boolean)) {
+              interactiveDone = true;
+              handles.forEach(function (h) {
+                h.markSolved();
+              });
+              advance();
+            }
+          }
+          boards.forEach(function (bcfg, i) {
+            if (i > 0) {
+              var div = document.createElement('div');
+              div.className = 'patch-divider';
+              wrap.appendChild(div);
+            }
+            var h = makeBoard(bcfg, function (solved) {
+              done[i] = solved;
+              if (solved) checkAll();
+            });
+            handles.push(h);
+            wrap.appendChild(h.el);
+          });
+          return wrap;
+        }
+
+        function applyStepLayout(step) {
+          var top =
+            typeof step.stagePaddingTop === 'number'
+              ? step.stagePaddingTop + 'px'
+              : '140px';
+          els.stage.style.setProperty('--stage-padding-top', top);
+        }
+
+        function applyStep() {
+          var step = STEPS[stepIndex];
+          if (!step) return;
+
+          clearTyping();
+          clearCoachWarn();
+          coachState = 'idle';
+          interactiveDone = false;
+          applyStepLayout(step);
+
+          els.reference.classList.toggle('is-on', !!step.reference);
+          els.coach.classList.remove('is-on');
+          els.coachText.textContent = '';
+          els.boardHost.innerHTML = '';
+
+          if (step.noCoach) {
+            els.coachStack.style.display = 'none';
+          } else {
+            els.coachStack.style.display = '';
+            showCoachCaption(step);
+          }
+
+          els.boardHost.appendChild(renderStep(step));
+
+          postToHost({ type: 'step', step: step.id, index: stepIndex });
+        }
+
+        function advance() {
+          stepIndex += 1;
+          if (stepIndex >= STEPS.length) {
+            finish();
+            return;
+          }
+          applyStep();
+        }
+
+        function finish() {
+          postToHost({ type: 'completed' });
+        }
+
+        var lastTapAt = 0;
+        function onScreenTap() {
+          var now = Date.now();
+          if (now - lastTapAt < 500) return;
+          lastTapAt = now;
+          handleScreenTap();
+        }
+        document.addEventListener('touchstart', onScreenTap, { passive: true });
+        document.addEventListener('click', onScreenTap);
+
+        window.addEventListener('message', function (e) {
+          var data = e.data;
+          try {
+            data = typeof data === 'string' ? JSON.parse(data) : data;
+          } catch (err) {
+            return;
+          }
+          if (!data || !data.type) return;
+          if (data.type === 'reset') {
+            stepIndex = 0;
+            applyStep();
+          }
+        });
+
+        setTimeout(function () {
+          lockCoachToMaxSize();
+          applyStep();
+          postToHost({ type: 'ready' });
+        }, 50);
+      })();
+    </script>
+  </body>
+</html>

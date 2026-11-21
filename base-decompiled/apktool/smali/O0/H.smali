@@ -1,0 +1,295 @@
+.class public final LO0/H;
+.super Ljava/lang/Object;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements LO0/T0;
+
+
+# instance fields
+.field public final a:Lkotlin/jvm/functions/Function1;
+
+.field public final b:LO0/F0;
+
+.field public final c:LJ0/I0;
+
+.field public final d:LC1/R0;
+
+.field public final e:LC1/R0;
+
+.field public final f:LC1/R0;
+
+
+# direct methods
+.method public constructor <init>(Lkotlin/jvm/functions/Function1;)V
+    .locals 3
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 2
+    .line 3
+    .line 4
+    iput-object p1, p0, LO0/H;->a:Lkotlin/jvm/functions/Function1;
+
+    .line 5
+    .line 6
+    new-instance p1, LO0/H$b;
+
+    .line 7
+    .line 8
+    invoke-direct {p1, p0}, LO0/H$b;-><init>(LO0/H;)V
+
+    .line 9
+    .line 10
+    .line 11
+    iput-object p1, p0, LO0/H;->b:LO0/F0;
+
+    .line 12
+    .line 13
+    new-instance p1, LJ0/I0;
+
+    .line 14
+    .line 15
+    invoke-direct {p1}, LJ0/I0;-><init>()V
+
+    .line 16
+    .line 17
+    .line 18
+    iput-object p1, p0, LO0/H;->c:LJ0/I0;
+
+    .line 19
+    .line 20
+    sget-object p1, Ljava/lang/Boolean;->FALSE:Ljava/lang/Boolean;
+
+    .line 21
+    .line 22
+    const/4 v0, 0x0
+
+    .line 23
+    const/4 v1, 0x2
+
+    .line 24
+    invoke-static {p1, v0, v1, v0}, LC1/d2;->j(Ljava/lang/Object;LC1/c2;ILjava/lang/Object;)LC1/R0;
+
+    .line 25
+    .line 26
+    .line 27
+    move-result-object v2
+
+    .line 28
+    iput-object v2, p0, LO0/H;->d:LC1/R0;
+
+    .line 29
+    .line 30
+    invoke-static {p1, v0, v1, v0}, LC1/d2;->j(Ljava/lang/Object;LC1/c2;ILjava/lang/Object;)LC1/R0;
+
+    .line 31
+    .line 32
+    .line 33
+    move-result-object v2
+
+    .line 34
+    iput-object v2, p0, LO0/H;->e:LC1/R0;
+
+    .line 35
+    .line 36
+    invoke-static {p1, v0, v1, v0}, LC1/d2;->j(Ljava/lang/Object;LC1/c2;ILjava/lang/Object;)LC1/R0;
+
+    .line 37
+    .line 38
+    .line 39
+    move-result-object p1
+
+    .line 40
+    iput-object p1, p0, LO0/H;->f:LC1/R0;
+
+    .line 41
+    .line 42
+    return-void
+.end method
+
+.method public static final synthetic g(LO0/H;)LJ0/I0;
+    .locals 0
+
+    .line 1
+    iget-object p0, p0, LO0/H;->c:LJ0/I0;
+
+    .line 2
+    .line 3
+    return-object p0
+.end method
+
+.method public static final synthetic h(LO0/H;)LO0/F0;
+    .locals 0
+
+    .line 1
+    iget-object p0, p0, LO0/H;->b:LO0/F0;
+
+    .line 2
+    .line 3
+    return-object p0
+.end method
+
+.method public static final synthetic i(LO0/H;)LC1/R0;
+    .locals 0
+
+    .line 1
+    iget-object p0, p0, LO0/H;->f:LC1/R0;
+
+    .line 2
+    .line 3
+    return-object p0
+.end method
+
+.method public static final synthetic j(LO0/H;)LC1/R0;
+    .locals 0
+
+    .line 1
+    iget-object p0, p0, LO0/H;->e:LC1/R0;
+
+    .line 2
+    .line 3
+    return-object p0
+.end method
+
+.method public static final synthetic k(LO0/H;)LC1/R0;
+    .locals 0
+
+    .line 1
+    iget-object p0, p0, LO0/H;->d:LC1/R0;
+
+    .line 2
+    .line 3
+    return-object p0
+.end method
+
+
+# virtual methods
+.method public a(LJ0/G0;Lkotlin/jvm/functions/Function2;LZl/c;)Ljava/lang/Object;
+    .locals 2
+
+    .line 1
+    new-instance v0, LO0/H$a;
+
+    .line 2
+    .line 3
+    const/4 v1, 0x0
+
+    .line 4
+    invoke-direct {v0, p0, p1, p2, v1}, LO0/H$a;-><init>(LO0/H;LJ0/G0;Lkotlin/jvm/functions/Function2;LZl/c;)V
+
+    .line 5
+    .line 6
+    .line 7
+    invoke-static {v0, p3}, LLn/P;->g(Lkotlin/jvm/functions/Function2;LZl/c;)Ljava/lang/Object;
+
+    .line 8
+    .line 9
+    .line 10
+    move-result-object p1
+
+    .line 11
+    invoke-static {}, Lam/c;->f()Ljava/lang/Object;
+
+    .line 12
+    .line 13
+    .line 14
+    move-result-object p2
+
+    .line 15
+    if-ne p1, p2, :cond_0
+
+    .line 16
+    .line 17
+    return-object p1
+
+    .line 18
+    :cond_0
+    sget-object p1, Lkotlin/Unit;->a:Lkotlin/Unit;
+
+    .line 19
+    .line 20
+    return-object p1
+.end method
+
+.method public b()Z
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, LO0/H;->d:LC1/R0;
+
+    .line 2
+    .line 3
+    invoke-interface {v0}, LC1/R0;->getValue()Ljava/lang/Object;
+
+    .line 4
+    .line 5
+    .line 6
+    move-result-object v0
+
+    .line 7
+    check-cast v0, Ljava/lang/Boolean;
+
+    .line 8
+    .line 9
+    invoke-virtual {v0}, Ljava/lang/Boolean;->booleanValue()Z
+
+    .line 10
+    .line 11
+    .line 12
+    move-result v0
+
+    .line 13
+    return v0
+.end method
+
+.method public e(F)F
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, LO0/H;->a:Lkotlin/jvm/functions/Function1;
+
+    .line 2
+    .line 3
+    invoke-static {p1}, Ljava/lang/Float;->valueOf(F)Ljava/lang/Float;
+
+    .line 4
+    .line 5
+    .line 6
+    move-result-object p1
+
+    .line 7
+    invoke-interface {v0, p1}, Lkotlin/jvm/functions/Function1;->invoke(Ljava/lang/Object;)Ljava/lang/Object;
+
+    .line 8
+    .line 9
+    .line 10
+    move-result-object p1
+
+    .line 11
+    check-cast p1, Ljava/lang/Number;
+
+    .line 12
+    .line 13
+    invoke-virtual {p1}, Ljava/lang/Number;->floatValue()F
+
+    .line 14
+    .line 15
+    .line 16
+    move-result p1
+
+    .line 17
+    return p1
+.end method
+
+.method public final l()Lkotlin/jvm/functions/Function1;
+    .locals 1
+
+    .line 1
+    iget-object v0, p0, LO0/H;->a:Lkotlin/jvm/functions/Function1;
+
+    .line 2
+    .line 3
+    return-object v0
+.end method

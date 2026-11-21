@@ -1,0 +1,54 @@
+package com.cashfree.pg.core.hidden.payment.model.request;
+
+import com.appsflyer.AppsFlyerProperties;
+import com.cashfree.pg.core.api.netbanking.CFNetBanking;
+import com.cashfree.pg.core.hidden.base.PaymentRequestObject;
+import java.util.HashMap;
+import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes3.dex */
+public final class NetBankingPaymentRequest extends PaymentRequestObject {
+    private final int bankCode;
+    private final String channel;
+
+    public NetBankingPaymentRequest(CFNetBanking cFNetBanking) {
+        this.bankCode = cFNetBanking.getBankCode();
+        this.channel = cFNetBanking.getChannel();
+    }
+
+    @Override // com.cashfree.pg.core.hidden.base.PaymentRequestObject, com.cashfree.pg.base.e
+    public String getDescription() {
+        return "Net Banking Request Body\n------------\nNet Banking Data: " + paymentObjectToJSON() + "\n------------";
+    }
+
+    @Override // com.cashfree.pg.core.hidden.base.PaymentRequestObject
+    public JSONObject paymentObjectToJSON() {
+        JSONObject jSONObject = new JSONObject();
+        try {
+            jSONObject.put(AppsFlyerProperties.CHANNEL, this.channel);
+            jSONObject.put("netbanking_bank_code", this.bankCode);
+        } catch (JSONException unused) {
+        }
+        return jSONObject;
+    }
+
+    @Override // com.cashfree.pg.core.hidden.base.PaymentRequestObject, com.cashfree.pg.base.d
+    public JSONObject toJSON() {
+        JSONObject jSONObject = new JSONObject();
+        try {
+            jSONObject.put("netbanking", paymentObjectToJSON());
+        } catch (JSONException unused) {
+        }
+        return jSONObject;
+    }
+
+    @Override // com.cashfree.pg.core.hidden.base.PaymentRequestObject, com.cashfree.pg.base.d
+    public Map<String, String> toMap() {
+        HashMap map = new HashMap();
+        map.put("netbanking", paymentObjectToJSON().toString());
+        return map;
+    }
+}

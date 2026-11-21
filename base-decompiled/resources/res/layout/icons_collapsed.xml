@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/content_view_big"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <include
+        android:id="@+id/icons_text_row"
+        layout="@layout/content_view_small_single_line_msg"/>
+    <include
+        android:id="@+id/icons_icon_row"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icons_icon_row_full"
+        layout="@layout/icons_icon_row"/>
+</LinearLayout>

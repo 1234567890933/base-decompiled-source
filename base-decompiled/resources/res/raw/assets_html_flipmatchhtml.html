@@ -1,0 +1,815 @@
+<!-- design-tokens: snapshot-sha256=855ba5ab1f9418e52cd19cef2258e6bafd08b5f29ce85f8ffaafa17159f09dd8 generator=task13-v2 -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover"
+    />
+    <title>Flip — How to Play</title>
+    <script>
+      (function () {
+        if (/Android/i.test(navigator.userAgent || '')) {
+          document.documentElement.classList.add('is-android-webview');
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #171717;
+        --text: #FFFFFF;
+        --coach-text: #0AB963;
+        --coach-bg: #16271f;
+        --font-body: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          Roboto, Inter, sans-serif;
+
+        /* Flip Match palette — mirrors MEMORY_VISUALS in MemoryPuzzleQuestion/surface/visuals.ts */
+        --f-back: #b3a1ff;
+        --f-face: #343333;
+        --f-correct: #8de7e8;
+        --f-incorrect: #ff6363;
+        --f-marker: #171717;
+
+        --card: min(84px, calc((100vw - 56px) / 3));
+        --gap: 10px;
+        /* Half of the flip: the back squeezes shut, then the face opens. */
+        --flip-half: 130ms;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        min-height: 100dvh;
+        min-height: -webkit-fill-available;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        overflow: hidden;
+        font-weight: 700;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .stage {
+        position: relative;
+        height: 100%;
+        min-height: 100dvh;
+        min-height: -webkit-fill-available;
+        display: flex;
+        flex-direction: column;
+        /* Fixed top inset so coach text sits 140px from the WebView top on every step. */
+        padding: 140px 18px 32px;
+      }
+      .content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 26px;
+        min-height: 0;
+      }
+
+      /* Coach caption */
+      .coach-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 280px;
+        width: 100%;
+        flex-shrink: 0;
+      }
+      .coach {
+        width: 100%;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.35;
+        color: var(--coach-text);
+        background: var(--coach-bg);
+        border-radius: 10px;
+        padding: 12px 16px;
+        opacity: 0;
+        transform: translateY(4px);
+        transition:
+          opacity 200ms ease,
+          transform 200ms ease;
+      }
+      .coach.is-on {
+        opacity: 1;
+        transform: none;
+      }
+      .coach-text {
+        min-height: 20px;
+      }
+      .coach-text .word {
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .coach-text .char {
+        display: inline-block;
+        opacity: 0;
+        animation: coachCharIn 90ms ease-out forwards;
+      }
+      @keyframes coachCharIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* ---- Flip Match board -------------------------------------------- */
+      .f-wrap {
+        position: relative;
+        /* Room for the tap-hand below the bottom row. */
+        margin-bottom: 64px;
+      }
+      .f-board {
+        display: grid;
+        grid-template-columns: repeat(3, var(--card));
+        gap: var(--gap);
+      }
+      .f-board.is-won {
+        animation: boardWin 520ms ease-out;
+      }
+      @keyframes boardWin {
+        0% {
+          transform: scale(1);
+        }
+        45% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .f-card {
+        position: relative;
+        width: var(--card);
+        height: var(--card);
+        padding: 0;
+        border: none;
+        background: transparent;
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      .f-face {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+      }
+      /* Flipping down: the face closes first, then the back opens. */
+      .f-back {
+        background: var(--f-back);
+        transform: scaleX(1);
+        transition: transform var(--flip-half) ease-out var(--flip-half);
+      }
+      .f-back svg {
+        width: 42%;
+        height: auto;
+        overflow: visible;
+      }
+      .f-front {
+        background: var(--f-face);
+        transform: scaleX(0);
+        transition:
+          transform var(--flip-half) ease-in,
+          background 160ms ease;
+      }
+      /* Flipping up: the back closes first, then the face opens. */
+      .f-card.is-up .f-back {
+        transform: scaleX(0);
+        transition: transform var(--flip-half) ease-in;
+      }
+      .f-card.is-up .f-front {
+        transform: scaleX(1);
+        transition:
+          transform var(--flip-half) ease-out var(--flip-half),
+          background 160ms ease;
+      }
+      /* The opening reveal has nothing to flip from. */
+      .f-board.no-anim .f-face {
+        transition: none !important;
+      }
+      .f-emoji {
+        font-size: calc(var(--card) * 0.5);
+        line-height: 1;
+      }
+      .f-card.is-selected .f-front {
+        box-shadow: inset 0 0 0 2px var(--f-correct);
+      }
+      .f-card.is-mismatch .f-front {
+        background: var(--f-incorrect);
+        animation: cardShake 260ms ease-in-out var(--flip-half);
+      }
+      .f-card.is-matched .f-front {
+        background: var(--f-correct);
+      }
+      .f-check {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 160ms ease;
+        pointer-events: none;
+      }
+      .f-card.is-matched .f-check {
+        opacity: 1;
+      }
+      @keyframes cardShake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-4px);
+        }
+        75% {
+          transform: translateX(4px);
+        }
+      }
+
+      /* Tap hint: purple hand that taps the card to flip next. */
+      .drag-hand {
+        position: absolute;
+        z-index: 4;
+        pointer-events: none;
+        opacity: 0;
+        transition:
+          opacity 180ms ease,
+          left 260ms ease,
+          top 260ms ease;
+      }
+      .drag-hand.is-on {
+        opacity: 1;
+      }
+      .drag-hand-inner {
+        transform-origin: 18% 0%;
+        animation: handTap 1.3s ease-in-out infinite;
+      }
+      .drag-hand svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      @keyframes handTap {
+        0%,
+        100% {
+          transform: translateY(10px) scale(1);
+        }
+        45%,
+        60% {
+          transform: translateY(0) scale(0.92);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stage" id="stage">
+      <div class="content">
+        <div class="coach-stack" id="coach-stack">
+          <div class="coach" id="coach">
+            <div class="coach-text" id="coach-text"></div>
+          </div>
+        </div>
+        <div id="board-host"></div>
+      </div>
+    </div>
+
+    <template id="drag-hand-template">
+      <div class="drag-hand">
+        <div class="drag-hand-inner">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="51"
+            height="90"
+            viewBox="0 0 51 90"
+            fill="none"
+          >
+            <mask id="dragHandOutline" fill="white">
+              <path
+                d="M8.9248 0C13.8538 0 17.8496 3.99577 17.8496 8.9248V20.9414C20.209 20.2144 22.7156 19.8232 25.3135 19.8232C39.2937 19.8233 50.627 31.1565 50.627 45.1367C50.6269 54.4725 45.572 62.6264 38.0508 67.0146C38.065 67.2682 38.0732 67.5241 38.0732 67.7812V76.2959C38.0732 83.7168 32.0575 89.7322 24.6367 89.7324C17.2157 89.7324 11.1992 83.7169 11.1992 76.2959V67.7812C11.1992 67.2508 11.2312 66.7273 11.291 66.2129C4.48478 61.6755 1.03749e-05 53.9304 0 45.1367C0 44.5332 0.0229127 43.9347 0.0644531 43.3418C0.0233643 42.9944 0 42.6407 0 42.2822L0 8.9248C0 3.99577 3.99577 0 8.9248 0Z"
+              />
+            </mask>
+            <path
+              d="M8.9248 0C13.8538 0 17.8496 3.99577 17.8496 8.9248V20.9414C20.209 20.2144 22.7156 19.8232 25.3135 19.8232C39.2937 19.8233 50.627 31.1565 50.627 45.1367C50.6269 54.4725 45.572 62.6264 38.0508 67.0146C38.065 67.2682 38.0732 67.5241 38.0732 67.7812V76.2959C38.0732 83.7168 32.0575 89.7322 24.6367 89.7324C17.2157 89.7324 11.1992 83.7169 11.1992 76.2959V67.7812C11.1992 67.2508 11.2312 66.7273 11.291 66.2129C4.48478 61.6755 1.03749e-05 53.9304 0 45.1367C0 44.5332 0.0229127 43.9347 0.0644531 43.3418C0.0233643 42.9944 0 42.6407 0 42.2822L0 8.9248C0 3.99577 3.99577 0 8.9248 0Z"
+              fill="#8e7ee0"
+            />
+            <path
+              d="M17.8496 20.9414H15.8496V23.6504L18.4385 22.8527L17.8496 20.9414ZM25.3135 19.8232L25.3135 17.8232H25.3135V19.8232ZM50.627 45.1367L52.627 45.1367V45.1367H50.627ZM38.0508 67.0146L37.0429 65.2872L35.9852 65.9043L36.0539 67.1269L38.0508 67.0146ZM38.0732 76.2959H40.0732V76.2959H38.0732ZM24.6367 89.7324V91.7324H24.6368L24.6367 89.7324ZM11.1992 76.2959H9.19922V76.2959H11.1992ZM11.291 66.2129L13.2776 66.4438L13.419 65.2278L12.4004 64.5488L11.291 66.2129ZM0 45.1367H-2V45.1367L0 45.1367ZM0.0644531 43.3418L2.05956 43.4816L2.07272 43.2938L2.05061 43.1069L0.0644531 43.3418ZM8.9248 0V2C12.7493 2 15.8496 5.10034 15.8496 8.9248H17.8496H19.8496C19.8496 2.8912 14.9584 -2 8.9248 -2V0ZM17.8496 8.9248H15.8496V20.9414H17.8496H19.8496V8.9248H17.8496ZM17.8496 20.9414L18.4385 22.8527C20.6092 22.1839 22.9173 21.8232 25.3135 21.8232V19.8232V17.8232C22.5138 17.8232 19.8088 18.245 17.2607 19.0301L17.8496 20.9414ZM25.3135 19.8232L25.3135 21.8232C38.1891 21.8233 48.627 32.2611 48.627 45.1367H50.627H52.627C52.627 30.0519 40.3983 17.8233 25.3135 17.8232L25.3135 19.8232ZM50.627 45.1367L48.627 45.1367C48.6269 53.7322 43.9753 61.2424 37.0429 65.2872L38.0508 67.0146L39.0587 68.7421C47.1686 64.0103 52.6269 55.213 52.627 45.1367L50.627 45.1367ZM38.0508 67.0146L36.0539 67.1269C36.0664 67.3484 36.0732 67.5664 36.0732 67.7812H38.0732H40.0732C40.0732 67.4817 40.0637 67.1881 40.0476 66.9024L38.0508 67.0146ZM38.0732 67.7812H36.0732V76.2959H38.0732H40.0732V67.7812H38.0732ZM38.0732 76.2959H36.0732C36.0732 82.6121 30.953 87.7322 24.6367 87.7324L24.6367 89.7324L24.6368 91.7324C33.1621 91.7322 40.0732 84.8214 40.0732 76.2959H38.0732ZM24.6367 89.7324V87.7324C18.3201 87.7324 13.1992 82.6122 13.1992 76.2959H11.1992H9.19922C9.19922 84.8217 16.1113 91.7324 24.6367 91.7324V89.7324ZM11.1992 76.2959H13.1992V67.7812H11.1992H9.19922V76.2959H11.1992ZM11.1992 67.7812H13.1992C13.1992 67.3313 13.2264 66.8849 13.2776 66.4438L11.291 66.2129L9.30439 65.982C9.23609 66.5696 9.19922 67.1703 9.19922 67.7812H11.1992ZM11.291 66.2129L12.4004 64.5488C6.12666 60.3664 2.00001 53.2334 2 45.1367L0 45.1367L-2 45.1367C-1.99999 54.6273 2.84289 62.9846 10.1816 67.877L11.291 66.2129ZM0 45.1367H2C2 44.5838 2.02099 44.0321 2.05956 43.4816L0.0644531 43.3418L-1.93066 43.202C-1.97517 43.8374 -2 44.4826 -2 45.1367H0ZM0.0644531 43.3418L2.05061 43.1069C2.01771 42.8287 2 42.5539 2 42.2822H0H-2C-2 42.7275 -1.97098 43.16 -1.9217 43.5767L0.0644531 43.3418ZM0 42.2822H2L2 8.9248H0H-2L-2 42.2822H0ZM0 8.9248H2C2 5.10034 5.10034 2 8.9248 2V0V-2C2.8912 -2 -2 2.8912 -2 8.9248H0Z"
+              fill="white"
+              mask="url(#dragHandOutline)"
+            />
+          </svg>
+        </div>
+      </div>
+    </template>
+
+    <script>
+      (function () {
+        var SVGNS = 'http://www.w3.org/2000/svg';
+
+        // Matches MEMORY_REVEAL_DURATION_MS / MEMORY_MISMATCH_DURATION_MS in the real board.
+        var REVEAL_MS = 2000;
+        var MISMATCH_MS = 700;
+        // Both halves of the CSS flip (--flip-half × 2).
+        var FLIP_MS = 260;
+        var STEP_PAUSE_MS = 450;
+        var WIN_MS = 700;
+        var HAND_WIDTH_RATIO = 0.42;
+
+        var EMOJI = { apple: '🍎', rocket: '🚀', star: '⭐' };
+        // 2×3 deck, row-major:  🍎 🚀 ⭐ / ⭐ 🍎 🚀
+        var CARDS = ['apple', 'rocket', 'star', 'star', 'apple', 'rocket'];
+
+        // ---- Steps ----------------------------------------------------------
+        // One board lives across every step. `guide` lists the only cards that
+        // may be flipped, in order; a step without it is free play.
+        var STEPS = [
+          {
+            id: 'memorise',
+            reveal: true,
+            text: 'Memorise the cards before they flip over.',
+          },
+          {
+            id: 'flipOne',
+            guide: [0],
+            text: 'Tap a card to flip it over.',
+          },
+          {
+            id: 'findMatch',
+            guide: [4],
+            text: 'Now flip its match. Matching cards stay face up.',
+          },
+          {
+            id: 'mismatch',
+            guide: [1, 2],
+            text: 'Not every pair matches. Flip these two cards.',
+          },
+          {
+            id: 'finish',
+            text: 'Wrong pairs flip back. Match the rest to finish!',
+          },
+        ];
+
+        var els = {
+          stage: document.getElementById('stage'),
+          coachStack: document.getElementById('coach-stack'),
+          coach: document.getElementById('coach'),
+          coachText: document.getElementById('coach-text'),
+          boardHost: document.getElementById('board-host'),
+          handTemplate: document.getElementById('drag-hand-template'),
+        };
+
+        var stepIndex = 0;
+        var TYPE_SPEED = 15;
+        var typingTimer = null;
+        var coachState = 'idle';
+        var timers = [];
+
+        // Board state, rebuilt by renderBoard().
+        var board = null;
+        var cardEls = [];
+        var hand = null;
+        var matched = [];
+        var firstIndex = null;
+        var guidePos = 0;
+        var locked = true;
+        var finished = false;
+
+        function postToHost(msg) {
+          try {
+            var payload = JSON.stringify(msg);
+            if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+              window.ReactNativeWebView.postMessage(payload);
+            } else if (window.parent && window.parent !== window) {
+              window.parent.postMessage(payload, '*');
+            }
+          } catch (e) {}
+        }
+
+        function postHaptic(style) {
+          postToHost({ type: 'haptic', style: style || 'Soft' });
+        }
+
+        function later(fn, ms) {
+          var timer = setTimeout(fn, ms);
+          timers.push(timer);
+          return timer;
+        }
+
+        function clearTimers() {
+          timers.forEach(clearTimeout);
+          timers = [];
+        }
+
+        // ---- Coach typewriter ----------------------------------------------
+        function clearTyping() {
+          if (typingTimer) {
+            clearTimeout(typingTimer);
+            typingTimer = null;
+          }
+        }
+
+        function typewrite(el, text, onDone) {
+          clearTyping();
+          coachState = 'typing';
+          el.textContent = text || '';
+          var totalChars = 0;
+          var children = Array.prototype.slice.call(el.childNodes);
+          children.forEach(function (child) {
+            if (child.nodeType !== 3) return;
+            var frag = document.createDocumentFragment();
+            var words = child.nodeValue.split(' ');
+            words.forEach(function (word, wIdx) {
+              if (word.length > 0) {
+                var wordSpan = document.createElement('span');
+                wordSpan.className = 'word';
+                for (var i = 0; i < word.length; i++) {
+                  var charSpan = document.createElement('span');
+                  charSpan.className = 'char';
+                  charSpan.style.animationDelay = totalChars * TYPE_SPEED + 'ms';
+                  charSpan.textContent = word.charAt(i);
+                  wordSpan.appendChild(charSpan);
+                  totalChars += 1;
+                }
+                frag.appendChild(wordSpan);
+              }
+              if (wIdx < words.length - 1) {
+                frag.appendChild(document.createTextNode(' '));
+                totalChars += 1;
+              }
+            });
+            el.replaceChild(frag, child);
+          });
+          var done = function () {
+            typingTimer = null;
+            if (onDone) onDone();
+          };
+          if (totalChars === 0) {
+            done();
+            return;
+          }
+          typingTimer = setTimeout(done, totalChars * TYPE_SPEED + 90);
+        }
+
+        function completeTyping() {
+          clearTyping();
+          var step = STEPS[stepIndex];
+          if (step) els.coachText.textContent = step.text || '';
+          coachState = 'done';
+        }
+
+        function handleScreenTap() {
+          if (coachState === 'typing') completeTyping();
+        }
+
+        function lockCoachSize(text) {
+          els.coach.style.minWidth = '';
+          els.coach.style.minHeight = '';
+          els.coachText.textContent = text || '';
+          void els.coach.offsetWidth;
+          var capH = els.coach.offsetHeight || 60;
+          var capW = els.coach.offsetWidth || 200;
+          els.coach.style.minWidth = capW + 'px';
+          els.coach.style.minHeight = capH + 'px';
+          els.coachText.textContent = '';
+        }
+
+        // Reserve the tallest caption so the board never shifts between steps.
+        function lockCoachStackSize() {
+          var maxH = 0;
+          els.coach.style.minWidth = '';
+          els.coach.style.minHeight = '';
+          STEPS.forEach(function (step) {
+            els.coachText.textContent = step.text || '';
+            void els.coachStack.offsetWidth;
+            var h = els.coachStack.offsetHeight || 0;
+            if (h > maxH) maxH = h;
+          });
+          els.coachText.textContent = '';
+          els.coachStack.style.minHeight = (maxH || 64) + 'px';
+        }
+
+        function showCoachCaption(step) {
+          coachState = 'idle';
+          lockCoachSize(step.text);
+          requestAnimationFrame(function () {
+            els.coach.classList.add('is-on');
+            typewrite(els.coachText, step.text, function () {
+              coachState = 'done';
+            });
+          });
+        }
+
+        // ---- Board ------------------------------------------------------------
+        function svgEl(name, attrs) {
+          var el = document.createElementNS(SVGNS, name);
+          Object.keys(attrs).forEach(function (key) {
+            el.setAttribute(key, attrs[key]);
+          });
+          return el;
+        }
+
+        // Card-back mark — geometry mirrors matiksMarkGeometry.ts.
+        function makeMatiksMark() {
+          var svg = svgEl('svg', {
+            viewBox: '0 0 13.1675 7.47141',
+            fill: 'none',
+            stroke: 'var(--f-marker)',
+            'stroke-width': '1.58483',
+            'aria-hidden': 'true',
+          });
+          svg.appendChild(svgEl('circle', { cx: '3.1348', cy: '3.73781', r: '2.34238' }));
+          svg.appendChild(svgEl('circle', { cx: '10.0327', cy: '3.73781', r: '2.34238' }));
+          svg.appendChild(
+            svgEl('line', { x1: '7.56909', y1: '0.202914', x2: '5.69741', y2: '7.2685' }),
+          );
+          return svg;
+        }
+
+        // Matched tick — same corner and proportions as paintMemoryCard.
+        function makeCheck() {
+          var svg = svgEl('svg', {
+            class: 'f-check',
+            viewBox: '0 0 100 100',
+            fill: 'none',
+            stroke: 'var(--f-marker)',
+            'stroke-width': '3.5',
+            'aria-hidden': 'true',
+          });
+          svg.appendChild(svgEl('polyline', { points: '69,76 76,83 89,65' }));
+          return svg;
+        }
+
+        function makeCard(index) {
+          var card = document.createElement('button');
+          card.type = 'button';
+          card.className = 'f-card';
+          card.setAttribute('data-index', String(index));
+
+          var back = document.createElement('span');
+          back.className = 'f-face f-back';
+          back.appendChild(makeMatiksMark());
+
+          var front = document.createElement('span');
+          front.className = 'f-face f-front';
+          var emoji = document.createElement('span');
+          emoji.className = 'f-emoji';
+          emoji.textContent = EMOJI[CARDS[index]];
+          front.appendChild(emoji);
+          front.appendChild(makeCheck());
+
+          card.appendChild(back);
+          card.appendChild(front);
+          card.addEventListener('pointerdown', function (e) {
+            e.preventDefault();
+            onCardTap(index);
+          });
+          return card;
+        }
+
+        function setUp(index, isUp) {
+          var card = cardEls[index];
+          card.classList.toggle('is-up', isUp);
+          card.setAttribute(
+            'aria-label',
+            'Card ' + (index + 1) + (isUp ? ', ' + CARDS[index] : ', face down'),
+          );
+        }
+
+        function renderBoard() {
+          els.boardHost.innerHTML = '';
+          var wrap = document.createElement('div');
+          wrap.className = 'f-wrap';
+          board = document.createElement('div');
+          board.className = 'f-board no-anim';
+          board.id = 'board';
+          cardEls = CARDS.map(function (_, index) {
+            var card = makeCard(index);
+            board.appendChild(card);
+            return card;
+          });
+          wrap.appendChild(board);
+
+          hand = els.handTemplate.content.firstElementChild.cloneNode(true);
+          wrap.appendChild(hand);
+          els.boardHost.appendChild(wrap);
+
+          matched = CARDS.map(function () {
+            return false;
+          });
+          firstIndex = null;
+          locked = true;
+          finished = false;
+          // Start revealed, exactly like the real board's opening two seconds.
+          CARDS.forEach(function (_, index) {
+            setUp(index, true);
+          });
+          void board.offsetWidth;
+          board.classList.remove('no-anim');
+        }
+
+        // ---- Tap hint ---------------------------------------------------------
+        function pointHandAt(index) {
+          var card = cardEls[index];
+          var handW = card.offsetWidth * HAND_WIDTH_RATIO;
+          hand.style.width = handW + 'px';
+          // The fingertip sits ~18% in from the SVG's left edge.
+          hand.style.left = card.offsetLeft + card.offsetWidth / 2 - handW * 0.18 + 'px';
+          hand.style.top = card.offsetTop + card.offsetHeight / 2 + 'px';
+          hand.classList.add('is-on');
+        }
+
+        function hideHand() {
+          hand.classList.remove('is-on');
+        }
+
+        function showGuide() {
+          var step = STEPS[stepIndex];
+          if (step && step.guide && guidePos < step.guide.length) {
+            pointHandAt(step.guide[guidePos]);
+          } else {
+            hideHand();
+          }
+        }
+
+        // ---- Game ---------------------------------------------------------------
+        function isGuideDone() {
+          var step = STEPS[stepIndex];
+          return Boolean(step && step.guide && guidePos >= step.guide.length);
+        }
+
+        function allMatched() {
+          return matched.every(Boolean);
+        }
+
+        function win() {
+          if (finished) return;
+          finished = true;
+          locked = true;
+          board.classList.add('is-won');
+          postHaptic('Medium');
+          later(finish, WIN_MS);
+        }
+
+        function resolvePair(a, b) {
+          cardEls[a].classList.remove('is-selected');
+          if (CARDS[a] === CARDS[b]) {
+            matched[a] = true;
+            matched[b] = true;
+            cardEls[a].classList.add('is-matched');
+            cardEls[b].classList.add('is-matched');
+            postHaptic('Medium');
+            locked = false;
+            if (allMatched()) {
+              win();
+            } else if (isGuideDone()) {
+              later(advance, STEP_PAUSE_MS + FLIP_MS);
+            }
+            return;
+          }
+          cardEls[a].classList.add('is-mismatch');
+          cardEls[b].classList.add('is-mismatch');
+          postHaptic('Heavy');
+          later(function () {
+            [a, b].forEach(function (index) {
+              cardEls[index].classList.remove('is-mismatch');
+              setUp(index, false);
+            });
+            locked = false;
+            if (isGuideDone()) later(advance, FLIP_MS);
+          }, MISMATCH_MS);
+        }
+
+        function onCardTap(index) {
+          var step = STEPS[stepIndex];
+          if (!step || locked || finished) return;
+          if (matched[index] || cardEls[index].classList.contains('is-up')) return;
+          if (step.guide && step.guide[guidePos] !== index) return;
+
+          setUp(index, true);
+          postHaptic('Soft');
+          if (step.guide) {
+            guidePos += 1;
+            showGuide();
+          }
+
+          if (firstIndex === null) {
+            firstIndex = index;
+            cardEls[index].classList.add('is-selected');
+            if (isGuideDone()) later(advance, STEP_PAUSE_MS);
+            return;
+          }
+
+          var a = firstIndex;
+          firstIndex = null;
+          locked = true;
+          // Judge the pair once the second card has finished turning over.
+          later(function () {
+            resolvePair(a, index);
+          }, FLIP_MS);
+        }
+
+        // ---- Step machine -------------------------------------------------------
+        function startReveal() {
+          locked = true;
+          later(function () {
+            CARDS.forEach(function (_, index) {
+              setUp(index, false);
+            });
+            postHaptic('Soft');
+            later(function () {
+              locked = false;
+              advance();
+            }, FLIP_MS);
+          }, REVEAL_MS);
+        }
+
+        function applyStep() {
+          var step = STEPS[stepIndex];
+          if (!step) return;
+
+          clearTyping();
+          coachState = 'idle';
+          guidePos = 0;
+
+          els.coach.classList.remove('is-on');
+          els.coach.style.minWidth = '';
+          els.coach.style.minHeight = '';
+          els.coachText.textContent = '';
+          els.stage.setAttribute('data-step', String(stepIndex));
+
+          showCoachCaption(step);
+          showGuide();
+          if (step.reveal) startReveal();
+
+          postToHost({ type: 'step', step: step.id, index: stepIndex });
+        }
+
+        function advance() {
+          if (stepIndex >= STEPS.length - 1) return;
+          stepIndex += 1;
+          applyStep();
+        }
+
+        function finish() {
+          postToHost({ type: 'completed' });
+        }
+
+        function start() {
+          clearTimers();
+          stepIndex = 0;
+          renderBoard();
+          applyStep();
+        }
+
+        var lastTapAt = 0;
+        function onScreenTap() {
+          var now = Date.now();
+          if (now - lastTapAt < 500) return;
+          lastTapAt = now;
+          handleScreenTap();
+        }
+        document.addEventListener('touchstart', onScreenTap, { passive: true });
+        document.addEventListener('click', onScreenTap);
+
+        window.addEventListener('message', function (e) {
+          var data = e.data;
+          try {
+            data = typeof data === 'string' ? JSON.parse(data) : data;
+          } catch (err) {
+            return;
+          }
+          if (!data || !data.type) return;
+          if (data.type === 'reset') start();
+        });
+
+        setTimeout(function () {
+          lockCoachStackSize();
+          start();
+          postToHost({ type: 'ready' });
+        }, 50);
+      })();
+    </script>
+  </body>
+</html>

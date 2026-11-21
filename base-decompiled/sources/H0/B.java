@@ -1,0 +1,18 @@
+package H0;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes.dex */
+public final class B implements A {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public final Q f11372a;
+
+    public B(Q q10) {
+        this.f11372a = q10;
+    }
+
+    @Override // H0.A
+    public v1 a(Y0 y10) {
+        return new z1(this.f11372a);
+    }
+}

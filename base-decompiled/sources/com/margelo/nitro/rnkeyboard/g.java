@@ -1,0 +1,41 @@
+package com.margelo.nitro.rnkeyboard;
+
+import android.util.Log;
+import kotlin.jvm.internal.DefaultConstructorMarker;
+import p234io.sentry.android.core.c1;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes4.dex */
+public abstract class g {
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    public static final a f68554a = new a(null);
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    public static boolean f68555b;
+
+    /* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+    public static final class a {
+        public /* synthetic */ a(DefaultConstructorMarker defaultConstructorMarker) {
+            this();
+        }
+
+        public final void a() {
+            if (g.f68555b) {
+                return;
+            }
+            try {
+                Log.i("NitroRnKeyboardOnLoad", "Loading NitroRnKeyboard C++ library...");
+                System.loadLibrary("NitroRnKeyboard");
+                Log.i("NitroRnKeyboardOnLoad", "Successfully loaded NitroRnKeyboard C++ library!");
+                g.f68555b = true;
+            } catch (Error e10) {
+                c1.f("NitroRnKeyboardOnLoad", "Failed to load NitroRnKeyboard C++ library! Is it properly installed and linked? Is the name correct? (see `CMakeLists.txt`, at `add_library(...)`)", e10);
+                throw e10;
+            }
+        }
+
+        public a() {
+        }
+    }
+}

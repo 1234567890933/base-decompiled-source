@@ -1,0 +1,198 @@
+.class public final Lb2/Y$b;
+.super Lkotlin/jvm/internal/Lambda;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements Lkotlin/jvm/functions/Function1;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lb2/Y;->l(Lb2/P;Lc2/h;ILkotlin/jvm/functions/Function1;)Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = null
+.end annotation
+
+
+# instance fields
+.field public final synthetic g:Lb2/P;
+
+.field public final synthetic h:Lb2/P;
+
+.field public final synthetic i:Lc2/h;
+
+.field public final synthetic j:I
+
+.field public final synthetic k:Lkotlin/jvm/functions/Function1;
+
+
+# direct methods
+.method public constructor <init>(Lb2/P;Lb2/P;Lc2/h;ILkotlin/jvm/functions/Function1;)V
+    .locals 0
+
+    .line 1
+    iput-object p1, p0, Lb2/Y$b;->g:Lb2/P;
+
+    .line 2
+    .line 3
+    iput-object p2, p0, Lb2/Y$b;->h:Lb2/P;
+
+    .line 4
+    .line 5
+    iput-object p3, p0, Lb2/Y$b;->i:Lc2/h;
+
+    .line 6
+    .line 7
+    iput p4, p0, Lb2/Y$b;->j:I
+
+    .line 8
+    .line 9
+    iput-object p5, p0, Lb2/Y$b;->k:Lkotlin/jvm/functions/Function1;
+
+    .line 10
+    .line 11
+    const/4 p1, 0x1
+
+    .line 12
+    invoke-direct {p0, p1}, Lkotlin/jvm/internal/Lambda;-><init>(I)V
+
+    .line 13
+    .line 14
+    .line 15
+    return-void
+.end method
+
+
+# virtual methods
+.method public final a(Lv2/e$a;)Ljava/lang/Boolean;
+    .locals 4
+
+    .line 1
+    iget-object v0, p0, Lb2/Y$b;->g:Lb2/P;
+
+    .line 2
+    .line 3
+    iget-object v1, p0, Lb2/Y$b;->h:Lb2/P;
+
+    .line 4
+    .line 5
+    invoke-static {v1}, Lx2/h;->t(Lx2/g;)Landroidx/compose/ui/node/Owner;
+
+    .line 6
+    .line 7
+    .line 8
+    move-result-object v1
+
+    .line 9
+    invoke-interface {v1}, Landroidx/compose/ui/node/Owner;->getFocusOwner()Lb2/t;
+
+    .line 10
+    .line 11
+    .line 12
+    move-result-object v1
+
+    .line 13
+    invoke-interface {v1}, Lb2/t;->l()Lb2/P;
+
+    .line 14
+    .line 15
+    .line 16
+    move-result-object v1
+
+    .line 17
+    if-eq v0, v1, :cond_0
+
+    .line 18
+    .line 19
+    sget-object p1, Ljava/lang/Boolean;->TRUE:Ljava/lang/Boolean;
+
+    .line 20
+    .line 21
+    return-object p1
+
+    .line 22
+    :cond_0
+    iget-object v0, p0, Lb2/Y$b;->h:Lb2/P;
+
+    .line 23
+    .line 24
+    iget-object v1, p0, Lb2/Y$b;->i:Lc2/h;
+
+    .line 25
+    .line 26
+    iget v2, p0, Lb2/Y$b;->j:I
+
+    .line 27
+    .line 28
+    iget-object v3, p0, Lb2/Y$b;->k:Lkotlin/jvm/functions/Function1;
+
+    .line 29
+    .line 30
+    invoke-static {v0, v1, v2, v3}, Lb2/Y;->a(Lb2/P;Lc2/h;ILkotlin/jvm/functions/Function1;)Z
+
+    .line 31
+    .line 32
+    .line 33
+    move-result v0
+
+    .line 34
+    invoke-static {v0}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
+
+    .line 35
+    .line 36
+    .line 37
+    move-result-object v1
+
+    .line 38
+    if-nez v0, :cond_2
+
+    .line 39
+    .line 40
+    invoke-interface {p1}, Lv2/e$a;->a()Z
+
+    .line 41
+    .line 42
+    .line 43
+    move-result p1
+
+    .line 44
+    if-nez p1, :cond_1
+
+    .line 45
+    .line 46
+    goto :goto_0
+
+    .line 47
+    :cond_1
+    const/4 p1, 0x0
+
+    .line 48
+    return-object p1
+
+    .line 49
+    :cond_2
+    :goto_0
+    return-object v1
+.end method
+
+.method public bridge synthetic invoke(Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 0
+
+    .line 1
+    check-cast p1, Lv2/e$a;
+
+    .line 2
+    .line 3
+    invoke-virtual {p0, p1}, Lb2/Y$b;->a(Lv2/e$a;)Ljava/lang/Boolean;
+
+    .line 4
+    .line 5
+    .line 6
+    move-result-object p1
+
+    .line 7
+    return-object p1
+.end method

@@ -1,0 +1,36 @@
+.class public final LU0/X$b;
+.super Ljava/lang/Object;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = LU0/X;-><init>(IILU0/M;)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = null
+.end annotation
+
+
+# instance fields
+.field public final synthetic a:LU0/X;
+
+
+# direct methods
+.method public constructor <init>(LU0/X;)V
+    .locals 0
+
+    .line 1
+    iput-object p1, p0, LU0/X$b;->a:LU0/X;
+
+    .line 2
+    .line 3
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 4
+    .line 5
+    .line 6
+    return-void
+.end method

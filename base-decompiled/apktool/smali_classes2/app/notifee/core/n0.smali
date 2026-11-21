@@ -1,0 +1,83 @@
+.class public final synthetic Lapp/notifee/core/n0;
+.super Ljava/lang/Object;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements Ldh/l;
+
+
+# instance fields
+.field public final synthetic a:Landroid/os/Bundle;
+
+.field public final synthetic b:Lapp/notifee/core/model/NotificationModel;
+
+.field public final synthetic c:Ljava/lang/String;
+
+.field public final synthetic d:Lapp/notifee/core/database/k;
+
+
+# direct methods
+.method public synthetic constructor <init>(Landroid/os/Bundle;Lapp/notifee/core/model/NotificationModel;Ljava/lang/String;Lapp/notifee/core/database/k;)V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 2
+    .line 3
+    .line 4
+    iput-object p1, p0, Lapp/notifee/core/n0;->a:Landroid/os/Bundle;
+
+    .line 5
+    .line 6
+    iput-object p2, p0, Lapp/notifee/core/n0;->b:Lapp/notifee/core/model/NotificationModel;
+
+    .line 7
+    .line 8
+    iput-object p3, p0, Lapp/notifee/core/n0;->c:Ljava/lang/String;
+
+    .line 9
+    .line 10
+    iput-object p4, p0, Lapp/notifee/core/n0;->d:Lapp/notifee/core/database/k;
+
+    .line 11
+    .line 12
+    return-void
+.end method
+
+
+# virtual methods
+.method public final apply(Ljava/lang/Object;)Ldh/y;
+    .locals 4
+
+    .line 1
+    iget-object v0, p0, Lapp/notifee/core/n0;->a:Landroid/os/Bundle;
+
+    .line 2
+    .line 3
+    iget-object v1, p0, Lapp/notifee/core/n0;->b:Lapp/notifee/core/model/NotificationModel;
+
+    .line 4
+    .line 5
+    iget-object v2, p0, Lapp/notifee/core/n0;->c:Ljava/lang/String;
+
+    .line 6
+    .line 7
+    iget-object v3, p0, Lapp/notifee/core/n0;->d:Lapp/notifee/core/database/k;
+
+    .line 8
+    .line 9
+    check-cast p1, Ljava/lang/Void;
+
+    .line 10
+    .line 11
+    invoke-static {v0, v1, v2, v3, p1}, Lapp/notifee/core/s0;->d(Landroid/os/Bundle;Lapp/notifee/core/model/NotificationModel;Ljava/lang/String;Lapp/notifee/core/database/k;Ljava/lang/Void;)Ldh/y;
+
+    .line 12
+    .line 13
+    .line 14
+    move-result-object p1
+
+    .line 15
+    return-object p1
+.end method

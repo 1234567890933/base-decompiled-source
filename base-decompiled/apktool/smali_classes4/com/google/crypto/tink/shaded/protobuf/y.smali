@@ -1,0 +1,16 @@
+.class public abstract Lcom/google/crypto/tink/shaded/protobuf/y;
+.super Lcom/google/crypto/tink/shaded/protobuf/c;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements Lcom/google/crypto/tink/shaded/protobuf/z$d;
+.implements Ljava/util/RandomAccess;
+.implements Lcom/google/crypto/tink/shaded/protobuf/Y;
+
+
+# virtual methods
+.method public abstract C1(I)V
+.end method
+
+.method public abstract getInt(I)I
+.end method

@@ -1,0 +1,124 @@
+.class public final Lexpo/modules/kotlin/types/ValueOrUndefined$Undefined;
+.super Ljava/lang/Object;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements Lexpo/modules/kotlin/types/ValueOrUndefined;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lexpo/modules/kotlin/types/ValueOrUndefined;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "Undefined"
+.end annotation
+
+.annotation runtime Lkotlin/Metadata;
+    d1 = {
+        "\u0000\u0010\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0001\n\u0002\u0008\u0003\u0008\u00c7\u0002\u0018\u00002\u0008\u0012\u0004\u0012\u00020\u00020\u0001B\t\u0008\u0002\u00a2\u0006\u0004\u0008\u0003\u0010\u0004\u00a8\u0006\u0005"
+    }
+    d2 = {
+        "Lexpo/modules/kotlin/types/ValueOrUndefined$Undefined;",
+        "Lexpo/modules/kotlin/types/ValueOrUndefined;",
+        "",
+        "<init>",
+        "()V",
+        "expo-modules-core_release"
+    }
+    k = 0x1
+    mv = {
+        0x2,
+        0x2,
+        0x0
+    }
+    xi = 0x30
+.end annotation
+
+
+# static fields
+.field public static final $stable:I
+
+.field public static final INSTANCE:Lexpo/modules/kotlin/types/ValueOrUndefined$Undefined;
+    .annotation build Lorg/jetbrains/annotations/NotNull;
+    .end annotation
+.end field
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    .line 1
+    new-instance v0, Lexpo/modules/kotlin/types/ValueOrUndefined$Undefined;
+
+    .line 2
+    .line 3
+    invoke-direct {v0}, Lexpo/modules/kotlin/types/ValueOrUndefined$Undefined;-><init>()V
+
+    .line 4
+    .line 5
+    .line 6
+    sput-object v0, Lexpo/modules/kotlin/types/ValueOrUndefined$Undefined;->INSTANCE:Lexpo/modules/kotlin/types/ValueOrUndefined$Undefined;
+
+    .line 7
+    .line 8
+    return-void
+.end method
+
+.method private constructor <init>()V
+    .locals 0
+
+    .line 1
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 2
+    .line 3
+    .line 4
+    return-void
+.end method
+
+
+# virtual methods
+.method public bridge synthetic getOptional()Ljava/lang/Object;
+    .locals 1
+
+    .line 1
+    invoke-virtual {p0}, Lexpo/modules/kotlin/types/ValueOrUndefined$Undefined;->getOptional()Ljava/lang/Void;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public getOptional()Ljava/lang/Void;
+    .locals 1
+    .annotation build Lorg/jetbrains/annotations/Nullable;
+    .end annotation
+
+    .line 2
+    invoke-super {p0}, Lexpo/modules/kotlin/types/ValueOrUndefined;->getOptional()Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, Ljava/lang/Void;
+
+    return-object v0
+.end method
+
+.method public isUndefined()Z
+    .locals 1
+
+    .line 1
+    invoke-super {p0}, Lexpo/modules/kotlin/types/ValueOrUndefined;->isUndefined()Z
+
+    .line 2
+    .line 3
+    .line 4
+    move-result v0
+
+    .line 5
+    return v0
+.end method

@@ -1,0 +1,214 @@
+.class public final LG0/t$g;
+.super Lkotlin/jvm/internal/Lambda;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements Lkotlin/jvm/functions/Function1;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = LG0/t;->e(LH0/M0;LG0/v;LG0/x;Ljava/lang/String;Landroidx/compose/runtime/Composer;I)LG0/C;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = null
+.end annotation
+
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        LG0/t$g$a;
+    }
+.end annotation
+
+
+# instance fields
+.field public final synthetic g:LG0/v;
+
+.field public final synthetic h:LG0/x;
+
+
+# direct methods
+.method public constructor <init>(LG0/v;LG0/x;)V
+    .locals 0
+
+    .line 1
+    iput-object p1, p0, LG0/t$g;->g:LG0/v;
+
+    .line 2
+    .line 3
+    iput-object p2, p0, LG0/t$g;->h:LG0/x;
+
+    .line 4
+    .line 5
+    const/4 p1, 0x1
+
+    .line 6
+    invoke-direct {p0, p1}, Lkotlin/jvm/internal/Lambda;-><init>(I)V
+
+    .line 7
+    .line 8
+    .line 9
+    return-void
+.end method
+
+
+# virtual methods
+.method public final a(LG0/q;)Ljava/lang/Float;
+    .locals 2
+
+    .line 1
+    sget-object v0, LG0/t$g$a;->a:[I
+
+    .line 2
+    .line 3
+    invoke-virtual {p1}, Ljava/lang/Enum;->ordinal()I
+
+    .line 4
+    .line 5
+    .line 6
+    move-result p1
+
+    .line 7
+    aget p1, v0, p1
+
+    .line 8
+    .line 9
+    const/4 v0, 0x1
+
+    .line 10
+    const/high16 v1, 0x3f800000    # 1.0f
+
+    .line 11
+    .line 12
+    if-eq p1, v0, :cond_2
+
+    .line 13
+    .line 14
+    const/4 v0, 0x2
+
+    .line 15
+    if-eq p1, v0, :cond_1
+
+    .line 16
+    .line 17
+    const/4 v0, 0x3
+
+    .line 18
+    if-ne p1, v0, :cond_0
+
+    .line 19
+    .line 20
+    iget-object p1, p0, LG0/t$g;->h:LG0/x;
+
+    .line 21
+    .line 22
+    invoke-virtual {p1}, LG0/x;->b()LG0/P;
+
+    .line 23
+    .line 24
+    .line 25
+    move-result-object p1
+
+    .line 26
+    invoke-virtual {p1}, LG0/P;->e()LG0/F;
+
+    .line 27
+    .line 28
+    .line 29
+    move-result-object p1
+
+    .line 30
+    if-eqz p1, :cond_2
+
+    .line 31
+    .line 32
+    invoke-virtual {p1}, LG0/F;->b()F
+
+    .line 33
+    .line 34
+    .line 35
+    move-result v1
+
+    .line 36
+    goto :goto_0
+
+    .line 37
+    :cond_0
+    new-instance p1, LUl/q;
+
+    .line 38
+    .line 39
+    invoke-direct {p1}, LUl/q;-><init>()V
+
+    .line 40
+    .line 41
+    .line 42
+    throw p1
+
+    .line 43
+    :cond_1
+    iget-object p1, p0, LG0/t$g;->g:LG0/v;
+
+    .line 44
+    .line 45
+    invoke-virtual {p1}, LG0/v;->b()LG0/P;
+
+    .line 46
+    .line 47
+    .line 48
+    move-result-object p1
+
+    .line 49
+    invoke-virtual {p1}, LG0/P;->e()LG0/F;
+
+    .line 50
+    .line 51
+    .line 52
+    move-result-object p1
+
+    .line 53
+    if-eqz p1, :cond_2
+
+    .line 54
+    .line 55
+    invoke-virtual {p1}, LG0/F;->b()F
+
+    .line 56
+    .line 57
+    .line 58
+    move-result v1
+
+    .line 59
+    :cond_2
+    :goto_0
+    invoke-static {v1}, Ljava/lang/Float;->valueOf(F)Ljava/lang/Float;
+
+    .line 60
+    .line 61
+    .line 62
+    move-result-object p1
+
+    .line 63
+    return-object p1
+.end method
+
+.method public bridge synthetic invoke(Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 0
+
+    .line 1
+    check-cast p1, LG0/q;
+
+    .line 2
+    .line 3
+    invoke-virtual {p0, p1}, LG0/t$g;->a(LG0/q;)Ljava/lang/Float;
+
+    .line 4
+    .line 5
+    .line 6
+    move-result-object p1
+
+    .line 7
+    return-object p1
+.end method

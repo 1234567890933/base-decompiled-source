@@ -1,0 +1,797 @@
+<!-- design-tokens: snapshot-sha256=855ba5ab1f9418e52cd19cef2258e6bafd08b5f29ce85f8ffaafa17159f09dd8 generator=task13-v2 -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover"
+    />
+    <title>Flow - How to Play</title>
+    <script>
+      // On Android the host container already adds the top inset
+      // (InteractiveHTP.native.tsx applies paddingTop when applyTopSafeArea is set).
+      // Without this flag the WebView's own env(safe-area-inset-top) is added on top
+      // of it and the header is pushed down twice.
+      (function () {
+        if (/Android/i.test(navigator.userAgent || '')) {
+          document.documentElement.classList.add('is-android-webview');
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #171717;
+        --text: #FFFFFF;
+        --muted: rgba(255, 255, 255, 0.4);
+        --green: #0AB963;
+        --green-text: #171717;
+        --coach-text: #0AB963;
+        --coach-bg: #16271f;
+        --board-background: #1E1E1E;
+        --pink: #E24B8B;
+        --blue: #4fadf5;
+        --frame: #747474;
+        --frame-muted: rgba(116, 116, 116, 0.5);
+        --grid: #414141;
+        --inactive-cell: #252525;
+        --pink-fill: #41222f;
+        --green-fill: #044e2a;
+        --blue-fill: #1e3d52;
+        --cell-size: 72px;
+        --font-body:
+          'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-title: 'Montserrat', sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        /* The host mounts this WebView with scrollEnabled={false}, so anything that
+           overflows (or a pinch-zoom) would be unreachable with no way to pan back. */
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .stage {
+        min-height: 100%;
+        padding: calc(6px + env(safe-area-inset-top, 0px)) 14px
+          calc(16px + env(safe-area-inset-bottom, 0px));
+      }
+      /* Only the top inset is double-applied — the host does not add a bottom inset,
+         so that one stays. */
+      html.is-android-webview .stage {
+        padding-top: 6px;
+      }
+      .header {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 60px;
+      }
+      .title {
+        font-family: var(--font-title);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0;
+        color: var(--muted);
+      }
+      .stage[data-step='0'] .title {
+        color: var(--text);
+      }
+      .close-btn {
+        position: absolute;
+        right: -6px;
+        width: 44px;
+        height: 44px;
+        padding: 4px 6px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+      .close-face {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px;
+        border: 1px solid var(--frame);
+        border-bottom-width: 4px;
+        border-radius: 10px;
+        background: var(--bg);
+      }
+      .close-face img {
+        width: 16px;
+        height: 16px;
+      }
+      .close-btn:active .close-face {
+        transform: translateY(2px);
+        border-bottom-width: 2px;
+      }
+      .close-btn:focus-visible,
+      .fgrid:focus-visible {
+        outline: 2px solid var(--text);
+        outline-offset: 4px;
+      }
+      .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 36px;
+        margin-top: 120px;
+      }
+      .coach-stack {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        max-width: 280px;
+        width: 100%;
+        /* Reserve three lines outside the background to keep the board still. */
+        min-height: calc(3 * 22px + 24px);
+        flex-shrink: 0;
+      }
+      .coach {
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 10px;
+        color: var(--coach-text);
+        background: var(--coach-bg);
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 22px;
+        text-align: center;
+        letter-spacing: 0;
+      }
+      .board-host {
+        position: relative;
+        width: max-content;
+      }
+      .fframe {
+        border: 0.6px solid var(--frame-muted);
+        border-radius: 9px;
+        overflow: hidden;
+        line-height: 0;
+      }
+      .fgrid {
+        position: relative;
+        display: grid;
+        width: calc(var(--cell-size) * 4);
+        height: calc(var(--cell-size) * 4);
+        grid-template: repeat(4, var(--cell-size)) / repeat(4, var(--cell-size));
+        touch-action: none;
+        cursor: crosshair;
+      }
+      .fcell {
+        background: var(--board-background);
+        border-right: 0.6px solid var(--grid);
+        border-bottom: 0.6px solid var(--grid);
+        transition: background-color 280ms ease-in-out;
+      }
+      .fcell:nth-child(4n) {
+        border-right: 0;
+      }
+      .fcell:nth-child(n + 13) {
+        border-bottom: 0;
+      }
+      .fsnake {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .fsnake polyline {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .fdot {
+        position: absolute;
+        width: 38px;
+        height: 38px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        pointer-events: none;
+        transition: opacity 280ms ease-in-out;
+      }
+      .hint,
+      .hand {
+        position: absolute;
+        pointer-events: none;
+        z-index: 2;
+      }
+      .hint {
+        width: 30px;
+        height: 30px;
+        animation: hint-pulse 1.8s ease-in-out infinite;
+      }
+      .hand {
+        width: 53.25px;
+        height: 94.28px;
+        left: 20px;
+        top: 65.7px;
+        animation: hand-drag 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      @keyframes hint-pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.6;
+        }
+      }
+      /* Reset between endpoints only while the hand is invisible. */
+      @keyframes hand-drag {
+        0%,
+        100% {
+          opacity: 0;
+          transform: translateX(0);
+        }
+        10%,
+        20% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        65%,
+        75% {
+          opacity: 1;
+          transform: translateX(calc(var(--cell-size) * 3));
+        }
+        88% {
+          opacity: 0;
+          transform: translateX(calc(var(--cell-size) * 3));
+        }
+        95% {
+          opacity: 0;
+          transform: translateX(0);
+        }
+      }
+      @media (max-height: 600px) {
+        .content {
+          margin-top: 32px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="stage" id="stage" data-step="0">
+      <header class="header">
+        <span class="title">FLOW TUTORIAL</span>
+        <button
+          type="button"
+          class="close-btn"
+          id="close"
+          aria-label="Close Flow tutorial"
+        >
+          <span class="close-face"
+            ><img
+              src="data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%22none%22%20overflow%3D%22visible%22%20style%3D%22display%3A%20block%3B%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cg%20id%3D%22Icons%22%3E%0A%3Cmask%20id%3D%22mask0_0_73%22%20style%3D%22mask-type%3Aalpha%22%20maskUnits%3D%22userSpaceOnUse%22%20x%3D%220%22%20y%3D%220%22%20width%3D%2216%22%20height%3D%2216%22%3E%0A%3Crect%20id%3D%22Bounding%20box%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23D9D9D9%22%2F%3E%0A%3C%2Fmask%3E%0A%3Cg%20mask%3D%22url(%23mask0_0_73)%22%3E%0A%3Cpath%20id%3D%22close%22%20d%3D%22M7.99168%208.84565L5.25835%2011.579C5.13613%2011.7012%204.99724%2011.7595%204.84168%2011.754C4.68613%2011.7484%204.54724%2011.6845%204.42502%2011.5623C4.30279%2011.4401%204.24168%2011.2984%204.24168%2011.1373C4.24168%2010.9762%204.30279%2010.8345%204.42502%2010.7123L7.14168%207.99565L4.40835%205.26231C4.28613%205.14009%204.22779%204.99842%204.23335%204.83731C4.2389%204.6762%204.30279%204.53454%204.42502%204.41231C4.54724%204.29009%204.6889%204.22898%204.85002%204.22898C5.01113%204.22898%205.15279%204.29009%205.27502%204.41231L7.99168%207.14565L10.725%204.41231C10.8472%204.29009%2010.9889%204.22898%2011.15%204.22898C11.3111%204.22898%2011.4528%204.29009%2011.575%204.41231C11.6972%204.53454%2011.7583%204.6762%2011.7583%204.83731C11.7583%204.99842%2011.6972%205.14009%2011.575%205.26231L8.84168%207.99565L11.575%2010.729C11.6972%2010.8512%2011.7583%2010.9901%2011.7583%2011.1456C11.7583%2011.3012%2011.6972%2011.4401%2011.575%2011.5623C11.4528%2011.6845%2011.3111%2011.7456%2011.15%2011.7456C10.9889%2011.7456%2010.8472%2011.6845%2010.725%2011.5623L7.99168%208.84565Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+              alt=""
+          /></span>
+        </button>
+      </header>
+      <div class="content">
+        <div class="coach-stack">
+          <div class="coach" id="coach" role="status" aria-live="polite"></div>
+        </div>
+        <div class="board-host">
+          <div class="fframe">
+            <div
+              class="fgrid"
+              id="grid"
+              tabindex="0"
+              role="application"
+              aria-label="Flow practice board. Connect matching dots by dragging. With a keyboard, press Enter to start, use arrow keys to draw, and Enter to release."
+              aria-describedby="coach"
+            ></div>
+          </div>
+          <img
+            class="hint"
+            id="hint"
+            src="data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%22none%22%20overflow%3D%22visible%22%20style%3D%22display%3A%20block%3B%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cg%20id%3D%22Frame%22%3E%0A%3Cpath%20id%3D%22Vector%22%20d%3D%22M12%2022L5%2015L6.4%2013.575L11%2018.175V11H13V18.175L17.6%2013.6L19%2015L12%2022ZM11%209V6H13V9H11ZM11%204V2H13V4H11Z%22%20fill%3D%22%23E3E3E3%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+            alt=""
+          />
+          <img
+            class="hand"
+            id="hand"
+            src="data:image/svg+xml,%3Csvg%20preserveAspectRatio%3D%22none%22%20overflow%3D%22visible%22%20style%3D%22display%3A%20block%3B%22%20width%3D%2238.8916%22%20height%3D%2268.8682%22%20viewBox%3D%220%200%2038.8916%2068.8682%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cg%20id%3D%22Union%22%3E%0A%3Cmask%20id%3D%22path-1-inside-1_0_63%22%20fill%3D%22white%22%3E%0A%3Cpath%20d%3D%22M6.85645%200C10.6428%200.000188116%2013.7119%203.07004%2013.7119%206.85645V16.0723C15.5245%2015.5143%2017.4504%2015.2139%2019.4463%2015.2139C30.1858%2015.214%2038.8916%2023.9122%2038.8916%2034.6416C38.8915%2041.8071%2035.0079%2048.0649%2029.2295%2051.4326C29.2408%2051.6303%2029.248%2051.8297%2029.248%2052.0303V58.5459C29.2479%2064.2466%2024.6265%2068.8682%2018.9258%2068.8682C13.2251%2068.8681%208.60371%2064.2466%208.60352%2058.5459V52.0303C8.60352%2051.6203%208.63026%2051.2159%208.67676%2050.8184C3.4467%2047.3363%206.06953e-05%2041.3916%200%2034.6416C0%2034.1764%200.016638%2033.7148%200.0488281%2033.2578C0.0172956%2032.9911%200%2032.7196%200%2032.4443V6.85645C0%203.06993%203.06993%200%206.85645%200Z%22%2F%3E%0A%3C%2Fmask%3E%0A%3Cpath%20d%3D%22M6.85645%200C10.6428%200.000188116%2013.7119%203.07004%2013.7119%206.85645V16.0723C15.5245%2015.5143%2017.4504%2015.2139%2019.4463%2015.2139C30.1858%2015.214%2038.8916%2023.9122%2038.8916%2034.6416C38.8915%2041.8071%2035.0079%2048.0649%2029.2295%2051.4326C29.2408%2051.6303%2029.248%2051.8297%2029.248%2052.0303V58.5459C29.2479%2064.2466%2024.6265%2068.8682%2018.9258%2068.8682C13.2251%2068.8681%208.60371%2064.2466%208.60352%2058.5459V52.0303C8.60352%2051.6203%208.63026%2051.2159%208.67676%2050.8184C3.4467%2047.3363%206.06953e-05%2041.3916%200%2034.6416C0%2034.1764%200.016638%2033.7148%200.0488281%2033.2578C0.0172956%2032.9911%200%2032.7196%200%2032.4443V6.85645C0%203.06993%203.06993%200%206.85645%200Z%22%20fill%3D%22%238E7EE0%22%2F%3E%0A%3Cpath%20d%3D%22M6.85645%200L6.85654%20-2H6.85645V0ZM13.7119%2016.0723H11.7119V18.7806L14.3004%2017.9837L13.7119%2016.0723ZM19.4463%2015.2139L19.4463%2013.2139H19.4463V15.2139ZM38.8916%2034.6416L40.8916%2034.6416V34.6416H38.8916ZM29.2295%2051.4326L28.2224%2049.7047L27.1629%2050.3222L27.2327%2051.5466L29.2295%2051.4326ZM29.248%2058.5459L31.248%2058.546V58.5459H29.248ZM18.9258%2068.8682L18.9258%2070.8682H18.9258V68.8682ZM8.60352%2058.5459H6.60352V58.546L8.60352%2058.5459ZM8.67676%2050.8184L10.6632%2051.0507L10.8056%2049.833L9.78513%2049.1536L8.67676%2050.8184ZM0%2034.6416H-2V34.6416L0%2034.6416ZM0.0488281%2033.2578L2.04389%2033.3983L2.05713%2033.2103L2.035%2033.023L0.0488281%2033.2578ZM6.85645%200L6.85635%202C9.53794%202.00013%2011.7119%204.17434%2011.7119%206.85645H13.7119H15.7119C15.7119%201.96575%2011.7477%20-1.99976%206.85654%20-2L6.85645%200ZM13.7119%206.85645H11.7119V16.0723H13.7119H15.7119V6.85645H13.7119ZM13.7119%2016.0723L14.3004%2017.9837C15.9244%2017.4838%2017.6521%2017.2139%2019.4463%2017.2139V15.2139V13.2139C17.2488%2013.2139%2015.1246%2013.5448%2013.1235%2014.1608L13.7119%2016.0723ZM19.4463%2015.2139L19.4463%2017.2139C29.083%2017.214%2036.8916%2025.0185%2036.8916%2034.6416H38.8916H40.8916C40.8916%2022.8059%2031.2887%2013.2141%2019.4463%2013.2139L19.4463%2015.2139ZM38.8916%2034.6416L36.8916%2034.6416C36.8915%2041.0657%2033.4122%2046.68%2028.2224%2049.7047L29.2295%2051.4326L30.2366%2053.1606C36.6037%2049.4498%2040.8915%2042.5485%2040.8916%2034.6416L38.8916%2034.6416ZM29.2295%2051.4326L27.2327%2051.5466C27.2425%2051.7174%2027.248%2051.8774%2027.248%2052.0303H29.248H31.248C31.248%2051.7821%2031.2391%2051.5433%2031.2262%2051.3187L29.2295%2051.4326ZM29.248%2052.0303H27.248V58.5459H29.248H31.248V52.0303H29.248ZM29.248%2058.5459L27.248%2058.5458C27.2479%2063.1421%2023.5219%2066.8682%2018.9258%2066.8682V68.8682V70.8682C25.7312%2070.8682%2031.2478%2065.3511%2031.248%2058.546L29.248%2058.5459ZM18.9258%2068.8682L18.9258%2066.8682C14.3297%2066.8681%2010.6037%2063.142%2010.6035%2058.5458L8.60352%2058.5459L6.60352%2058.546C6.60375%2065.3511%2012.1204%2070.8681%2018.9258%2070.8682L18.9258%2068.8682ZM8.60352%2058.5459H10.6035V52.0303H8.60352H6.60352V58.5459H8.60352ZM8.60352%2052.0303H10.6035C10.6035%2051.7071%2010.6246%2051.3809%2010.6632%2051.0507L8.67676%2050.8184L6.6903%2050.586C6.63593%2051.0509%206.60352%2051.5334%206.60352%2052.0303H8.60352ZM8.67676%2050.8184L9.78513%2049.1536C5.0876%2046.0261%202.00005%2040.6936%202%2034.6416L0%2034.6416L-2%2034.6416C-1.99993%2042.0896%201.80579%2048.6465%207.56838%2052.4831L8.67676%2050.8184ZM0%2034.6416H2C2%2034.2241%202.01493%2033.8094%202.04389%2033.3983L0.0488281%2033.2578L-1.94623%2033.1173C-1.98166%2033.6203%20-2%2034.1287%20-2%2034.6416H0ZM0.0488281%2033.2578L2.035%2033.023C2.01203%2032.8287%202%2032.6358%202%2032.4443H0H-2C-2%2032.8034%20-1.97744%2033.1534%20-1.93734%2033.4926L0.0488281%2033.2578ZM0%2032.4443H2V6.85645H0H-2V32.4443H0ZM0%206.85645H2C2%204.1745%204.1745%202%206.85645%202V0V-2C1.96536%20-2%20-2%201.96536%20-2%206.85645H0Z%22%20fill%3D%22white%22%20mask%3D%22url(%23path-1-inside-1_0_63)%22%2F%3E%0A%3C%2Fg%3E%0A%3C%2Fsvg%3E"
+            alt=""
+          />
+        </div>
+      </div>
+    </main>
+    <script>
+      (function () {
+        var SIZE = parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            '--cell-size',
+          ),
+        );
+        var C = 4;
+        var PALETTE = ['var(--pink)', 'var(--green)', 'var(--blue)'];
+        var FILLS = [
+          'var(--pink-fill)',
+          'var(--green-fill)',
+          'var(--blue-fill)',
+        ];
+        var PAIRS = [
+          [0, 3],
+          [4, 15],
+          [5, 11],
+        ];
+        var GREEN_ROUTE = [4, 8, 12, 13, 14, 15];
+        var GUIDE_ROUTES = [[0, 1, 2, 3], GREEN_ROUTE, [5, 9, 10, 6, 7, 11]];
+        var STEPS = [
+          {
+            id: 'connectPink',
+            text: 'Start by connecting the two dots of the same color',
+          },
+          {
+            id: 'connectGreen',
+            text: 'Start by connecting the two dots of the same color',
+          },
+          {
+            id: 'fillEveryCell',
+            text: 'Fill every cell on the board to complete the puzzle.',
+          },
+          {
+            id: 'greenConnected',
+            text: 'Fill every cell on the board to complete the puzzle.',
+          },
+          {
+            id: 'greenFilled',
+            text: 'Fill every cell on the board to complete the puzzle.',
+          },
+          {
+            id: 'connectBlue',
+            text: 'Now Connect the last blue dots by filling all the remaining cells',
+          },
+          {
+            id: 'fillRemaining',
+            text: 'Now Connect the last blue dots by filling all the remaining cells',
+          },
+        ];
+        var stage = document.getElementById('stage');
+        var coach = document.getElementById('coach');
+        var grid = document.getElementById('grid');
+        var boardHost = grid.closest('.board-host');
+        var hint = document.getElementById('hint');
+        var hand = document.getElementById('hand');
+        var paths = [[], [], []];
+        var committed = [false, false, false];
+        var activeColor = 0;
+        var stepIndex = -1;
+        var drawing = false;
+        var pointerId = null;
+        var ended = false;
+        var timers = [];
+        var cells = [];
+        var dots = [];
+        var polys = [];
+        var dotColorAt = {};
+        var keyboardCell = 0;
+        var gestureTop = 0;
+
+        function postToHost(message) {
+          var payload = JSON.stringify(message);
+          if (
+            window.ReactNativeWebView &&
+            window.ReactNativeWebView.postMessage
+          ) {
+            window.ReactNativeWebView.postMessage(payload);
+          } else if (window.parent !== window) {
+            window.parent.postMessage(payload, '*');
+          }
+        }
+        function later(callback, delay) {
+          timers.push(
+            setTimeout(function () {
+              if (!ended) callback();
+            }, delay),
+          );
+        }
+        function clearTimers() {
+          timers.forEach(clearTimeout);
+          timers = [];
+        }
+        function setStep(index) {
+          if (ended || index === stepIndex) return;
+          stepIndex = index;
+          stage.dataset.step = String(index);
+          if (coach.textContent !== STEPS[index].text) {
+            var hadText = Boolean(coach.textContent);
+            coach.textContent = STEPS[index].text;
+            if (
+              hadText &&
+              !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            ) {
+              coach.getAnimations().forEach(function (animation) {
+                animation.cancel();
+              });
+              coach.animate([{ opacity: 0.35 }, { opacity: 1 }], {
+                duration: 240,
+                easing: 'ease-out',
+              });
+            }
+          }
+          if (drawing) {
+            // Caption wrapping must not move cells out from under a live gesture.
+            boardHost.style.transform = '';
+            boardHost.style.transform =
+              'translateY(' +
+              (gestureTop - grid.getBoundingClientRect().top) +
+              'px)';
+          }
+          postToHost({ type: 'step', step: STEPS[index].id, index: index });
+          redraw();
+        }
+        function center(index) {
+          return {
+            x: ((index % C) + 0.5) * SIZE,
+            y: (Math.floor(index / C) + 0.5) * SIZE,
+          };
+        }
+        for (var i = 0; i < 16; i++) {
+          var cell = document.createElement('div');
+          cell.className = 'fcell';
+          cell.dataset.cell = i;
+          grid.appendChild(cell);
+          cells.push(cell);
+        }
+        // Use the existing tutorial's SVG path renderer for live pointer input.
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class', 'fsnake');
+        svg.setAttribute('width', C * SIZE);
+        svg.setAttribute('height', C * SIZE);
+        grid.appendChild(svg);
+        PAIRS.forEach(function (pair, color) {
+          var poly = document.createElementNS(
+            'http://www.w3.org/2000/svg',
+            'polyline',
+          );
+          poly.setAttribute('stroke', PALETTE[color]);
+          poly.setAttribute('stroke-width', '22');
+          svg.appendChild(poly);
+          polys.push(poly);
+          pair.forEach(function (index) {
+            dotColorAt[index] = color;
+            var point = center(index);
+            var dot = document.createElement('div');
+            dot.className = 'fdot';
+            dot.style.left = point.x + 'px';
+            dot.style.top = point.y + 'px';
+            dot.style.background = PALETTE[color];
+            grid.appendChild(dot);
+            dots.push({ element: dot, color: color, index: index });
+          });
+        });
+        function connected(color) {
+          var path = paths[color];
+          var pair = PAIRS[color];
+          return (
+            path.length > 1 &&
+            ((path[0] === pair[0] && path[path.length - 1] === pair[1]) ||
+              (path[0] === pair[1] && path[path.length - 1] === pair[0]))
+          );
+        }
+        function nextHintCell(path) {
+          var route = GUIDE_ROUTES[activeColor];
+          if (path[0] === route[route.length - 1])
+            route = route.slice().reverse();
+          for (var i = 0; i < path.length; i++) {
+            // Guide a shortcut back to the last correct turn before continuing.
+            if (path[i] !== route[i]) return path[path.length - 2];
+          }
+          return route[Math.max(1, path.length)];
+        }
+        function redraw() {
+          // Highlight whichever start dot is currently active, not just pink's.
+          // Blue may legitimately be drawn from either endpoint, so prefer the one
+          // the player actually began from and fall back to the canonical start
+          // before any path exists. Already-committed paths are repainted below.
+          var activeStart = paths[activeColor].length
+            ? paths[activeColor][0]
+            : PAIRS[activeColor][0];
+          cells.forEach(function (cell, index) {
+            var color = dotColorAt[index];
+            var fill = '';
+            if (
+              color !== undefined &&
+              (color <= activeColor || committed[color])
+            ) {
+              fill =
+                index === activeStart
+                  ? FILLS[activeColor]
+                  : 'var(--inactive-cell)';
+            }
+            paths.forEach(function (path, pathColor) {
+              if (committed[pathColor] && path.indexOf(index) >= 0)
+                fill = FILLS[pathColor];
+            });
+            cell.style.backgroundColor = fill;
+            cell.style.borderColor =
+              index < C || fill ? 'var(--frame)' : 'var(--grid)';
+          });
+          paths.forEach(function (path, color) {
+            polys[color].setAttribute(
+              'points',
+              path
+                .map(function (index) {
+                  var point = center(index);
+                  return point.x + ',' + point.y;
+                })
+                .join(' '),
+            );
+          });
+          dots.forEach(function (dot) {
+            dot.element.style.opacity =
+              dot.color <= activeColor || dot.index === 4 ? '1' : '0.45';
+          });
+          hand.hidden =
+            stepIndex !== 0 || drawing || paths[0].length > 0 || ended;
+          hint.hidden =
+            ended ||
+            (stepIndex !== 0 &&
+              stepIndex !== 1 &&
+              stepIndex !== 2 &&
+              stepIndex !== 6);
+          var path = paths[activeColor];
+          var head = path.length
+            ? path[path.length - 1]
+            : PAIRS[activeColor][0];
+          var next = nextHintCell(path);
+          if (next === undefined) {
+            hint.hidden = true;
+          } else {
+            var point = center(head);
+            var dx = (next % C) - (head % C);
+            var dy = Math.floor(next / C) - Math.floor(head / C);
+            var angle = dx === 1 ? -90 : dx === -1 ? 90 : dy === -1 ? 180 : 0;
+            hint.style.transform = 'rotate(' + angle + 'deg)';
+            hint.style.left = point.x + (dx * SIZE) / 2 - 15 + 'px';
+            hint.style.top = point.y + (dy * SIZE) / 2 - 15 + 'px';
+          }
+        }
+        function cellFromEvent(event) {
+          var rect = grid.getBoundingClientRect();
+          var x = event.clientX - rect.left;
+          var y = event.clientY - rect.top;
+          if (x < 0 || y < 0 || x >= rect.width || y >= rect.height) return -1;
+          return (
+            Math.floor((y / rect.height) * C) * C +
+            Math.floor((x / rect.width) * C)
+          );
+        }
+        function begin(index) {
+          if (ended || committed[activeColor] || index < 0) return false;
+          var path = paths[activeColor];
+          if (dotColorAt[index] === activeColor) {
+            // The green walkthrough follows the edge, leaving room for the blue path.
+            if (activeColor === 1 && index !== PAIRS[1][0]) return false;
+            paths[activeColor] = [index];
+          } else if (path.indexOf(index) >= 0) {
+            paths[activeColor] = path.slice(0, path.indexOf(index) + 1);
+          } else {
+            return false;
+          }
+          drawing = true;
+          gestureTop = grid.getBoundingClientRect().top;
+          keyboardCell = index;
+          updateProgress();
+          redraw();
+          return true;
+        }
+        function extend(index) {
+          var path = paths[activeColor];
+          if (index < 0 || index >= C * C || !drawing || !path.length || ended)
+            return;
+          var head = path[path.length - 1];
+          if (
+            Math.abs(Math.floor(head / C) - Math.floor(index / C)) +
+              Math.abs((head % C) - (index % C)) !==
+            1
+          )
+            return;
+          var own = path.indexOf(index);
+          if (own >= 0) {
+            paths[activeColor] = path.slice(0, own + 1);
+          } else {
+            if (connected(activeColor)) return;
+            if (
+              dotColorAt[index] !== undefined &&
+              dotColorAt[index] !== activeColor
+            )
+              return;
+            if (
+              paths.some(function (other, color) {
+                return color !== activeColor && other.indexOf(index) >= 0;
+              })
+            )
+              return;
+            if (activeColor === 0 && index >= C) return;
+            if (activeColor === 1 && index !== GREEN_ROUTE[path.length]) return;
+            paths[activeColor].push(index);
+          }
+          keyboardCell = index;
+          updateProgress();
+          redraw();
+        }
+        function updateProgress() {
+          if (activeColor !== 1 || committed[1]) return;
+          if (connected(1)) setStep(3);
+          else if (paths[1].length >= 3) setStep(2);
+          else setStep(1);
+        }
+        function release(cancelled) {
+          if (!drawing) return;
+          drawing = false;
+          pointerId = null;
+          boardHost.style.transform = '';
+          if (cancelled || !connected(activeColor)) {
+            redraw();
+            return;
+          }
+          if (
+            activeColor === 2 &&
+            paths.reduce(function (sum, path) {
+              return sum + path.length;
+            }, 0) !== 16
+          ) {
+            redraw();
+            return;
+          }
+          committed[activeColor] = true;
+          postToHost({ type: 'haptic', style: 'Light' });
+          if (activeColor === 0) {
+            activeColor = 1;
+            keyboardCell = PAIRS[1][0];
+            setStep(1);
+          } else if (activeColor === 1) {
+            setStep(4);
+            later(function () {
+              activeColor = 2;
+              keyboardCell = PAIRS[2][0];
+              setStep(5);
+              later(function () {
+                setStep(6);
+              }, 500);
+            }, 450);
+          } else {
+            ended = true;
+            clearTimers();
+            redraw();
+            postToHost({ type: 'completed' });
+          }
+          redraw();
+        }
+        grid.addEventListener('pointerdown', function (event) {
+          // A keyboard-started path sets drawing without a pointerId. Bailing out on
+          // `drawing` alone would leave pointer input dead until the next Enter/Space,
+          // since pointermove/up both require a matching pointerId. Let the pointer
+          // take over instead; begin() re-anchors the path at the pressed cell.
+          if (
+            (drawing && pointerId !== null) ||
+            event.isPrimary === false ||
+            (event.pointerType === 'mouse' && event.button !== 0)
+          )
+            return;
+          if (!begin(cellFromEvent(event))) return;
+          pointerId = event.pointerId;
+          grid.setPointerCapture(pointerId);
+          event.preventDefault();
+        });
+        grid.addEventListener('pointermove', function (event) {
+          if (!drawing || event.pointerId !== pointerId) return;
+          // Some touch devices coalesce moves across multiple cells.
+          var target = cellFromEvent(event);
+          var path = paths[activeColor];
+          var head = path[path.length - 1];
+          if (
+            target >= 0 &&
+            (Math.floor(head / C) === Math.floor(target / C) ||
+              head % C === target % C)
+          ) {
+            var delta =
+              Math.floor(head / C) === Math.floor(target / C)
+                ? Math.sign(target - head)
+                : Math.sign(target - head) * C;
+            while (delta && head !== target) {
+              extend(head + delta);
+              var next = paths[activeColor][paths[activeColor].length - 1];
+              if (next === head) break;
+              head = next;
+            }
+          } else {
+            extend(target);
+          }
+          event.preventDefault();
+        });
+        grid.addEventListener('pointerup', function (event) {
+          if (event.pointerId === pointerId) release(false);
+        });
+        grid.addEventListener('pointercancel', function (event) {
+          if (event.pointerId === pointerId) release(true);
+        });
+        grid.addEventListener('lostpointercapture', function (event) {
+          if (event.pointerId === pointerId) release(true);
+        });
+        grid.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            if (drawing) release(false);
+            else begin(keyboardCell);
+            return;
+          }
+          var offsets = {
+            ArrowUp: -C,
+            ArrowDown: C,
+            ArrowLeft: -1,
+            ArrowRight: 1,
+          };
+          if (drawing && offsets[event.key] !== undefined) {
+            event.preventDefault();
+            extend(keyboardCell + offsets[event.key]);
+          }
+        });
+        document.getElementById('close').addEventListener('click', function () {
+          ended = true;
+          drawing = false;
+          boardHost.style.transform = '';
+          clearTimers();
+          redraw();
+          postToHost({ type: 'closed' });
+        });
+        function reset() {
+          clearTimers();
+          paths = [[], [], []];
+          committed = [false, false, false];
+          activeColor = 0;
+          drawing = false;
+          pointerId = null;
+          boardHost.style.transform = '';
+          ended = false;
+          keyboardCell = 0;
+          stepIndex = -1;
+          setStep(0);
+        }
+        function onHostMessage(event) {
+          var message = event.data;
+          try {
+            if (typeof message === 'string') message = JSON.parse(message);
+          } catch (error) {
+            return;
+          }
+          if (message && message.type === 'reset') reset();
+        }
+        window.addEventListener('message', onHostMessage);
+        document.addEventListener('message', onHostMessage);
+        window.addEventListener('pagehide', clearTimers);
+        reset();
+        postToHost({ type: 'ready' });
+      })();
+    </script>
+  </body>
+</html>

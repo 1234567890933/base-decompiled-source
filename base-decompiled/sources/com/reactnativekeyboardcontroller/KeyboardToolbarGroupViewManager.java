@@ -1,0 +1,56 @@
+package com.reactnativekeyboardcontroller;
+
+import Ud.C4100q;
+import android.view.View;
+import com.facebook.react.uimanager.ViewGroupManager;
+import com.facebook.react.uimanager.W;
+import com.facebook.react.uimanager.e0;
+import com.facebook.react.uimanager.o0;
+import kotlin.Metadata;
+import kotlin.jvm.internal.Intrinsics;
+import org.jetbrains.annotations.NotNull;
+import p542uk.e;
+import p672zk.i;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes4.dex */
+@Metadata(d1 = {"\u0000<\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0004\u0018\u00002\b\u0012\u0004\u0012\u00020\u00020\u00012\b\u0012\u0004\u0012\u00020\u00020\u0003B\u0007¢\u0006\u0004\b\u0004\u0010\u0005J\u0015\u0010\u0007\u001a\b\u0012\u0004\u0012\u00020\u00020\u0006H\u0014¢\u0006\u0004\b\u0007\u0010\bJ\u000f\u0010\n\u001a\u00020\tH\u0016¢\u0006\u0004\b\n\u0010\u000bJ\u0017\u0010\u000e\u001a\u00020\u00022\u0006\u0010\r\u001a\u00020\fH\u0014¢\u0006\u0004\b\u000e\u0010\u000fR\u0014\u0010\u0011\u001a\u00020\u00108\u0002X\u0082\u0004¢\u0006\u0006\n\u0004\b\u0011\u0010\u0012R0\u0010\u0015\u001a\u001e\u0012\f\u0012\n \u0014*\u0004\u0018\u00010\u00020\u0002\u0012\f\u0012\n \u0014*\u0004\u0018\u00010\u00000\u00000\u00138\u0002X\u0082\u0004¢\u0006\u0006\n\u0004\b\u0015\u0010\u0016¨\u0006\u0017"}, d2 = {"Lcom/reactnativekeyboardcontroller/KeyboardToolbarGroupViewManager;", "Lcom/facebook/react/uimanager/ViewGroupManager;", "Lzk/i;", "", "<init>", "()V", "Lcom/facebook/react/uimanager/e0;", "getDelegate", "()Lcom/facebook/react/uimanager/e0;", "", "getName", "()Ljava/lang/String;", "Lcom/facebook/react/uimanager/W;", "context", "createViewInstance", "(Lcom/facebook/react/uimanager/W;)Lzk/i;", "Luk/e;", "manager", "Luk/e;", "LUd/q;", "kotlin.jvm.PlatformType", "mDelegate", "LUd/q;", "react-native-keyboard-controller_release"}, k = 1, mv = {2, 2, 0}, xi = 48)
+public final class KeyboardToolbarGroupViewManager extends ViewGroupManager<i> implements o0 {
+
+    @NotNull
+    private final C4100q mDelegate;
+
+    @NotNull
+    private final e manager;
+
+    public KeyboardToolbarGroupViewManager() {
+        super(null, 1, null);
+        this.manager = new e();
+        this.mDelegate = new C4100q(this);
+    }
+
+    @Override // com.facebook.react.uimanager.ViewManager
+    @NotNull
+    /* JADX INFO: renamed from: getDelegate */
+    public e0 getMDelegate() {
+        return this.mDelegate;
+    }
+
+    @Override // com.facebook.react.uimanager.ViewManager, com.facebook.react.bridge.NativeModule
+    @NotNull
+    public String getName() {
+        return "KeyboardToolbarGroupView";
+    }
+
+    @Override // com.facebook.react.uimanager.ViewGroupManager, com.facebook.react.uimanager.InterfaceC5812m
+    public /* bridge */ /* synthetic */ void removeAllViews(@NotNull View view) {
+        super.removeAllViews(view);
+    }
+
+    @Override // com.facebook.react.uimanager.ViewManager
+    @NotNull
+    public i createViewInstance(@NotNull W context) {
+        Intrinsics.checkNotNullParameter(context, "context");
+        return this.manager.a(context);
+    }
+}

@@ -1,0 +1,11 @@
+package com.webengage.sdk.android;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes5.dex */
+enum c3 {
+    INSIDE_SELECTOR,
+    INSIDE_COMMENT,
+    INSIDE_PROPERTY_NAME,
+    INSIDE_VALUE,
+    INSIDE_VALUE_ROUND_BRACKET
+}

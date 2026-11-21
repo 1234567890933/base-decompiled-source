@@ -1,0 +1,300 @@
+.class public Lo9/f$a;
+.super Ljava/lang/Object;
+.source "r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b"
+
+# interfaces
+.implements Landroid/text/TextWatcher;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lo9/f;->q()V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1
+    name = null
+.end annotation
+
+
+# instance fields
+.field public final synthetic a:Lo9/f;
+
+
+# direct methods
+.method public constructor <init>(Lo9/f;)V
+    .locals 0
+
+    .line 1
+    iput-object p1, p0, Lo9/f$a;->a:Lo9/f;
+
+    .line 2
+    .line 3
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 4
+    .line 5
+    .line 6
+    return-void
+.end method
+
+
+# virtual methods
+.method public afterTextChanged(Landroid/text/Editable;)V
+    .locals 2
+
+    .line 1
+    invoke-virtual {p1}, Ljava/lang/Object;->toString()Ljava/lang/String;
+
+    .line 2
+    .line 3
+    .line 4
+    move-result-object v0
+
+    .line 5
+    iget-object v1, p0, Lo9/f$a;->a:Lo9/f;
+
+    .line 6
+    .line 7
+    invoke-static {v1}, Lo9/f;->i(Lo9/f;)Lcom/google/android/material/textfield/TextInputEditText;
+
+    .line 8
+    .line 9
+    .line 10
+    move-result-object v1
+
+    .line 11
+    invoke-virtual {v1}, Landroid/widget/TextView;->getSelectionStart()I
+
+    .line 12
+    .line 13
+    .line 14
+    move-result v1
+
+    .line 15
+    invoke-static {v0, v1}, Lcom/cashfree/pg/core/hidden/utils/CardUtil;->getCardNumberFormatted(Ljava/lang/String;I)Lcom/cashfree/pg/core/hidden/utils/CardUtil$CardFormatResult;
+
+    .line 16
+    .line 17
+    .line 18
+    move-result-object v0
+
+    .line 19
+    invoke-virtual {p1}, Ljava/lang/Object;->toString()Ljava/lang/String;
+
+    .line 20
+    .line 21
+    .line 22
+    move-result-object p1
+
+    .line 23
+    invoke-static {p1}, Lcom/cashfree/pg/core/hidden/utils/CardUtil;->getCardType(Ljava/lang/String;)Lcom/cashfree/pg/core/hidden/utils/CardType;
+
+    .line 24
+    .line 25
+    .line 26
+    move-result-object p1
+
+    .line 27
+    invoke-virtual {p1}, Lcom/cashfree/pg/core/hidden/utils/CardType;->getFrontResource()Ljava/lang/Integer;
+
+    .line 28
+    .line 29
+    .line 30
+    move-result-object v1
+
+    .line 31
+    if-nez v1, :cond_0
+
+    .line 32
+    .line 33
+    iget-object p1, p0, Lo9/f$a;->a:Lo9/f;
+
+    .line 34
+    .line 35
+    invoke-static {p1}, Lo9/f;->j(Lo9/f;)Landroid/widget/ImageView;
+
+    .line 36
+    .line 37
+    .line 38
+    move-result-object p1
+
+    .line 39
+    const/16 v1, 0x8
+
+    .line 40
+    .line 41
+    invoke-virtual {p1, v1}, Landroid/widget/ImageView;->setVisibility(I)V
+
+    .line 42
+    .line 43
+    .line 44
+    goto :goto_0
+
+    .line 45
+    :cond_0
+    iget-object v1, p0, Lo9/f$a;->a:Lo9/f;
+
+    .line 46
+    .line 47
+    invoke-static {v1}, Lo9/f;->j(Lo9/f;)Landroid/widget/ImageView;
+
+    .line 48
+    .line 49
+    .line 50
+    move-result-object v1
+
+    .line 51
+    invoke-virtual {p1}, Lcom/cashfree/pg/core/hidden/utils/CardType;->getFrontResource()Ljava/lang/Integer;
+
+    .line 52
+    .line 53
+    .line 54
+    move-result-object p1
+
+    .line 55
+    invoke-virtual {p1}, Ljava/lang/Integer;->intValue()I
+
+    .line 56
+    .line 57
+    .line 58
+    move-result p1
+
+    .line 59
+    invoke-virtual {v1, p1}, Landroid/widget/ImageView;->setImageResource(I)V
+
+    .line 60
+    .line 61
+    .line 62
+    iget-object p1, p0, Lo9/f$a;->a:Lo9/f;
+
+    .line 63
+    .line 64
+    invoke-static {p1}, Lo9/f;->j(Lo9/f;)Landroid/widget/ImageView;
+
+    .line 65
+    .line 66
+    .line 67
+    move-result-object p1
+
+    .line 68
+    const/4 v1, 0x0
+
+    .line 69
+    invoke-virtual {p1, v1}, Landroid/widget/ImageView;->setVisibility(I)V
+
+    .line 70
+    .line 71
+    .line 72
+    :goto_0
+    invoke-virtual {v0}, Lcom/cashfree/pg/core/hidden/utils/CardUtil$CardFormatResult;->isUpdated()Z
+
+    .line 73
+    .line 74
+    .line 75
+    move-result p1
+
+    .line 76
+    if-eqz p1, :cond_1
+
+    .line 77
+    .line 78
+    iget-object p1, p0, Lo9/f$a;->a:Lo9/f;
+
+    .line 79
+    .line 80
+    invoke-static {p1}, Lo9/f;->i(Lo9/f;)Lcom/google/android/material/textfield/TextInputEditText;
+
+    .line 81
+    .line 82
+    .line 83
+    move-result-object p1
+
+    .line 84
+    invoke-virtual {v0}, Lcom/cashfree/pg/core/hidden/utils/CardUtil$CardFormatResult;->getFormattedNumber()Ljava/lang/String;
+
+    .line 85
+    .line 86
+    .line 87
+    move-result-object v1
+
+    .line 88
+    invoke-virtual {p1, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+
+    .line 89
+    .line 90
+    .line 91
+    iget-object p1, p0, Lo9/f$a;->a:Lo9/f;
+
+    .line 92
+    .line 93
+    invoke-static {p1}, Lo9/f;->i(Lo9/f;)Lcom/google/android/material/textfield/TextInputEditText;
+
+    .line 94
+    .line 95
+    .line 96
+    move-result-object p1
+
+    .line 97
+    invoke-virtual {v0}, Lcom/cashfree/pg/core/hidden/utils/CardUtil$CardFormatResult;->getCursorPosition()I
+
+    .line 98
+    .line 99
+    .line 100
+    move-result v0
+
+    .line 101
+    invoke-virtual {p1, v0}, Landroid/widget/EditText;->setSelection(I)V
+
+    .line 102
+    .line 103
+    .line 104
+    return-void
+
+    .line 105
+    :cond_1
+    iget-object p1, p0, Lo9/f$a;->a:Lo9/f;
+
+    .line 106
+    .line 107
+    invoke-static {p1}, Lo9/f;->k(Lo9/f;)V
+
+    .line 108
+    .line 109
+    .line 110
+    return-void
+.end method
+
+.method public beforeTextChanged(Ljava/lang/CharSequence;III)V
+    .locals 0
+
+    .line 1
+    return-void
+.end method
+
+.method public onTextChanged(Ljava/lang/CharSequence;III)V
+    .locals 0
+
+    .line 1
+    iget-object p1, p0, Lo9/f$a;->a:Lo9/f;
+
+    .line 2
+    .line 3
+    invoke-static {p1}, Lo9/f;->h(Lo9/f;)Lcom/google/android/material/textfield/TextInputLayout;
+
+    .line 4
+    .line 5
+    .line 6
+    move-result-object p1
+
+    .line 7
+    const/4 p2, 0x0
+
+    .line 8
+    invoke-virtual {p1, p2}, Lcom/google/android/material/textfield/TextInputLayout;->setErrorEnabled(Z)V
+
+    .line 9
+    .line 10
+    .line 11
+    return-void
+.end method

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt"
+    android:height="160dp"
+    android:width="330dp"
+    android:viewportWidth="330"
+    android:viewportHeight="160">
+    <group>
+        <clip-path android:pathData="M 28 0 L 302 0 Q 330 0 330 28 L 330 132 Q 330 160 302 160 L 28 160 Q 0 160 0 132 L 0 28 Q 0 0 28 0 Z"/>
+        <path
+            android:fillColor="@drawable/_bg_exp_streak_unsafe_bored__0_res_0x7f080012"
+            android:pathData="M 28 0 L 302 0 Q 330 0 330 28 L 330 132 Q 330 160 302 160 L 28 160 Q 0 160 0 132 L 0 28 Q 0 0 28 0 Z"/>
+        <path
+            android:fillColor="#ffffffff"
+            android:pathData="M168.54 220.24c101.28 0 183.39-40.56 183.39-90.59 0-50.02-82.1-90.58-183.4-90.58-101.27 0-183.38 40.56-183.38 90.59 0 50.02 82.1 90.58 183.39 90.58Z"
+            android:fillAlpha="0.05"/>
+        <path
+            android:fillColor="#ffffffff"
+            android:pathData="M168.54 234.36c88.67 0 160.55-35.5 160.55-79.3s-71.88-79.3-160.55-79.3c-88.67 0-160.55 35.5-160.55 79.3s71.88 79.3 160.55 79.3Z"
+            android:fillAlpha="0.05"/>
+        <path
+            android:fillColor="#ffffffff"
+            android:pathData="M168.54 231.34c70.2 0 127.12-28.1 127.12-62.78s-56.91-62.8-127.12-62.8c-70.2 0-127.12 28.12-127.12 62.8 0 34.67 56.91 62.78 127.12 62.78Z"
+            android:fillAlpha="0.05"/>
+    </group>
+</vector>

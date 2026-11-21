@@ -1,0 +1,57 @@
+package Sk;
+
+import kotlin.collections.C7787w;
+import kotlin.collections.C7788x;
+import kotlin.jvm.functions.Function0;
+import kotlin.jvm.internal.DefaultConstructorMarker;
+import kotlin.jvm.internal.Intrinsics;
+
+/* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+/* JADX INFO: loaded from: classes5.dex */
+public final class X2 extends AbstractC3713a implements Vk.m {
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public static final a f31642d = new a(null);
+
+    /* JADX INFO: renamed from: e, reason: collision with root package name */
+    public static final String f31643e = "SystemConfirm";
+
+    /* JADX INFO: renamed from: c, reason: collision with root package name */
+    public final x4 f31644c;
+
+    /* JADX INFO: compiled from: r8-map-id-faddf18a56af0b2ca4a3a0734319898a8981fa7b065945dc227835c087e5f36b */
+    public static final class a {
+        public /* synthetic */ a(DefaultConstructorMarker defaultConstructorMarker) {
+            this();
+        }
+
+        public String a() {
+            return X2.f31643e;
+        }
+
+        public a() {
+        }
+    }
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    public X2(Ok.b haptics, x4 systemPresets) {
+        super(haptics, new Vk.l(C7788x.r(C7788x.o(), C7788x.o()), C7787w.e(C7788x.r(Float.valueOf(0.0f), Float.valueOf(0.65f), Float.valueOf(0.85f)))), true);
+        Intrinsics.checkNotNullParameter(haptics, "haptics");
+        Intrinsics.checkNotNullParameter(systemPresets, "systemPresets");
+        this.f31644c = systemPresets;
+    }
+
+    public static final boolean d(X2 x10) {
+        return x10.f31644c.c();
+    }
+
+    @Override // Sk.AbstractC3713a, Vk.m
+    public void play() {
+        a(new Function0() { // from class: Sk.W2
+            @Override // kotlin.jvm.functions.Function0
+            public final Object invoke() {
+                return Boolean.valueOf(X2.d(this.f31640a));
+            }
+        });
+    }
+}
